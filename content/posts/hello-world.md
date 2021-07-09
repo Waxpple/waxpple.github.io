@@ -8,4 +8,4 @@ Test a text
 function test(){
 	console.log("Hello world!");
 }
-```.
+```
