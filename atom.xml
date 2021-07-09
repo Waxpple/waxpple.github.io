@@ -1,7 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-09T07:21:17+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-09T07:21:13+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen!
-但是我安裝Miniconda 後整個WSL的ssl都掛了，建議不要安裝
-安裝Miniconda 因為我是用WSL，也沒有GUI，就直接用miniconda就好了。
-wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh chmod +x Miniconda3-py39_4.9.2-Linux-x86_64.sh ./Miniconda3-py39_4.9.2-Linux-x86_64.sh pip install git+https://github.com/m-labs/nmigen.git pip install git+https://github.com/m-labs/nmigen-boards.git</summary><content type="html">&lt;p>第一天接觸nMigen, 先來安裝　nMigen!&lt;/p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-09T14:33:59+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-09T14:33:54+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝nMigen pip install git+https://github.com/m-labs/nmigen.git pip install git+https://github.com/m-labs/nmigen-boards.git 安裝之後就可以開始學習如何使用nMigen製作電路
+Value in migen Const 永不變 from nmigen import * a = Const(10) a.shape() &amp;gt;&amp;gt; Shape(width=4, signed=False) a = Const(10) a.shape() &amp;gt;&amp;gt; Shape(width=5, signed=True) x = Const(3,range(-5,11)) x.shape() &amp;gt;&amp;gt; Shape(width=5, signed=True) 可以使用Enum 來做常數狀態 from enum import Enum, unique @unique class Func(Enum): NONE = 0 ADD = 1 SUB = 2 MUL = 3 DIV = 4 .</summary><content type="html">&lt;h1 id="第一天接觸nmigen-先來安裝nmigen">第一天接觸nMigen, 先來安裝　nMigen!&lt;/h1>
+&lt;p>&lt;img src="https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a" alt="1">&lt;/p>
+&lt;h1 id="安裝nmigen">安裝nMigen&lt;/h1>
+&lt;pre>&lt;code>pip install git+https://github.com/m-labs/nmigen.git
+pip install git+https://github.com/m-labs/nmigen-boards.git
+&lt;/code>&lt;/pre>&lt;p>安裝之後就可以開始學習如何使用nMigen製作電路&lt;/p>
+&lt;h1 id="value-in-migen">Value in migen&lt;/h1>
+&lt;h2 id="const-永不變">Const 永不變&lt;/h2>
+&lt;pre>&lt;code>from nmigen import *
+a = Const(10)
+a.shape()
+&amp;gt;&amp;gt; Shape(width=4, signed=False)
+a = Const(10)
+a.shape()
+&amp;gt;&amp;gt; Shape(width=5, signed=True)
+x = Const(3,range(-5,11))
+x.shape()
+&amp;gt;&amp;gt; Shape(width=5, signed=True)
+&lt;/code>&lt;/pre>&lt;h2 id="可以使用enum-來做常數狀態">可以使用Enum 來做常數狀態&lt;/h2>
+&lt;pre>&lt;code>from enum import Enum, unique
+@unique
+class Func(Enum):
+NONE = 0
+ADD = 1
+SUB = 2
+MUL = 3
+DIV = 4
+...
+&amp;gt;&amp;gt;&amp;gt; x = Const(2, Func)
+&amp;gt;&amp;gt;&amp;gt; x.shape()
+unsigned(3)
+&amp;gt;&amp;gt;&amp;gt; x = Value.cast(Func.NONE)
+&amp;gt;&amp;gt;&amp;gt; x
+const 3'd0
+&lt;/code>&lt;/pre>&lt;h2 id="signal-是-wire或者reg">Signal 是 Wire或者reg&lt;/h2>
+&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; from nmigen import *
+&amp;gt;&amp;gt;&amp;gt; A = Signal(signed(8))
+&amp;gt;&amp;gt;&amp;gt; A.shape()
+Shape(width=8, signed=True)
+&lt;/code>&lt;/pre>&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x = Signal(range(-5,11))
+&amp;gt;&amp;gt;&amp;gt; x.shape()
+Shape(width=5, signed=True)
+&lt;/code>&lt;/pre>&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x = Signal(Func)
+&amp;gt;&amp;gt;&amp;gt; x
+(sig x)
+&amp;gt;&amp;gt;&amp;gt; x = Signal(unsigned(16),name=&amp;quot;dout&amp;quot;)
+&amp;gt;&amp;gt;&amp;gt; x.name
+'dout'
+&lt;/code>&lt;/pre>&lt;hr>
 &lt;blockquote>
 &lt;p>但是我安裝Miniconda 後整個WSL的ssl都掛了，建議不要安裝&lt;/p>
 &lt;h1 id="安裝miniconda">安裝Miniconda&lt;/h1>
@@ -9,10 +55,7 @@ wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh c
 &lt;pre>&lt;code>wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh
 chmod +x Miniconda3-py39_4.9.2-Linux-x86_64.sh
 ./Miniconda3-py39_4.9.2-Linux-x86_64.sh
-&lt;/code>&lt;/pre>&lt;/blockquote>
-&lt;pre>&lt;code>pip install git+https://github.com/m-labs/nmigen.git
-pip install git+https://github.com/m-labs/nmigen-boards.git
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">Hello World</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/hello-world/"/><id>https://waxpple.github.io/posts/hello-world/</id><updated>2021-07-09T07:21:13+00:00</updated><published>2021-07-09T13:36:49+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Test a text
+&lt;/code>&lt;/pre>&lt;/blockquote></content></entry><entry><title type="text">Hello World</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/hello-world/"/><id>https://waxpple.github.io/posts/hello-world/</id><updated>2021-07-09T14:33:54+00:00</updated><published>2021-07-09T13:36:49+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Test a text
 function test(){ console.log(&amp;quot;Hello world!&amp;quot;); }</summary><content type="html">&lt;p>Test a text&lt;/p>
 &lt;pre>&lt;code>function test(){
 console.log(&amp;quot;Hello world!&amp;quot;);

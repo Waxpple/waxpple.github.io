@@ -1,4 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Fri, 09 Jul 2021 07:21:17 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day00] nMigen 戰鬥</title><link>https://waxpple.github.io/posts/day00/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day00/</guid><pubDate>Fri, 09 Jul 2021 14:33:00 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;p>第一天接觸nMigen, 先來安裝　nMigen!&lt;/p>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Fri, 09 Jul 2021 14:33:59 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day00] nMigen 戰鬥</title><link>https://waxpple.github.io/posts/day00/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day00/</guid><pubDate>Fri, 09 Jul 2021 14:33:00 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="第一天接觸nmigen-先來安裝nmigen">第一天接觸nMigen, 先來安裝　nMigen!&lt;/h1>
+&lt;p>&lt;img src="https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a" alt="1">&lt;/p>
+&lt;h1 id="安裝nmigen">安裝nMigen&lt;/h1>
+&lt;pre>&lt;code>pip install git+https://github.com/m-labs/nmigen.git
+pip install git+https://github.com/m-labs/nmigen-boards.git
+&lt;/code>&lt;/pre>&lt;p>安裝之後就可以開始學習如何使用nMigen製作電路&lt;/p>
+&lt;h1 id="value-in-migen">Value in migen&lt;/h1>
+&lt;h2 id="const-永不變">Const 永不變&lt;/h2>
+&lt;pre>&lt;code>from nmigen import *
+a = Const(10)
+a.shape()
+&amp;gt;&amp;gt; Shape(width=4, signed=False)
+a = Const(10)
+a.shape()
+&amp;gt;&amp;gt; Shape(width=5, signed=True)
+x = Const(3,range(-5,11))
+x.shape()
+&amp;gt;&amp;gt; Shape(width=5, signed=True)
+&lt;/code>&lt;/pre>&lt;h2 id="可以使用enum-來做常數狀態">可以使用Enum 來做常數狀態&lt;/h2>
+&lt;pre>&lt;code>from enum import Enum, unique
+@unique
+class Func(Enum):
+NONE = 0
+ADD = 1
+SUB = 2
+MUL = 3
+DIV = 4
+...
+&amp;gt;&amp;gt;&amp;gt; x = Const(2, Func)
+&amp;gt;&amp;gt;&amp;gt; x.shape()
+unsigned(3)
+&amp;gt;&amp;gt;&amp;gt; x = Value.cast(Func.NONE)
+&amp;gt;&amp;gt;&amp;gt; x
+const 3'd0
+&lt;/code>&lt;/pre>&lt;h2 id="signal-是-wire或者reg">Signal 是 Wire或者reg&lt;/h2>
+&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; from nmigen import *
+&amp;gt;&amp;gt;&amp;gt; A = Signal(signed(8))
+&amp;gt;&amp;gt;&amp;gt; A.shape()
+Shape(width=8, signed=True)
+&lt;/code>&lt;/pre>&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x = Signal(range(-5,11))
+&amp;gt;&amp;gt;&amp;gt; x.shape()
+Shape(width=5, signed=True)
+&lt;/code>&lt;/pre>&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x = Signal(Func)
+&amp;gt;&amp;gt;&amp;gt; x
+(sig x)
+&amp;gt;&amp;gt;&amp;gt; x = Signal(unsigned(16),name=&amp;quot;dout&amp;quot;)
+&amp;gt;&amp;gt;&amp;gt; x.name
+'dout'
+&lt;/code>&lt;/pre>&lt;hr>
 &lt;blockquote>
 &lt;p>但是我安裝Miniconda 後整個WSL的ssl都掛了，建議不要安裝&lt;/p>
 &lt;h1 id="安裝miniconda">安裝Miniconda&lt;/h1>
@@ -6,10 +54,7 @@
 &lt;pre>&lt;code>wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh
 chmod +x Miniconda3-py39_4.9.2-Linux-x86_64.sh
 ./Miniconda3-py39_4.9.2-Linux-x86_64.sh
-&lt;/code>&lt;/pre>&lt;/blockquote>
-&lt;pre>&lt;code>pip install git+https://github.com/m-labs/nmigen.git
-pip install git+https://github.com/m-labs/nmigen-boards.git
-&lt;/code>&lt;/pre></description></item><item><title>Hello World</title><link>https://waxpple.github.io/posts/hello-world/</link><guid isPermaLink="true">https://waxpple.github.io/posts/hello-world/</guid><pubDate>Fri, 09 Jul 2021 13:36:49 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;p>Test a text&lt;/p>
+&lt;/code>&lt;/pre>&lt;/blockquote></description></item><item><title>Hello World</title><link>https://waxpple.github.io/posts/hello-world/</link><guid isPermaLink="true">https://waxpple.github.io/posts/hello-world/</guid><pubDate>Fri, 09 Jul 2021 13:36:49 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;p>Test a text&lt;/p>
 &lt;pre>&lt;code>function test(){
 console.log(&amp;quot;Hello world!&amp;quot;);
 }
