@@ -346,18 +346,18 @@ uglyURLs = false
     ######################################
     # Site Info
 
-    siteLogo = "/icons/apple-touch-icon.png"
+    siteLogo = "/icons/me.png"
     # Note: used for JSON-LD, Open Graph
 
-    siteDescription = "MemE is a powerful and highly customizable GoHugo theme for personal blogs."
+    siteDescription = "Risc V daliy base."
     # Note: used for HTML head meta, JSON-LD,
     #       Open Graph, Atom, RSS
 
-    siteCreatedTime = "1969-07-20T20:17:43+00:00"
+    siteCreatedTime = "1998-10-24T20:17:43+00:00"
     # ATTENTION: keep this format, change
     #            the number
 
-    siteTwitter = "reuixiy"
+    siteTwitter = ""
     # Note: used for Twitter Cards
 
 
