@@ -1,4 +1,5 @@
 baseURL = "https://waxpple.github.io/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Waxapple Code Segment"
 theme = "ananke"
+theme="lovit"
