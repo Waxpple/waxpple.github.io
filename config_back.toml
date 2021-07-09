@@ -1,0 +1,4 @@
+baseURL = "https://waxpple.github.io/"
+languageCode = "en-us"
+title = "Waxapple Code Segment"
+theme="lovit"
