@@ -5,7 +5,16 @@ draft: false
 ---
 # 第一天接觸nMigen, 先來安裝　nMigen!
 ![1](https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a)
-
+# 安裝Prerequisites
+```
+sudo apt-get install build-essential clang bison flex libreadline-dev \
+                     gawk tcl-dev libffi-dev git mercurial graphviz   \
+                     xdot pkg-config python python3 libftdi-dev gperf \
+                     libboost-program-options-dev autoconf libgmp-dev \
+                     cmake
+```
+# 安裝有的沒的必備程式
+參考 https://symbiyosys.readthedocs.io/en/latest/install.html
 # 安裝nMigen
 ```
 pip install git+https://github.com/m-labs/nmigen.git
