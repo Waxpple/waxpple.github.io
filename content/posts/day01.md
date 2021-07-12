@@ -4,6 +4,8 @@ date: 2021-07-10T10:50:02+08:00
 draft: false
 ---
 # Basic structure of modules
+The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/
+Thumbs up for his contributions.
 ```
 from nmigen import *
 from nmigen.build import Platform
