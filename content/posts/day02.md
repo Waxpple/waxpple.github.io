@@ -113,3 +113,52 @@ Operator    | Operation | Notes
 Attemped to convert nMigen value to boolean error will occur.
 
 >Shift right is effectively arithmetic, where the sign bit is present for signed values or zero for unsigned Values.
+
+# Effects of operations on result width
+Two unsigned/signed 4-bit signals addition will result in unsigned/signed 5-bit result.
+```
+>>> s1 = Signal(signed(4))
+>>> s2 = Signal(signed(4))
+>>> v2 = s1 + s2
+>>> v2.shape()
+Shape(width=5, signed=True)
+```
+
+# Multiplexing signals
+`Mux()` returns one signal if the condition is true, the other signal otherwise:
+```
+y.eq(Mux(cond,x1,x2))
+```
+In this case, if `cond` is true then `y` is set to x1, otherwise x2. It is the same as `y = cond?x1:x2;`. \
+`Mux` cannot be used on the left-hand side of any assignment.
+
+# Placing statements in domains
+Statements are written in the combinational domain of a module as we used to in verilog. Ofcourse, can be used in sequential circuits.
+```
+# Combinational circuit
+m.d.comb += x.eq(y+1)
+# Sequential circuit
+m.d.sync += x.eq(y+1)
+```
+For example, y is `IDLE` and x is next_state.
+# Adding multiple statements
+The `+=` operator for a domain can take one statement, or a list of statements, which is pretty ease to use.
+```
+m.d.comb += [
+    x.eq(y+1),
+    z.eq(w+2)
+]
+```
+# Conflict statements will be override
+If a statement sets the same signal that previous statement set, the the second set takes precedence.
+```
+m.d.comb += x.eq(y+1)
+m.d.comb += x.eq(y+2)
+```
+In this case, x will get y+2 not y+1.
+Remember that one signal can only be assigned to one domains, otherwise, it will result in a driver-driver conflict.
+```
+# Wrong code
+m.d.comb += x.eq(y+1)
+m.d.sync += x.eq(y+1)
+```
