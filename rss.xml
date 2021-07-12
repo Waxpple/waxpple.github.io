@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 12 Jul 2021 02:47:43 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day02] Basic terminology</title><link>https://waxpple.github.io/posts/day02/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day02/</guid><pubDate>Mon, 12 Jul 2021 10:01:41 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="domains">Domains&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 12 Jul 2021 03:09:38 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day02] Basic terminology</title><link>https://waxpple.github.io/posts/day02/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day02/</guid><pubDate>Mon, 12 Jul 2021 10:01:41 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
 &lt;h1 id="combinational">Combinational&lt;/h1>
@@ -43,7 +43,25 @@ m.domains += ClockDomain(&amp;quot;thing&amp;quot;, local=True)
 m.d.thing += # logic
 # Error will occur here.
 m2.d.thing += # logic
-&lt;/code>&lt;/pre></description></item><item><title>[Day01] Basic nMigen</title><link>https://waxpple.github.io/posts/day01/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day01/</guid><pubDate>Sat, 10 Jul 2021 10:50:02 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
+&lt;/code>&lt;/pre>&lt;h1 id="ports">Ports&lt;/h1>
+&lt;p>The equivalent of ports in a module is public attributes. In the following example, &lt;code>a&lt;/code> and &lt;code>data&lt;/code> are publicly available to other modules, while &lt;code>b&lt;/code> is not, just as &lt;code>a&lt;/code> and &lt;code>data&lt;/code> are publicly available to other python classes, and &lt;code>b&lt;/code> is not.&lt;/p>
+&lt;pre>&lt;code>class ThingBlock(Elaboratable):
+def __init__(self):
+# Public accessible
+self.a = Signal()
+self.data = Signal(8)
+def elaborate(self, platform: str):
+m = Module()
+# Internal use reg/wire.
+b = Signal()
+return m
+&lt;/code>&lt;/pre>&lt;h1 id="resetdefault-values-for-signals">Reset/default values for signals&lt;/h1>
+&lt;p>If a &lt;code>Signal&lt;/code> is set in the &lt;em>combinational&lt;/em> or &lt;em>synchronous&lt;/em> domain, then you can specify the default value of the signal if it is not set. By default value of the signal if it is not set. By default, it is zero, but for a non-zero value, you can specify the default value for a signal when constructing the signal by setting the &lt;code>reset&lt;/code> named parameter in the constructor. For example, this create a 16-bit signed signal, self.x, which initial value set to 0xFFFF.&lt;/p>
+&lt;pre>&lt;code>self.x = Signal(signed(16), reset=0xFFFF) # initial value &amp;quot;0xFFFF&amp;quot;
+&lt;/code>&lt;/pre>&lt;h1 id="explicitly-not-resetting">Explicitly not resetting&lt;/h1>
+&lt;p>For synchronous signals(that is, a signal set in a synchronous domain), you can specify that it is not reset on the reset signal, instead only getting an initial balue on power-up. This is done by setting the &lt;code>reset_less&lt;/code> named parameter in the constructor to &lt;code>True&lt;/code>&lt;/p>
+&lt;pre>&lt;code>self.x = Signal(signed(16),reset= 0xFFFF, reset_less = True)
+&lt;/code>&lt;/pre>&lt;p>This is especially useful during simulation or formal verification where you want to activate the reset, but keep some signals &amp;ldquo;outside&amp;rdquo; the reset. For example, a cycle counter that maintains its count across resets.&lt;/p></description></item><item><title>[Day01] Basic nMigen</title><link>https://waxpple.github.io/posts/day01/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day01/</guid><pubDate>Sat, 10 Jul 2021 10:50:02 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
 &lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
 Thumbs up for his contributions.&lt;/p>
 &lt;pre>&lt;code>from nmigen import *
