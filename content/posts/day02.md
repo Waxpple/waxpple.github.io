@@ -60,3 +60,28 @@ m.d.thing += # logic
 # Error will occur here.
 m2.d.thing += # logic
 ```
+# Ports
+The equivalent of ports in a module is public attributes. In the following example, `a` and `data` are publicly available to other modules, while `b` is not, just as `a` and `data` are publicly available to other python classes, and `b` is not.
+```
+class ThingBlock(Elaboratable):
+    def __init__(self):
+        # Public accessible
+        self.a = Signal()
+        self.data = Signal(8)
+    def elaborate(self, platform: str):
+        m = Module()
+        # Internal use reg/wire.
+        b = Signal()
+        return m
+```
+# Reset/default values for signals
+If a `Signal` is set in the *combinational* or *synchronous* domain, then you can specify the default value of the signal if it is not set. By default value of the signal if it is not set. By default, it is zero, but for a non-zero value, you can specify the default value for a signal when constructing the signal by setting the `reset` named parameter in the constructor. For example, this create a 16-bit signed signal, self.x, which initial value set to 0xFFFF.
+```
+self.x = Signal(signed(16), reset=0xFFFF) # initial value "0xFFFF"
+```
+# Explicitly not resetting
+For synchronous signals(that is, a signal set in a synchronous domain), you can specify that it is not reset on the reset signal, instead only getting an initial balue on power-up. This is done by setting the `reset_less` named parameter in the constructor to `True`
+```
+self.x = Signal(signed(16),reset= 0xFFFF, reset_less = True)
+```
+This is especially useful during simulation or formal verification where you want to activate the reset, but keep some signals "outside" the reset. For example, a cycle counter that maintains its count across resets.
