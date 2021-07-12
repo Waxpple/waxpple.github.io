@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-12T03:09:38+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-12T03:09:34+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-12T03:35:03+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-12T03:34:57+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
 Modules come with two domain built in: a combinational domain and a sequential(synchronous) domain.</summary><content type="html">&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
@@ -62,7 +62,115 @@ return m
 &lt;/code>&lt;/pre>&lt;h1 id="explicitly-not-resetting">Explicitly not resetting&lt;/h1>
 &lt;p>For synchronous signals(that is, a signal set in a synchronous domain), you can specify that it is not reset on the reset signal, instead only getting an initial balue on power-up. This is done by setting the &lt;code>reset_less&lt;/code> named parameter in the constructor to &lt;code>True&lt;/code>&lt;/p>
 &lt;pre>&lt;code>self.x = Signal(signed(16),reset= 0xFFFF, reset_less = True)
-&lt;/code>&lt;/pre>&lt;p>This is especially useful during simulation or formal verification where you want to activate the reset, but keep some signals &amp;ldquo;outside&amp;rdquo; the reset. For example, a cycle counter that maintains its count across resets.&lt;/p></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-12T03:09:34+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
+&lt;/code>&lt;/pre>&lt;p>This is especially useful during simulation or formal verification where you want to activate the reset, but keep some signals &amp;ldquo;outside&amp;rdquo; the reset. For example, a cycle counter that maintains its count across resets.&lt;/p>
+&lt;h1 id="basic-operations">Basic operations&lt;/h1>
+&lt;h2 id="statements">Statements&lt;/h2>
+&lt;p>nMigen doesn&amp;rsquo;t convert Python to hardware. In essence, what you are writing using nMigen is a &lt;em>generator&lt;/em> of logic, not the logic itself. So if you want to assign one &lt;code>Value&lt;/code> to take the value of another, you don&amp;rsquo;t write &lt;code>a = b&lt;/code>, but instead you call the method of &lt;code>a&lt;/code> that generates the equality: &lt;code>a.eq(b)&lt;/code>. This is known as a &lt;em>statement&lt;/em>.&lt;br>
+However, many math operators are overridable in Python, since these translate to calls to Python functions. So for example, you can write &lt;code>a.eq(b+1)&lt;/code> instead of something like a.eq(b.plus(1)) because Python addition can be overrideen to a function callm and nMigen&amp;rsquo;s Signal class does that for all such operators (&lt;code>=&lt;/code> is still not overrided).&lt;/p>
+&lt;h2 id="list-of-directly-translatable-python-operators">List of directly translatable Python operators&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Operator&lt;/th>
+&lt;th style="text-align:center">Operation&lt;/th>
+&lt;th>Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>~&lt;/code>&lt;/td>
+&lt;td style="text-align:center">inversion&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-&lt;/code>&lt;/td>
+&lt;td style="text-align:center">arithmetic negation&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>+&lt;/code>&lt;/td>
+&lt;td style="text-align:center">addition&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>*&lt;/code>&lt;/td>
+&lt;td style="text-align:center">multiplication&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>%&lt;/code>&lt;/td>
+&lt;td style="text-align:center">modulus&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>//&lt;/code>&lt;/td>
+&lt;td style="text-align:center">division&lt;/td>
+&lt;td>integer division, rounding down&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;lt;&amp;lt;&lt;/code>&lt;/td>
+&lt;td style="text-align:center">shift left&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;gt;&amp;gt;&lt;/code>&lt;/td>
+&lt;td style="text-align:center">shift right&lt;/td>
+&lt;td>Effectively arithmetic, see below.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;amp;&lt;/code>&lt;/td>
+&lt;td style="text-align:center">bitwise and&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>`&lt;/td>
+&lt;td style="text-align:center">`&lt;/td>
+&lt;td>bitwise or&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>^&lt;/code>&lt;/td>
+&lt;td style="text-align:center">bitwise xor&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>==&lt;/code>&lt;/td>
+&lt;td style="text-align:center">equality&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>!=&lt;/code>&lt;/td>
+&lt;td style="text-align:center">inequality&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;gt;&lt;/code>&lt;/td>
+&lt;td style="text-align:center">greater than&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;gt;=&lt;/code>&lt;/td>
+&lt;td style="text-align:center">greater than or equal to&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;lt;&lt;/code>&lt;/td>
+&lt;td style="text-align:center">less than&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;lt;=&lt;/code>&lt;/td>
+&lt;td style="text-align:center">less than equal to&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;blockquote>
+&lt;p>Note that there are no translatable Python logical operators (&lt;code>and&lt;/code>,&lt;code>or&lt;/code>). The logical reduction functions &lt;code>any&lt;/code> and &lt;code>all&lt;/code> are not avaliable in nMigen expressions.&lt;br>
+Attemped to convert nMigen value to boolean error will occur.&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>Shift right is effectively arithmetic, where the sign bit is present for signed values or zero for unsigned Values.&lt;/p>
+&lt;/blockquote></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-12T03:34:57+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
 from nmigen import * from nmigen.build import Platform class ThingBlock(Elaboratable): def __init__(self): pass def elaborate(self, platform: Platform) -&amp;gt; Module: m = Module() return m Elaborating a module from nmigen.</summary><content type="html">&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
 &lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
 Thumbs up for his contributions.&lt;/p>
@@ -92,7 +200,7 @@ main(m, ports=[sync.clk,sync.rst])
 &lt;/blockquote>
 &lt;ul>
 &lt;li>Choose RTLIL if using yosys.&lt;/li>
-&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-12T03:09:34+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
+&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-12T03:34:57+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
 安裝nMigen pip install git+https://github.com/m-labs/nmigen.git pip install git+https://github.com/m-labs/nmigen-boards.git 安裝之後就可以開始學習如何使用nMigen製作電路</summary><content type="html">&lt;h1 id="第一天接觸nmigen-先來安裝nmigen">第一天接觸nMigen, 先來安裝　nMigen!&lt;/h1>
 &lt;p>&lt;img src="https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a" alt="1">&lt;/p>
 &lt;h1 id="安裝prerequisites">安裝Prerequisites&lt;/h1>
