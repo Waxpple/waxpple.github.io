@@ -55,4 +55,15 @@ with m.Switch (y):
 In this example, if `y is in [0, 1, 2]` then `x` is assigned 2. Otherwise `x` retains its value of 1.
 - Recall the section on overriding statements. One signal can only assigned in only one clock domain.
 
-# Bit patterns
+# Specify a bit patterns
+The way to specify a matching pattern in a `Case` is with a Python string of binary digits. For example, `"0011101011"`. A don't-care bit is specified using a dash `-`, so for example `"00111-----"`. The number of bits in the string must exactly the same as the number of bits in the expression it is being compared to.
+```
+with m.If(a.matches("11---",3,b)):
+    statement1
+```
+Is equivelent to
+```
+with m.Switch(a):
+    with m.Case("11---",3,b):
+        statement1
+```
