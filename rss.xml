@@ -1,4 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 12 Jul 2021 06:01:41 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day02] Basic terminology</title><link>https://waxpple.github.io/posts/day02/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day02/</guid><pubDate>Mon, 12 Jul 2021 10:01:41 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="domains">Domains&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 12 Jul 2021 07:24:33 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day03] Branching</title><link>https://waxpple.github.io/posts/day03/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day03/</guid><pubDate>Mon, 12 Jul 2021 14:38:07 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
+&lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
+&lt;pre>&lt;code>with m.If(condition1):
+m.d.comb += statements1
+with m.Elif(condition2):
+m.d.comb += statements2
+with m.Else():
+m.d.comb += statements3
+&lt;/code>&lt;/pre>&lt;p>If you use regular Python &lt;code>if-elif-else&lt;/code>, then those will be evaluated during &lt;em>generation&lt;/em> of the logic, not the logic itself. This can be useful if you want a flag to cause different logic implement to be generated, and this is a good use of platform string pass to elaborate().&lt;/p>
+&lt;pre>&lt;code>if (platform== &amp;quot;KC705&amp;quot;)
+m.d.comb += statement1
+else:
+m.d.comb += statement2
+&lt;/code>&lt;/pre>&lt;p>If &lt;code>platform&lt;/code> is &lt;code>&amp;quot;KC705&amp;quot;&lt;/code> then statement1 will be implement in generated hardware, otherwise only statement2 will be implement in the design.&lt;/p>
+&lt;h1 id="conditions">Conditions&lt;/h1>
+&lt;p>The conditions in &lt;code>If-Elif-Else&lt;/code> are cimparisons, for example &lt;code>a == 1&lt;/code> or &lt;code>(a &amp;gt;= b) &amp;amp; (a &amp;lt;= c)&lt;/code>. Note that each comparison will be one-bit comparison.&lt;br>
+If you have a signal with more than one bit and use it as the condition, use &lt;code>with m.If(a):&lt;/code>, then the condition will be true if any bit in a is 1.&lt;/p>
+&lt;h1 id="switch-case-default">Switch-Case-Default&lt;/h1>
+&lt;p>You can use &lt;code>Switch-Case-Default&lt;/code> just as in standard HDLs using the following &lt;code>with&lt;/code> constructs:&lt;/p>
+&lt;pre>&lt;code>with m.Switch(expression):
+with m.Case(value1):
+statements1
+with m.Case(value2):
+statements2
+with m.Default():
+statements3
+&lt;/code>&lt;/pre>&lt;p>Although it is suggested that using &lt;code>full-case&lt;/code> switch that we used to do in verilog. You can use multiple values in one case statement.&lt;/p>
+&lt;pre>&lt;code>with m.Switch(expression):
+with m.Case(value1,value2):
+statements1
+with m.Default():
+statements3
+&lt;/code>&lt;/pre>&lt;p>You can leave out the &lt;code>Defalt()&lt;/code>, but not suggest you to do that.&lt;/p>
+&lt;pre>&lt;code>m.d.comb += x.eq(1)
+with m.Switch (y):
+with m.Case(0,1,2):
+m.d.comb += x.eq(2)
+&lt;/code>&lt;/pre>&lt;p>In this example, if &lt;code>y is in [0, 1, 2]&lt;/code> then &lt;code>x&lt;/code> is assigned 2. Otherwise &lt;code>x&lt;/code> retains its value of 1.&lt;/p>
+&lt;ul>
+&lt;li>Recall the section on overriding statements. One signal can only assigned in only one clock domain.&lt;/li>
+&lt;/ul>
+&lt;h1 id="bit-patterns">Bit patterns&lt;/h1></description></item><item><title>[Day02] Basic terminology</title><link>https://waxpple.github.io/posts/day02/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day02/</guid><pubDate>Mon, 12 Jul 2021 10:01:41 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
 &lt;h1 id="combinational">Combinational&lt;/h1>
