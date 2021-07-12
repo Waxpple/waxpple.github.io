@@ -33,4 +33,5 @@ if __name__== "__main__":
 ```
 python3 thing.py generate -t [v|il] > thing.[v|il]
 ```
+> If you encounter any error message, Back to day00 and install the pre-requisties.
 - Choose RTLIL if using yosys.
