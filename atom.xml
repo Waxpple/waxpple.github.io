@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-12T02:21:15+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-12T02:21:10+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-12T02:47:43+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-12T02:47:37+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
 Modules come with two domain built in: a combinational domain and a sequential(synchronous) domain.</summary><content type="html">&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
@@ -7,7 +7,47 @@ Modules come with two domain built in: a combinational domain and a sequential(s
 m means &lt;code>Module&lt;/code> and d means &lt;code>domain&lt;/code>.&lt;/p>
 &lt;h1 id="synchronous">Synchronous&lt;/h1>
 &lt;p>Logic that contains clocked elements is called synchronous (a.k.a sequential circuit) because all the FFs are triggered by particular clock domain. Each clock domain also has a reset signal which can reset all FFs to a given state. Finally, the domain specifies the edge of its clock on which all the FFs change: &lt;code>posedge&lt;/code> or &lt;code>negedge&lt;/code>.&lt;br>
-Unless otherwise specified, there is one synchronous domain in a &lt;code>Module&lt;/code> called sync. It can be accessed via &lt;code>m.d.sync&lt;/code>.&lt;/p></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-12T02:21:10+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules from nmigen import * from nmigen.build import Platform class ThingBlock(Elaboratable): def __init__(self): pass def elaborate(self, platform: Platform) -&amp;gt; Module: m = Module() return m Elaborating a module from nmigen.cli import main if __name__== &amp;quot;__main__&amp;quot;: sync = ClockDomain() block = ThingBlock() m = Module() m.</summary><content type="html">&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
+Unless otherwise specified, there is one synchronous domain in a &lt;code>Module&lt;/code> called sync. It can be accessed via &lt;code>m.d.sync&lt;/code>.&lt;/p>
+&lt;h1 id="creating-more-domains">Creating more domains&lt;/h1>
+&lt;p>There is no reason to create combinational domains. As mentioned above, modules already contain one combinational domain, comb.&lt;br>
+You can create a synchronous clock domain using &lt;code>ClockDomain(&amp;quot;&amp;lt;domain-name&amp;gt;&amp;quot;, clk_edge=&amp;quot;pos|neg&amp;quot;)&lt;/code>. This gives you both the clock and the reset signal for the domain. By default, the domain name is &lt;code>sync&lt;/code> and the clock edge is &lt;code>pos&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>m = Module()
+mydomain = ClockDomain(&amp;quot;clk&amp;quot;)
+m.domains += mydomain
+m.d.mydomain += ... # logic to add in the &amp;quot;mydomain&amp;quot; clock domain.
+&lt;/code>&lt;/pre>&lt;p>You can access a domain within a module by its name. So a domain created via ClockDomain(&amp;ldquo;my clock&amp;rdquo;) is accessed via &lt;code>m.d.myclock&lt;/code> or &lt;code>m.d[&amp;quot;myclk&amp;quot;]&lt;/code>. \&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>ClockSignal(domain=&amp;quot;&amp;lt;domain&amp;gt;&amp;quot;)&lt;/code> gives you the clock signal for the given domain.&lt;/li>
+&lt;li>&lt;code>ResetSignal(domain=&amp;quot;&amp;lt;domain&amp;gt;&amp;quot;)&lt;/code> gives you the reset signal for the given domain.&lt;/li>
+&lt;/ul>
+&lt;h1 id="tips-clock-domains-with-the-same-clock-but-different-edges">Tips: Clock domains with the same clock but different edges.&lt;/h1>
+&lt;p>This can be done simply by creating one &lt;code>clockdomain&lt;/code>&lt;/p>
+&lt;pre>&lt;code>pos = ClockDomain(&amp;quot;pos&amp;quot;)
+neg = ClockDomain(&amp;quot;neg&amp;quot;, clk_edge=&amp;quot;neg&amp;quot;)
+&lt;/code>&lt;/pre>&lt;p>Next, assign them with same clock driven&lt;/p>
+&lt;pre>&lt;code>neg.clk = pos.clk
+neg.rst = pos.rst
+&lt;/code>&lt;/pre>&lt;p>And then you can add these to the module. We can add more than domain to a module with the same statement.&lt;/p>
+&lt;pre>&lt;code>m.domains += [pos, neg]
+&lt;/code>&lt;/pre>&lt;h1 id="access-to-domains">Access to domains&lt;/h1>
+&lt;p>A module can access its domains via its &lt;code>d&lt;/code> attribute. By default, if a synchronous domain is added to a module&amp;rsquo;s &lt;code>domain&lt;/code>, then all modules everywhere will also have access to that domain via their d attribute, even if that module is not a submodule of the module where the domain was added.&lt;/p>
+&lt;pre>&lt;code>m = Module()
+m2 = Module()
+m.domains += ClockDomain(&amp;quot;thing&amp;quot;)
+m.d.thing += # logic
+# This is implicity
+m2.d.thing += #logic
+&lt;/code>&lt;/pre>&lt;p>If you want to explicitly inhibit this global propagation by setting the &lt;code>local&lt;/code> named parameter of the &lt;code>ClockDomain&lt;/code> to &lt;code>True&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>m = Module()
+m2 = Module()
+m.domains += ClockDomain(&amp;quot;thing&amp;quot;, local=True)
+m.d.thing += # logic
+# Error will occur here.
+m2.d.thing += # logic
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-12T02:47:37+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
+from nmigen import * from nmigen.build import Platform class ThingBlock(Elaboratable): def __init__(self): pass def elaborate(self, platform: Platform) -&amp;gt; Module: m = Module() return m Elaborating a module from nmigen.</summary><content type="html">&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
+&lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
+Thumbs up for his contributions.&lt;/p>
 &lt;pre>&lt;code>from nmigen import *
 from nmigen.build import Platform
 class ThingBlock(Elaboratable):
@@ -34,7 +74,7 @@ main(m, ports=[sync.clk,sync.rst])
 &lt;/blockquote>
 &lt;ul>
 &lt;li>Choose RTLIL if using yosys.&lt;/li>
-&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-12T02:21:10+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
+&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-12T02:47:37+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
 安裝nMigen pip install git+https://github.com/m-labs/nmigen.git pip install git+https://github.com/m-labs/nmigen-boards.git 安裝之後就可以開始學習如何使用nMigen製作電路</summary><content type="html">&lt;h1 id="第一天接觸nmigen-先來安裝nmigen">第一天接觸nMigen, 先來安裝　nMigen!&lt;/h1>
 &lt;p>&lt;img src="https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a" alt="1">&lt;/p>
 &lt;h1 id="安裝prerequisites">安裝Prerequisites&lt;/h1>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 12 Jul 2021 02:21:15 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day02] Basic terminology</title><link>https://waxpple.github.io/posts/day02/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day02/</guid><pubDate>Mon, 12 Jul 2021 10:01:41 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="domains">Domains&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 12 Jul 2021 02:47:43 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day02] Basic terminology</title><link>https://waxpple.github.io/posts/day02/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day02/</guid><pubDate>Mon, 12 Jul 2021 10:01:41 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
 &lt;h1 id="combinational">Combinational&lt;/h1>
@@ -6,7 +6,46 @@
 m means &lt;code>Module&lt;/code> and d means &lt;code>domain&lt;/code>.&lt;/p>
 &lt;h1 id="synchronous">Synchronous&lt;/h1>
 &lt;p>Logic that contains clocked elements is called synchronous (a.k.a sequential circuit) because all the FFs are triggered by particular clock domain. Each clock domain also has a reset signal which can reset all FFs to a given state. Finally, the domain specifies the edge of its clock on which all the FFs change: &lt;code>posedge&lt;/code> or &lt;code>negedge&lt;/code>.&lt;br>
-Unless otherwise specified, there is one synchronous domain in a &lt;code>Module&lt;/code> called sync. It can be accessed via &lt;code>m.d.sync&lt;/code>.&lt;/p></description></item><item><title>[Day01] Basic nMigen</title><link>https://waxpple.github.io/posts/day01/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day01/</guid><pubDate>Sat, 10 Jul 2021 10:50:02 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
+Unless otherwise specified, there is one synchronous domain in a &lt;code>Module&lt;/code> called sync. It can be accessed via &lt;code>m.d.sync&lt;/code>.&lt;/p>
+&lt;h1 id="creating-more-domains">Creating more domains&lt;/h1>
+&lt;p>There is no reason to create combinational domains. As mentioned above, modules already contain one combinational domain, comb.&lt;br>
+You can create a synchronous clock domain using &lt;code>ClockDomain(&amp;quot;&amp;lt;domain-name&amp;gt;&amp;quot;, clk_edge=&amp;quot;pos|neg&amp;quot;)&lt;/code>. This gives you both the clock and the reset signal for the domain. By default, the domain name is &lt;code>sync&lt;/code> and the clock edge is &lt;code>pos&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>m = Module()
+mydomain = ClockDomain(&amp;quot;clk&amp;quot;)
+m.domains += mydomain
+m.d.mydomain += ... # logic to add in the &amp;quot;mydomain&amp;quot; clock domain.
+&lt;/code>&lt;/pre>&lt;p>You can access a domain within a module by its name. So a domain created via ClockDomain(&amp;ldquo;my clock&amp;rdquo;) is accessed via &lt;code>m.d.myclock&lt;/code> or &lt;code>m.d[&amp;quot;myclk&amp;quot;]&lt;/code>. \&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>ClockSignal(domain=&amp;quot;&amp;lt;domain&amp;gt;&amp;quot;)&lt;/code> gives you the clock signal for the given domain.&lt;/li>
+&lt;li>&lt;code>ResetSignal(domain=&amp;quot;&amp;lt;domain&amp;gt;&amp;quot;)&lt;/code> gives you the reset signal for the given domain.&lt;/li>
+&lt;/ul>
+&lt;h1 id="tips-clock-domains-with-the-same-clock-but-different-edges">Tips: Clock domains with the same clock but different edges.&lt;/h1>
+&lt;p>This can be done simply by creating one &lt;code>clockdomain&lt;/code>&lt;/p>
+&lt;pre>&lt;code>pos = ClockDomain(&amp;quot;pos&amp;quot;)
+neg = ClockDomain(&amp;quot;neg&amp;quot;, clk_edge=&amp;quot;neg&amp;quot;)
+&lt;/code>&lt;/pre>&lt;p>Next, assign them with same clock driven&lt;/p>
+&lt;pre>&lt;code>neg.clk = pos.clk
+neg.rst = pos.rst
+&lt;/code>&lt;/pre>&lt;p>And then you can add these to the module. We can add more than domain to a module with the same statement.&lt;/p>
+&lt;pre>&lt;code>m.domains += [pos, neg]
+&lt;/code>&lt;/pre>&lt;h1 id="access-to-domains">Access to domains&lt;/h1>
+&lt;p>A module can access its domains via its &lt;code>d&lt;/code> attribute. By default, if a synchronous domain is added to a module&amp;rsquo;s &lt;code>domain&lt;/code>, then all modules everywhere will also have access to that domain via their d attribute, even if that module is not a submodule of the module where the domain was added.&lt;/p>
+&lt;pre>&lt;code>m = Module()
+m2 = Module()
+m.domains += ClockDomain(&amp;quot;thing&amp;quot;)
+m.d.thing += # logic
+# This is implicity
+m2.d.thing += #logic
+&lt;/code>&lt;/pre>&lt;p>If you want to explicitly inhibit this global propagation by setting the &lt;code>local&lt;/code> named parameter of the &lt;code>ClockDomain&lt;/code> to &lt;code>True&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>m = Module()
+m2 = Module()
+m.domains += ClockDomain(&amp;quot;thing&amp;quot;, local=True)
+m.d.thing += # logic
+# Error will occur here.
+m2.d.thing += # logic
+&lt;/code>&lt;/pre></description></item><item><title>[Day01] Basic nMigen</title><link>https://waxpple.github.io/posts/day01/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day01/</guid><pubDate>Sat, 10 Jul 2021 10:50:02 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
+&lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
+Thumbs up for his contributions.&lt;/p>
 &lt;pre>&lt;code>from nmigen import *
 from nmigen.build import Platform
 class ThingBlock(Elaboratable):
