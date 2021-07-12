@@ -85,3 +85,31 @@ For synchronous signals(that is, a signal set in a synchronous domain), you can 
 self.x = Signal(signed(16),reset= 0xFFFF, reset_less = True)
 ```
 This is especially useful during simulation or formal verification where you want to activate the reset, but keep some signals "outside" the reset. For example, a cycle counter that maintains its count across resets.
+# Basic operations
+## Statements
+nMigen doesn't convert Python to hardware. In essence, what you are writing using nMigen is a *generator* of logic, not the logic itself. So if you want to assign one `Value` to take the value of another, you don't write `a = b`, but instead you call the method of `a` that generates the equality: `a.eq(b)`. This is known as a *statement*. \
+However, many math operators are overridable in Python, since these translate to calls to Python functions. So for example, you can write `a.eq(b+1)` instead of something like a.eq(b.plus(1)) because Python addition can be overrideen to a function callm and nMigen's Signal class does that for all such operators (`=` is still not overrided).
+## List of directly translatable Python operators
+Operator    | Operation | Notes
+------------|:---------:|------
+`~`         |inversion  | 
+`-`         |arithmetic negation |
+`+`         |addition   |
+`*`         |multiplication|
+`%`         |modulus    |
+`//`        |division   | integer division, rounding down
+`<<`        |shift left | 
+`>>`        |shift right| Effectively arithmetic, see below.
+`&`         |bitwise and|
+`|`         |bitwise or |
+`^`         |bitwise xor|
+`==`        |equality   |
+`!=`        |inequality |
+`>`         |greater than|
+`>=`        |greater than or equal to|
+`<`         |less than  |
+`<=`        |less than equal to|
+> Note that there are no translatable Python logical operators (`and`,`or`). The logical reduction functions `any` and `all` are not avaliable in nMigen expressions. \
+Attemped to convert nMigen value to boolean error will occur.
+
+>Shift right is effectively arithmetic, where the sign bit is present for signed values or zero for unsigned Values.
