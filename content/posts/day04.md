@@ -143,3 +143,63 @@ x = Array([Signal(unsigned(16)), Signal(unsigned(16)), Signal(unsigned(16)) ])
 # Also creates an array of 16-bit signals, taking 
 y = Array([Signal(unsigned(16)) for_ in range(3)])
 ```
+You can even create multidimensional arrays:
+```
+# Creates a 3 by 5 array of 16-bit signals:
+yy = Array([Array[Signal(unsigned(16)) for _ in range(5)] for _ in range(3) ])
+```
+You can index into the array with a constant:
+```
+z = y[2]
+```
+This will result in an "elaborate time" error if the index is out of bounds.
+However, you can also index with another signal:
+```
+i = Signal(unsigned(16))
+z = y[i]
+```
+Of course, during elaboration this will not result in any error. The actual result depends on runtime. It is best to ensure as much as possible that your access is not invalid. One way is to declare the index to only have a valid range.
+```
+y = Array([Signal(unsigned(16)) for _ in range(5)])
+i = Signal.range(5)
+
+z = y[i]
+```
+Of course, there is nothing to prevent `i` from being 5, 6, or 7, since it is a 3-bit signal.
+Another way is to simply deal with invalid values:
+```
+y = Array([Signal(unsigned(16)) for _ in range(5)])
+i = Signal.range(5)
+z = y[i % 4]
+```
+Note here, it will still result in unexpected result.
+In the end, you will have to `formally verify` that i will only contain valid values.
+
+# Records
+A `Record` is a bundle of signals. To define a `Record`, we first must define a `Layout`.
+## Layouts
+```
+from nmigen.hdl.rec import *
+
+class MyLayout(Layout):
+    def __init__(self):
+        super().__init__([
+            (<signal_name>, <shape|layout> [, <direction>]),
+            (<signal_name>, <shape|layout> [, <direction>]),
+        ])
+```
+Here is an example of a bus with 8-bit data, 16-bit address line, and some control signals:
+```
+class BusLayout(Layout):
+    def __init__(self):
+        super().__init__([
+            ("data", unsigned(8)),
+            ("addr", unsigned(16)),
+            ("wr",1),
+            ("en",1),
+        ])
+```
+If your bus is very complex and easy to reuse another bus, you can define a bus by another bus.
+```
+class DataBusLayout(Layout):
+```
