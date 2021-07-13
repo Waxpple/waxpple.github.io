@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 13 Jul 2021 02:45:58 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 13 Jul 2021 03:30:43 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
 &lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
 &lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
 &lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; from nmigen import *
@@ -52,6 +52,48 @@ Therefore, be careful to slice the result&lt;/p>
 &lt;pre>&lt;code>tmp = Signal(unsigned(16))
 m.d.comb += tmp.eq(a+b)
 m.d.comb += z.eq(tmp == 0)
+&lt;/code>&lt;/pre>&lt;p>This becomes especially insidious when combining unsigned and signed signals:&lt;/p>
+&lt;pre>&lt;code>ptr = Signal(unsigned(16))
+addr = Signal(unsigned(16))
+offset = Signal(signed(5))
+m.d.comb += ptr.eq(addr + offset)
+&lt;/code>&lt;/pre>&lt;p>we expect &lt;code>ptr&lt;/code> to be a 16-bit value, since that is what we set it to be. However, what happens here?
+Suppose &lt;code>addr&lt;/code> is 0 and &lt;code>offset&lt;/code> is -1. Will this comparison work? No, sorry my dear. It wouldn&amp;rsquo;t work.
+Consider that &lt;code>adder&lt;/code> range from &lt;code>0x7FFF to 0xFFFF&lt;/code> and &lt;code>offset&lt;/code> range from &lt;code>0x7 to 0xF&lt;/code>, which is max((+32767 ~ -32768) + (+7 ~ -8) )= &lt;code>0x8006&lt;/code>&lt;/p>
+&lt;pre>&lt;code>y = Signal()
+m.d.comb += y.eq((addr + offset) == 0xFFFF )
+&lt;/code>&lt;/pre>&lt;p>So the result of &lt;code>addr+offset&lt;/code> in this is -1, which 2&amp;rsquo;s complement 18-bit is &lt;code>0x3FFFF&lt;/code>. If we slice it, it will be &lt;code>0xFFFF&lt;/code>.&lt;/p>
+&lt;h1 id="concatenating-signals">Concatenating signals&lt;/h1>
+&lt;p>You can create a new signal out of other signals using &lt;code>Cat&lt;/code>:&lt;/p>
+&lt;pre>&lt;code>m.d.comb += x.eq(Cat(a, b, ...))
+&lt;/code>&lt;/pre>&lt;p>This concatenates the given signals &lt;em>first element last&lt;/em> This is important that a in the example above ends up as the least significant bits of x. That is, the concatenation of &lt;code>a&lt;/code> and &lt;code>b&lt;/code> is not &lt;code>ab&lt;/code> but &lt;code>ba&lt;/code>.&lt;br>
+It is now easy to swap the bytes of a 16-bit signal:&lt;/p>
+&lt;pre>&lt;code>m.d.sync += x.eq(Cat(x[8:], x[:8]))
+&lt;/code>&lt;/pre>&lt;p>You can also assign to a &lt;code>Cat&lt;/code>, so swapping the bytes can be accomplished in this way also:&lt;/p>
+&lt;pre>&lt;code>m.d.sync += Cat(x[8:], x[:8]).eq(x)
+&lt;/code>&lt;/pre>&lt;h1 id="replicating-signals">Replicating signals&lt;/h1>
+&lt;p>You can replicate a signal by concatenating it to itself via &lt;code>Cat(x,x)&lt;/code>. But you can also replicate the signal via &lt;code>Repl(x,2)&lt;/code>
+&lt;code>Repl&lt;/code> with &lt;code>Cat&lt;/code> can be used together to, for example, signed-extend a value:&lt;/p>
+&lt;pre>&lt;code>uint16 = Signal(unsigned(16))
+int32 = Signal(signed(32))
+m.d.comb += int32.eq(Cat(uint16, Repl(uint16[15],16)))
+&lt;/code>&lt;/pre>&lt;p>Of course, the same can be done by simply using the right signal types:&lt;/p>
+&lt;pre>&lt;code>uint16 = Signal(unsigned(16))
+int32 = Signal(signed(32))
+m.d.comb += int32.eq(uint16)
+&lt;/code>&lt;/pre>&lt;p>The generated cide will do the right thing.&lt;/p>
+&lt;h1 id="arrays">Arrays&lt;/h1>
+&lt;p>You can create an array of signals like this:&lt;/p>
+&lt;pre>&lt;code># All of these create an array of 3 16-bit elements:
+# Creates an array from a, b, c:
+a = Signal(unsigned(16))
+b = Signal(unsigned(16))
+c = Signal(unsigned(16))
+abc = Array([a, b, c])
+# Creates an array of 16-bit signals:
+x = Array([Signal(unsigned(16)), Signal(unsigned(16)), Signal(unsigned(16)) ])
+# Also creates an array of 16-bit signals, taking
+y = Array([Signal(unsigned(16)) for_ in range(3)])
 &lt;/code>&lt;/pre></description></item><item><title>[Day03] Branching</title><link>https://waxpple.github.io/posts/day03/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day03/</guid><pubDate>Mon, 12 Jul 2021 14:38:07 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
 &lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
 &lt;pre>&lt;code>with m.If(condition1):
