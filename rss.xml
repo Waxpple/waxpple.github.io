@@ -1,4 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 12 Jul 2021 07:28:41 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day03] Branching</title><link>https://waxpple.github.io/posts/day03/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day03/</guid><pubDate>Mon, 12 Jul 2021 14:38:07 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 13 Jul 2021 02:45:58 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
+&lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
+&lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; from nmigen import *
+&amp;gt;&amp;gt;&amp;gt; x = Signal(16)
+&amp;gt;&amp;gt;&amp;gt; x
+(sig x)
+&amp;gt;&amp;gt;&amp;gt; x.shape()
+Shape(width=16, signed=False)
+&amp;gt;&amp;gt;&amp;gt; x[15]
+(slice (sig x) 15:16)
+&amp;gt;&amp;gt;&amp;gt; x[15].shape()
+Shape(width=1, signed=False)
+&lt;/code>&lt;/pre>&lt;p>While &lt;code>x[7:0]&lt;/code> is the way to extract the eight least significant bits in verilog.But in nMigen we use &lt;code>x[0:8]&lt;/code> or &lt;code>x[:8]&lt;/code>. It will be &lt;code>Signal_name[start_bit:bits]&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x[7:0]
+Traceback (most recent call last):
+File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+File &amp;quot;/home/waxapple/.local/lib/python3.8/site-packages/nmigen/hdl/ast.py&amp;quot;, line 238, in __getitem__
+return Slice(self, start, stop)
+File &amp;quot;/home/waxapple/.local/lib/python3.8/site-packages/nmigen/hdl/ast.py&amp;quot;, line 659, in __init__
+raise IndexError(&amp;quot;Slice start {} must be less than slice stop {}&amp;quot;.format(start, stop))
+IndexError: Slice start 7 must be less than slice stop 0
+&amp;gt;&amp;gt;&amp;gt; x[0:8]
+(slice (sig x) 0:8)
+&amp;gt;&amp;gt;&amp;gt; x[0:8].shape()
+Shape(width=8, signed=False)
+&lt;/code>&lt;/pre>&lt;p>Remember that since this is Python, negative indices are offsets from the end, so a way of getting the most significant bit is &lt;code>x[-1]&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x[-1]
+(slice (sig x) 15:16)
+&lt;/code>&lt;/pre>&lt;p>You can use strides: &lt;code>x[0:8:2]&lt;/code> which is &lt;code>signal_name[start_bit:bits:strides]&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x[0:8:2]
+(cat (slice (sig x) 0:1) (slice (sig x) 2:3) (slice (sig x) 4:5) (slice (sig x) 6:7))
+&lt;/code>&lt;/pre>&lt;p>Note that taking bits range selection will always result in unsigned signal.&lt;br>
+You can even assign to a piece of a signal:&lt;/p>
+&lt;pre>&lt;code>m.d.comb += x[:8].eq(y)
+# same as the x[7:0] = {y[7:0]}; in verilog
+&lt;/code>&lt;/pre>&lt;h1 id="tip-using-a-slice-when-comparing">Tip: Using a slice when comparing&lt;/h1>
+&lt;p>In a situation like this:&lt;/p>
+&lt;pre>&lt;code>a = Signal(unsigned(16))
+b = Signal(unsigned(16))
+c = Signal(unsigned(16))
+m.d.comb += c.eq(a+b)
+&lt;/code>&lt;/pre>&lt;p>We expect that if &lt;code>a+b&lt;/code> overflows, &lt;code>c&lt;/code> will just be the lower 16 bits of the result.&lt;/p>
+&lt;pre>&lt;code>a = Signal(unsigned(16))
+b = Signal(unsigned(16))
+z = Signal()
+m.d.comb += z.eq((a+b)== 0)
+&lt;/code>&lt;/pre>&lt;p>However, z will be a 17-bit signal. So a 16-bit overflow is not a 17-bit overflow, and this will result in comparison failure. Such as &lt;code>a = 0xffff&lt;/code> and &lt;code>b = 0x0001&lt;/code>, the addition will be &lt;code>z = 0x10000&lt;/code>, which obviously not zero as we expected.&lt;br>
+Therefore, be careful to slice the result&lt;/p>
+&lt;pre>&lt;code>m.d.comb += z.eq((a+b)[:16] == 0)
+&lt;/code>&lt;/pre>&lt;p>Alternatively, just use an intermediate signal (not recommanded):&lt;/p>
+&lt;pre>&lt;code>tmp = Signal(unsigned(16))
+m.d.comb += tmp.eq(a+b)
+m.d.comb += z.eq(tmp == 0)
+&lt;/code>&lt;/pre></description></item><item><title>[Day03] Branching</title><link>https://waxpple.github.io/posts/day03/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day03/</guid><pubDate>Mon, 12 Jul 2021 14:38:07 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
 &lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
 &lt;pre>&lt;code>with m.If(condition1):
 m.d.comb += statements1
