@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 13 Jul 2021 06:52:38 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 13 Jul 2021 07:52:56 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
 &lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
 &lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
 &lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; from nmigen import *
@@ -135,7 +135,55 @@ super().__init__([
 ])
 &lt;/code>&lt;/pre>&lt;p>If your bus is very complex and easy to reuse another bus, you can define a bus by another bus.&lt;/p>
 &lt;pre>&lt;code>class DataBusLayout(Layout):
-&lt;/code>&lt;/pre></description></item><item><title>[Day03] Branching</title><link>https://waxpple.github.io/posts/day03/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day03/</guid><pubDate>Mon, 12 Jul 2021 14:38:07 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
+def __init__(self):
+super().__init__([
+(&amp;quot;data&amp;quot;,unsigned(8))
+])
+class AddrBusLayout(Layout):
+def __init__(self):
+super().__init__([
+(&amp;quot;addr&amp;quot;,unsigned(16))
+])
+class AllBusLayout(Layout):
+def __init__(self):
+super().__init__([
+(&amp;quot;addr_bus&amp;quot;,AddrBusLayout()),
+(&amp;quot;data_bus&amp;quot;,DataBusLayout()),
+])
+&lt;/code>&lt;/pre>&lt;h2 id="laying-out-a-record-with-a-layout">Laying out a record with a layout&lt;/h2>
+&lt;p>Once a &lt;code>Layout&lt;/code> is defined, you can define a &lt;code>Record&lt;/code> using that &lt;code>Layout&lt;/code>, and use it as a signal:&lt;/p>
+&lt;pre>&lt;code>class Bus(Record):
+def __init__(self):
+super().__init__(BusLayout())
+...
+# Later in a module:
+self.bus = Bus()
+m.d.comb += self.bus.data.eq(0xFF)
+m.d.sync += self.bus.wr.eq(0)
+# Can assign a bus by a bus
+self.bus2 = Bus()
+m.d.comb += self.bus2.eq(self.bus)
+&lt;/code>&lt;/pre>&lt;h1 id="directions-and-connecting-records">Directions and connecting records&lt;/h1>
+&lt;p>It is often advantageous to define signals so that the zero value means either invalid or inactive. That way, you can have many of those signals and logical-or them together. For example, you might have three modules, each of which output a one-bit write signal, but only one module will write at a time. Then if your write signal is active high( zeros means no write), you can simply logical-or the write signal from each module together to get a master write signal.&lt;/p>
+&lt;pre>&lt;code>self.master_record = Bus()
+m.d.comb += self.master_record.connect(bus1, bus2, bus3, ...)
+&lt;/code>&lt;/pre>&lt;p>The &lt;code>connect&lt;/code> method on a record returns an array of statement which logical-ors each signal together.
+The exactly same thing could be accomplished &amp;ldquo;manually&amp;rdquo;.&lt;/p>
+&lt;pre>&lt;code>self.master_record = Bus()
+m.d.comb += self.master_record.eq(bus1 | bus2 | bus3 |...)
+&lt;/code>&lt;/pre>&lt;p>The disadvantage is that &lt;code>connect&lt;/code> can connect &lt;em>parts&lt;/em> of records, if the field names matched. In this sense, the &amp;ldquo;subordinate&amp;rdquo; records must have every signal that the &amp;ldquo;master&amp;rdquo; record has. That is, the &amp;ldquo;subordinate&amp;rdquo; records can have extra signals, but the &amp;ldquo;master&amp;rdquo; record must not.&lt;br>
+Fan-out is where each subordinate record gets a copy of the master record. If the direction of each signal in the layout of record is &lt;code>DIR_FANOUT&lt;/code>, then you can connect several records to a &amp;ldquo;master&amp;rdquo; record like this:&lt;/p>
+&lt;pre>&lt;code>self.master_record = Bus()
+m.d.comb += self.master_record.connect(bus1, bus2, bus3, ...)
+&lt;/code>&lt;/pre>&lt;p>The syntax is exactly the same, but the direction is different, from master record to each subordinate record. Again, you could do this &amp;ldquo;manually&amp;rdquo;:&lt;/p>
+&lt;pre>&lt;code>self.master_record = Bus()
+m.d.comb += [
+bus1.eq(self.master_record),
+bus2.eq(self.master_record),
+bus3.eq(self.master_record),
+...
+]
+&lt;/code>&lt;/pre>&lt;p>But this is longer, and also doesn&amp;rsquo;t handle when the master record has extra signals that not in the subordinate records.&lt;/p></description></item><item><title>[Day03] Branching</title><link>https://waxpple.github.io/posts/day03/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day03/</guid><pubDate>Mon, 12 Jul 2021 14:38:07 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
 &lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
 &lt;pre>&lt;code>with m.If(condition1):
 m.d.comb += statements1
