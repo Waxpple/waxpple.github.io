@@ -78,3 +78,68 @@ tmp = Signal(unsigned(16))
 m.d.comb += tmp.eq(a+b)
 m.d.comb += z.eq(tmp == 0)
 ```
+This becomes especially insidious when combining unsigned and signed signals:
+```
+ptr = Signal(unsigned(16))
+addr = Signal(unsigned(16))
+offset = Signal(signed(5))
+
+m.d.comb += ptr.eq(addr + offset)
+```
+we expect `ptr` to be a 16-bit value, since that is what we set it to be. However, what happens here?
+Suppose `addr` is 0 and `offset` is -1. Will this comparison work? No, sorry my dear. It wouldn't work.
+Consider that `adder` range from `0x7FFF to 0xFFFF` and `offset` range from `0x7 to 0xF`, which is max((+32767 ~ -32768) + (+7 ~ -8) )= `0x8006`
+```
+y = Signal()
+m.d.comb += y.eq((addr + offset) == 0xFFFF )
+```
+So the result of `addr+offset` in this is -1, which 2's complement 18-bit is `0x3FFFF`. If we slice it, it will be `0xFFFF`.
+# Concatenating signals
+You can create a new signal out of other signals using `Cat`:
+```
+m.d.comb += x.eq(Cat(a, b, ...))
+```
+This concatenates the given signals *first element last* This is important that a in the example above ends up as the least significant bits of x. That is, the concatenation of `a` and `b` is not `ab` but `ba`. \
+It is now easy to swap the bytes of a 16-bit signal:
+```
+m.d.sync += x.eq(Cat(x[8:], x[:8]))
+```
+You can also assign to a `Cat`, so swapping the bytes can be accomplished in this way also:
+```
+m.d.sync += Cat(x[8:], x[:8]).eq(x)
+```
+# Replicating signals
+You can replicate a signal by concatenating it to itself via `Cat(x,x)`. But you can also replicate the signal via `Repl(x,2)`
+`Repl` with `Cat` can be used together to, for example, signed-extend a value:
+```
+uint16 = Signal(unsigned(16)) 
+int32 = Signal(signed(32))
+
+m.d.comb += int32.eq(Cat(uint16, Repl(uint16[15],16)))
+```
+Of course, the same can be done by simply using the right signal types:
+```
+uint16 = Signal(unsigned(16)) 
+int32 = Signal(signed(32))
+
+m.d.comb += int32.eq(uint16)
+```
+The generated cide will do the right thing.
+# Arrays
+You can create an array of signals like this:
+```
+# All of these create an array of 3 16-bit elements:
+
+# Creates an array from a, b, c:
+a = Signal(unsigned(16))
+b = Signal(unsigned(16))
+c = Signal(unsigned(16))
+
+abc = Array([a, b, c])
+
+# Creates an array of 16-bit signals:
+x = Array([Signal(unsigned(16)), Signal(unsigned(16)), Signal(unsigned(16)) ])
+
+# Also creates an array of 16-bit signals, taking 
+y = Array([Signal(unsigned(16)) for_ in range(3)])
+```
