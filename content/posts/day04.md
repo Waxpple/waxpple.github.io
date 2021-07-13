@@ -202,4 +202,64 @@ class BusLayout(Layout):
 If your bus is very complex and easy to reuse another bus, you can define a bus by another bus.
 ```
 class DataBusLayout(Layout):
+    def __init__(self):
+        super().__init__([
+            ("data",unsigned(8))
+        ])
+class AddrBusLayout(Layout):
+    def __init__(self):
+        super().__init__([
+            ("addr",unsigned(16))
+        ])
+class AllBusLayout(Layout):
+    def __init__(self):
+        super().__init__([
+            ("addr_bus",AddrBusLayout()),
+            ("data_bus",DataBusLayout()),
+        ])
 ```
+## Laying out a record with a layout
+Once a `Layout` is defined, you can define a `Record` using that `Layout`, and use it as a signal:
+```
+class Bus(Record):
+    def __init__(self):
+        super().__init__(BusLayout())
+...
+# Later in a module:
+    self.bus = Bus()
+    m.d.comb += self.bus.data.eq(0xFF)
+    m.d.sync += self.bus.wr.eq(0)
+# Can assign a bus by a bus
+
+    self.bus2 = Bus()
+    m.d.comb += self.bus2.eq(self.bus)
+```
+# Directions and connecting records
+It is often advantageous to define signals so that the zero value means either invalid or inactive. That way, you can have many of those signals and logical-or them together. For example, you might have three modules, each of which output a one-bit write signal, but only one module will write at a time. Then if your write signal is active high( zeros means no write), you can simply logical-or the write signal from each module together to get a master write signal.
+```
+self.master_record = Bus()
+m.d.comb += self.master_record.connect(bus1, bus2, bus3, ...)
+```
+The `connect` method on a record returns an array of statement which logical-ors each signal together.
+The exactly same thing could be accomplished "manually".
+```
+self.master_record = Bus()
+m.d.comb += self.master_record.eq(bus1 | bus2 | bus3 |...)
+```
+The disadvantage is that `connect` can connect *parts* of records, if the field names matched. In this sense, the "subordinate" records must have every signal that the "master" record has. That is, the "subordinate" records can have extra signals, but the "master" record must not. \
+Fan-out is where each subordinate record gets a copy of the master record. If the direction of each signal in the layout of record is `DIR_FANOUT`, then you can connect several records to a "master" record like this:
+```
+self.master_record = Bus()
+m.d.comb += self.master_record.connect(bus1, bus2, bus3, ...)
+```
+The syntax is exactly the same, but the direction is different, from master record to each subordinate record. Again, you could do this "manually":
+```
+self.master_record = Bus()
+m.d.comb += [
+    bus1.eq(self.master_record),
+    bus2.eq(self.master_record),
+    bus3.eq(self.master_record),
+    ...
+]
+```
+But this is longer, and also doesn't handle when the master record has extra signals that not in the subordinate records.
