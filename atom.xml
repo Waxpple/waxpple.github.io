@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-13T03:30:43+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day04] Bit selection</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day04/"/><id>https://waxpple.github.io/posts/day04/</id><updated>2021-07-13T03:30:37+00:00</updated><published>2021-07-13T09:48:38+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Spliting and combining signals Slicing signals We can get the least significant bit by x[0] or the most significant bit by x[15].
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-13T06:52:38+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day04] Bit selection</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day04/"/><id>https://waxpple.github.io/posts/day04/</id><updated>2021-07-13T06:52:32+00:00</updated><published>2021-07-13T09:48:38+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Spliting and combining signals Slicing signals We can get the least significant bit by x[0] or the most significant bit by x[15].
 &amp;gt;&amp;gt;&amp;gt; from nmigen import * &amp;gt;&amp;gt;&amp;gt; x = Signal(16) &amp;gt;&amp;gt;&amp;gt; x (sig x) &amp;gt;&amp;gt;&amp;gt; x.shape() Shape(width=16, signed=False) &amp;gt;&amp;gt;&amp;gt; x[15] (slice (sig x) 15:16) &amp;gt;&amp;gt;&amp;gt; x[15].</summary><content type="html">&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
 &lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
 &lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
@@ -95,7 +95,48 @@ abc = Array([a, b, c])
 x = Array([Signal(unsigned(16)), Signal(unsigned(16)), Signal(unsigned(16)) ])
 # Also creates an array of 16-bit signals, taking
 y = Array([Signal(unsigned(16)) for_ in range(3)])
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day03] Branching</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day03/"/><id>https://waxpple.github.io/posts/day03/</id><updated>2021-07-13T03:30:37+00:00</updated><published>2021-07-12T14:38:07+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">If-Elif-Else you cannot use the standard python if-elif-else statements to create statements. Instead, using nMigen branching.
+&lt;/code>&lt;/pre>&lt;p>You can even create multidimensional arrays:&lt;/p>
+&lt;pre>&lt;code># Creates a 3 by 5 array of 16-bit signals:
+yy = Array([Array[Signal(unsigned(16)) for _ in range(5)] for _ in range(3) ])
+&lt;/code>&lt;/pre>&lt;p>You can index into the array with a constant:&lt;/p>
+&lt;pre>&lt;code>z = y[2]
+&lt;/code>&lt;/pre>&lt;p>This will result in an &amp;ldquo;elaborate time&amp;rdquo; error if the index is out of bounds.
+However, you can also index with another signal:&lt;/p>
+&lt;pre>&lt;code>i = Signal(unsigned(16))
+z = y[i]
+&lt;/code>&lt;/pre>&lt;p>Of course, during elaboration this will not result in any error. The actual result depends on runtime. It is best to ensure as much as possible that your access is not invalid. One way is to declare the index to only have a valid range.&lt;/p>
+&lt;pre>&lt;code>y = Array([Signal(unsigned(16)) for _ in range(5)])
+i = Signal.range(5)
+z = y[i]
+&lt;/code>&lt;/pre>&lt;p>Of course, there is nothing to prevent &lt;code>i&lt;/code> from being 5, 6, or 7, since it is a 3-bit signal.
+Another way is to simply deal with invalid values:&lt;/p>
+&lt;pre>&lt;code>y = Array([Signal(unsigned(16)) for _ in range(5)])
+i = Signal.range(5)
+z = y[i % 4]
+&lt;/code>&lt;/pre>&lt;p>Note here, it will still result in unexpected result.
+In the end, you will have to &lt;code>formally verify&lt;/code> that i will only contain valid values.&lt;/p>
+&lt;h1 id="records">Records&lt;/h1>
+&lt;p>A &lt;code>Record&lt;/code> is a bundle of signals. To define a &lt;code>Record&lt;/code>, we first must define a &lt;code>Layout&lt;/code>.&lt;/p>
+&lt;h2 id="layouts">Layouts&lt;/h2>
+&lt;pre>&lt;code>from nmigen.hdl.rec import *
+class MyLayout(Layout):
+def __init__(self):
+super().__init__([
+(&amp;lt;signal_name&amp;gt;, &amp;lt;shape|layout&amp;gt; [, &amp;lt;direction&amp;gt;]),
+(&amp;lt;signal_name&amp;gt;, &amp;lt;shape|layout&amp;gt; [, &amp;lt;direction&amp;gt;]),
+])
+&lt;/code>&lt;/pre>&lt;p>Here is an example of a bus with 8-bit data, 16-bit address line, and some control signals:&lt;/p>
+&lt;pre>&lt;code>class BusLayout(Layout):
+def __init__(self):
+super().__init__([
+(&amp;quot;data&amp;quot;, unsigned(8)),
+(&amp;quot;addr&amp;quot;, unsigned(16)),
+(&amp;quot;wr&amp;quot;,1),
+(&amp;quot;en&amp;quot;,1),
+])
+&lt;/code>&lt;/pre>&lt;p>If your bus is very complex and easy to reuse another bus, you can define a bus by another bus.&lt;/p>
+&lt;pre>&lt;code>class DataBusLayout(Layout):
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day03] Branching</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day03/"/><id>https://waxpple.github.io/posts/day03/</id><updated>2021-07-13T06:52:32+00:00</updated><published>2021-07-12T14:38:07+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">If-Elif-Else you cannot use the standard python if-elif-else statements to create statements. Instead, using nMigen branching.
 with m.If(condition1): m.d.comb += statements1 with m.Elif(condition2): m.d.comb += statements2 with m.Else(): m.d.comb += statements3 If you use regular Python if-elif-else, then those will be evaluated during generation of the logic, not the logic itself.</summary><content type="html">&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
 &lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
 &lt;pre>&lt;code>with m.If(condition1):
@@ -145,7 +186,7 @@ statement1
 &lt;pre>&lt;code>with m.Switch(a):
 with m.Case(&amp;quot;11---&amp;quot;,3,b):
 statement1
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-13T03:30:37+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-13T06:52:32+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
 Modules come with two domain built in: a combinational domain and a sequential(synchronous) domain.</summary><content type="html">&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
@@ -352,7 +393,7 @@ Remember that one signal can only be assigned to one domains, otherwise, it will
 &lt;pre>&lt;code># Wrong code
 m.d.comb += x.eq(y+1)
 m.d.sync += x.eq(y+1)
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-13T03:30:37+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-13T06:52:32+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
 from nmigen import * from nmigen.build import Platform class ThingBlock(Elaboratable): def __init__(self): pass def elaborate(self, platform: Platform) -&amp;gt; Module: m = Module() return m Elaborating a module from nmigen.</summary><content type="html">&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
 &lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
 Thumbs up for his contributions.&lt;/p>
@@ -382,7 +423,7 @@ main(m, ports=[sync.clk,sync.rst])
 &lt;/blockquote>
 &lt;ul>
 &lt;li>Choose RTLIL if using yosys.&lt;/li>
-&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-13T03:30:37+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
+&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-13T06:52:32+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
 安裝nMigen pip install git+https://github.com/m-labs/nmigen.git pip install git+https://github.com/m-labs/nmigen-boards.git 安裝之後就可以開始學習如何使用nMigen製作電路</summary><content type="html">&lt;h1 id="第一天接觸nmigen-先來安裝nmigen">第一天接觸nMigen, 先來安裝　nMigen!&lt;/h1>
 &lt;p>&lt;img src="https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a" alt="1">&lt;/p>
 &lt;h1 id="安裝prerequisites">安裝Prerequisites&lt;/h1>

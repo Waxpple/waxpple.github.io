@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 13 Jul 2021 03:30:43 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 13 Jul 2021 06:52:38 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
 &lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
 &lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
 &lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; from nmigen import *
@@ -94,6 +94,47 @@ abc = Array([a, b, c])
 x = Array([Signal(unsigned(16)), Signal(unsigned(16)), Signal(unsigned(16)) ])
 # Also creates an array of 16-bit signals, taking
 y = Array([Signal(unsigned(16)) for_ in range(3)])
+&lt;/code>&lt;/pre>&lt;p>You can even create multidimensional arrays:&lt;/p>
+&lt;pre>&lt;code># Creates a 3 by 5 array of 16-bit signals:
+yy = Array([Array[Signal(unsigned(16)) for _ in range(5)] for _ in range(3) ])
+&lt;/code>&lt;/pre>&lt;p>You can index into the array with a constant:&lt;/p>
+&lt;pre>&lt;code>z = y[2]
+&lt;/code>&lt;/pre>&lt;p>This will result in an &amp;ldquo;elaborate time&amp;rdquo; error if the index is out of bounds.
+However, you can also index with another signal:&lt;/p>
+&lt;pre>&lt;code>i = Signal(unsigned(16))
+z = y[i]
+&lt;/code>&lt;/pre>&lt;p>Of course, during elaboration this will not result in any error. The actual result depends on runtime. It is best to ensure as much as possible that your access is not invalid. One way is to declare the index to only have a valid range.&lt;/p>
+&lt;pre>&lt;code>y = Array([Signal(unsigned(16)) for _ in range(5)])
+i = Signal.range(5)
+z = y[i]
+&lt;/code>&lt;/pre>&lt;p>Of course, there is nothing to prevent &lt;code>i&lt;/code> from being 5, 6, or 7, since it is a 3-bit signal.
+Another way is to simply deal with invalid values:&lt;/p>
+&lt;pre>&lt;code>y = Array([Signal(unsigned(16)) for _ in range(5)])
+i = Signal.range(5)
+z = y[i % 4]
+&lt;/code>&lt;/pre>&lt;p>Note here, it will still result in unexpected result.
+In the end, you will have to &lt;code>formally verify&lt;/code> that i will only contain valid values.&lt;/p>
+&lt;h1 id="records">Records&lt;/h1>
+&lt;p>A &lt;code>Record&lt;/code> is a bundle of signals. To define a &lt;code>Record&lt;/code>, we first must define a &lt;code>Layout&lt;/code>.&lt;/p>
+&lt;h2 id="layouts">Layouts&lt;/h2>
+&lt;pre>&lt;code>from nmigen.hdl.rec import *
+class MyLayout(Layout):
+def __init__(self):
+super().__init__([
+(&amp;lt;signal_name&amp;gt;, &amp;lt;shape|layout&amp;gt; [, &amp;lt;direction&amp;gt;]),
+(&amp;lt;signal_name&amp;gt;, &amp;lt;shape|layout&amp;gt; [, &amp;lt;direction&amp;gt;]),
+])
+&lt;/code>&lt;/pre>&lt;p>Here is an example of a bus with 8-bit data, 16-bit address line, and some control signals:&lt;/p>
+&lt;pre>&lt;code>class BusLayout(Layout):
+def __init__(self):
+super().__init__([
+(&amp;quot;data&amp;quot;, unsigned(8)),
+(&amp;quot;addr&amp;quot;, unsigned(16)),
+(&amp;quot;wr&amp;quot;,1),
+(&amp;quot;en&amp;quot;,1),
+])
+&lt;/code>&lt;/pre>&lt;p>If your bus is very complex and easy to reuse another bus, you can define a bus by another bus.&lt;/p>
+&lt;pre>&lt;code>class DataBusLayout(Layout):
 &lt;/code>&lt;/pre></description></item><item><title>[Day03] Branching</title><link>https://waxpple.github.io/posts/day03/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day03/</guid><pubDate>Mon, 12 Jul 2021 14:38:07 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
 &lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
 &lt;pre>&lt;code>with m.If(condition1):
