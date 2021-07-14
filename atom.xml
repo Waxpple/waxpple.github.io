@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-13T07:54:22+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day04] Bit selection</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day04/"/><id>https://waxpple.github.io/posts/day04/</id><updated>2021-07-13T07:54:16+00:00</updated><published>2021-07-13T09:48:38+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Spliting and combining signals Slicing signals We can get the least significant bit by x[0] or the most significant bit by x[15].
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-14T12:07:27+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day05] Simulations</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day05/"/><id>https://waxpple.github.io/posts/day05/</id><updated>2021-07-14T12:07:20+00:00</updated><published>2021-07-14T15:28:58+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Simulating The best way to simulate a module is through nMigen&amp;rsquo;s Simulator.
+Define you ports Define a ports function in your module which returns an array of your module&amp;rsquo;s ports:
+class YourModule(Elaboratable): ... def ports(self): return [self.youmodule.p1, self.yourmodule.p2, ...] Create a top-level module Create a top-level module for your simulation:</summary><content type="html">&lt;h1 id="simulating">Simulating&lt;/h1>
+&lt;p>The best way to simulate a module is through nMigen&amp;rsquo;s &lt;code>Simulator&lt;/code>.&lt;/p>
+&lt;h2 id="define-you-ports">Define you ports&lt;/h2>
+&lt;p>Define a &lt;code>ports&lt;/code> function in your module which returns an array of your module&amp;rsquo;s ports:&lt;/p>
+&lt;pre>&lt;code>class YourModule(Elaboratable):
+...
+def ports(self):
+return [self.youmodule.p1, self.yourmodule.p2, ...]
+&lt;/code>&lt;/pre>&lt;h2 id="create-a-top-level-module">Create a top-level module&lt;/h2>
+&lt;p>Create a top-level module for your simulation:&lt;/p>
+&lt;pre>&lt;code>from nmigen import *
+from nmigen.back.pysim import Simulator, Delay, Settle
+from somewhere import YourModule
+if __name__ == &amp;quot;__main__&amp;quot;:
+m = Module()
+m.submodules.yourmodule = yourmodule = YourModule()
+sim = Simulator(m)
+def process():
+# To be defined
+sim.add_process(process) # or sim.add_sync_process(process), see below
+with sim.write_vcd(&amp;quot;test.vcd&amp;quot;, &amp;quot;test.gtkw&amp;quot;, traces=yourmodule.ports()):
+sim.run()
+&lt;/code>&lt;/pre>&lt;blockquote>
+&lt;p>There is currently a bug in nMigen where inputs to your module are not output to the trace file. To get around this, for each such input, place this in your &lt;code>main&lt;/code> before the &lt;code>Simulator&lt;/code> construction:&lt;/p>
+&lt;pre>&lt;code>input1 = Signal()
+m.d.comb += yourmodule.input1.eq(input1)
+...
+sim = Simulator(m)
+&lt;/code>&lt;/pre>&lt;p>Inside your &lt;code>process&lt;/code>, refer to this input as &lt;code>input1&lt;/code>, not &lt;code>yourmodule.input1&lt;/code>. This will force nMigen to include &lt;code>input1&lt;/code> in the trace file.&lt;/p>
+&lt;/blockquote></content></entry><entry><title type="text">[Day04] Bit selection</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day04/"/><id>https://waxpple.github.io/posts/day04/</id><updated>2021-07-14T12:07:20+00:00</updated><published>2021-07-13T09:48:38+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Spliting and combining signals Slicing signals We can get the least significant bit by x[0] or the most significant bit by x[15].
 &amp;gt;&amp;gt;&amp;gt; from nmigen import * &amp;gt;&amp;gt;&amp;gt; x = Signal(16) &amp;gt;&amp;gt;&amp;gt; x (sig x) &amp;gt;&amp;gt;&amp;gt; x.shape() Shape(width=16, signed=False) &amp;gt;&amp;gt;&amp;gt; x[15] (slice (sig x) 15:16) &amp;gt;&amp;gt;&amp;gt; x[15].</summary><content type="html">&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
 &lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
 &lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
@@ -166,7 +197,7 @@ self.bus2 = Bus()
 m.d.comb += self.bus2.eq(self.bus)
 &lt;/code>&lt;/pre>&lt;h1 id="directions-and-connecting-records">Directions and connecting records&lt;/h1>
 &lt;p>It is often advantageous to define signals so that the zero value means either invalid or inactive. That way, you can have many of those signals and logical-or them together. For example, you might have three modules, each of which output a one-bit write signal, but only one module will write at a time. Then if your write signal is active high( zeros means no write), you can simply logical-or the write signal from each module together to get a master write signal.
-&lt;img src="https://github.com/Waxpple/waxpple.github.io/blob/main/images/Bus_01.png" alt="1">&lt;/p>
+&lt;img src="https://github.com/Waxpple/waxpple.github.io/blob/main/images/Bus_01.png" alt="2">&lt;/p>
 &lt;pre>&lt;code>self.master_record = Bus()
 m.d.comb += self.master_record.connect(bus1, bus2, bus3, ...)
 &lt;/code>&lt;/pre>&lt;p>The &lt;code>connect&lt;/code> method on a record returns an array of statement which logical-ors each signal together.
@@ -185,7 +216,7 @@ bus2.eq(self.master_record),
 bus3.eq(self.master_record),
 ...
 ]
-&lt;/code>&lt;/pre>&lt;p>But this is longer, and also doesn&amp;rsquo;t handle when the master record has extra signals that not in the subordinate records.&lt;/p></content></entry><entry><title type="text">[Day03] Branching</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day03/"/><id>https://waxpple.github.io/posts/day03/</id><updated>2021-07-13T07:54:16+00:00</updated><published>2021-07-12T14:38:07+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">If-Elif-Else you cannot use the standard python if-elif-else statements to create statements. Instead, using nMigen branching.
+&lt;/code>&lt;/pre>&lt;p>But this is longer, and also doesn&amp;rsquo;t handle when the master record has extra signals that not in the subordinate records.&lt;/p></content></entry><entry><title type="text">[Day03] Branching</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day03/"/><id>https://waxpple.github.io/posts/day03/</id><updated>2021-07-14T12:07:20+00:00</updated><published>2021-07-12T14:38:07+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">If-Elif-Else you cannot use the standard python if-elif-else statements to create statements. Instead, using nMigen branching.
 with m.If(condition1): m.d.comb += statements1 with m.Elif(condition2): m.d.comb += statements2 with m.Else(): m.d.comb += statements3 If you use regular Python if-elif-else, then those will be evaluated during generation of the logic, not the logic itself.</summary><content type="html">&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
 &lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
 &lt;pre>&lt;code>with m.If(condition1):
@@ -235,7 +266,7 @@ statement1
 &lt;pre>&lt;code>with m.Switch(a):
 with m.Case(&amp;quot;11---&amp;quot;,3,b):
 statement1
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-13T07:54:16+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-14T12:07:20+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
 Modules come with two domain built in: a combinational domain and a sequential(synchronous) domain.</summary><content type="html">&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
@@ -442,7 +473,7 @@ Remember that one signal can only be assigned to one domains, otherwise, it will
 &lt;pre>&lt;code># Wrong code
 m.d.comb += x.eq(y+1)
 m.d.sync += x.eq(y+1)
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-13T07:54:16+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-14T12:07:20+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
 from nmigen import * from nmigen.build import Platform class ThingBlock(Elaboratable): def __init__(self): pass def elaborate(self, platform: Platform) -&amp;gt; Module: m = Module() return m Elaborating a module from nmigen.</summary><content type="html">&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
 &lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
 Thumbs up for his contributions.&lt;/p>
@@ -472,7 +503,7 @@ main(m, ports=[sync.clk,sync.rst])
 &lt;/blockquote>
 &lt;ul>
 &lt;li>Choose RTLIL if using yosys.&lt;/li>
-&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-13T07:54:16+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
+&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-14T12:07:20+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
 安裝nMigen pip install git+https://github.com/m-labs/nmigen.git pip install git+https://github.com/m-labs/nmigen-boards.git 安裝之後就可以開始學習如何使用nMigen製作電路</summary><content type="html">&lt;h1 id="第一天接觸nmigen-先來安裝nmigen">第一天接觸nMigen, 先來安裝　nMigen!&lt;/h1>
 &lt;p>&lt;img src="https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a" alt="1">&lt;/p>
 &lt;h1 id="安裝prerequisites">安裝Prerequisites&lt;/h1>
