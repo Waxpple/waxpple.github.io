@@ -236,7 +236,7 @@ class Bus(Record):
 ```
 # Directions and connecting records
 It is often advantageous to define signals so that the zero value means either invalid or inactive. That way, you can have many of those signals and logical-or them together. For example, you might have three modules, each of which output a one-bit write signal, but only one module will write at a time. Then if your write signal is active high( zeros means no write), you can simply logical-or the write signal from each module together to get a master write signal.
-![1](https://github.com/Waxpple/waxpple.github.io/blob/main/images/Bus_01.png)
+![2](https://github.com/Waxpple/waxpple.github.io/blob/main/images/Bus_01.png)
 ```
 self.master_record = Bus()
 m.d.comb += self.master_record.connect(bus1, bus2, bus3, ...)
