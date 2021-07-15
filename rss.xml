@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Wed, 14 Jul 2021 12:07:27 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day05] Simulations</title><link>https://waxpple.github.io/posts/day05/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day05/</guid><pubDate>Wed, 14 Jul 2021 15:28:58 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="simulating">Simulating&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 15 Jul 2021 08:33:14 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day05] Simulations</title><link>https://waxpple.github.io/posts/day05/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day05/</guid><pubDate>Wed, 14 Jul 2021 15:28:58 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="simulating">Simulating&lt;/h1>
 &lt;p>The best way to simulate a module is through nMigen&amp;rsquo;s &lt;code>Simulator&lt;/code>.&lt;/p>
 &lt;h2 id="define-you-ports">Define you ports&lt;/h2>
 &lt;p>Define a &lt;code>ports&lt;/code> function in your module which returns an array of your module&amp;rsquo;s ports:&lt;/p>
@@ -27,7 +27,59 @@ m.d.comb += yourmodule.input1.eq(input1)
 ...
 sim = Simulator(m)
 &lt;/code>&lt;/pre>&lt;p>Inside your &lt;code>process&lt;/code>, refer to this input as &lt;code>input1&lt;/code>, not &lt;code>yourmodule.input1&lt;/code>. This will force nMigen to include &lt;code>input1&lt;/code> in the trace file.&lt;/p>
-&lt;/blockquote></description></item><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
+&lt;/blockquote>
+&lt;h2 id="define-your-clocks-if-any">Define your clocks, if any&lt;/h2>
+&lt;p>If you have clocks, add each clock after the &lt;code>Simulator&lt;/code> constrction, giving the clock period in seconds. For example, a 100MHz clock for clock domain &lt;code>fast_clock&lt;/code> and a nearly 166MHz clock for &lt;code>faster clock&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>...
+sim = Simulator()
+sim.add_clock(1e-8,domain=&amp;quot;fast_clock&amp;quot;)
+sim.add_clock(6e-9,domain=&amp;quot;faster_clock&amp;quot;)
+&lt;/code>&lt;/pre>&lt;p>Leaving out &lt;code>domain&lt;/code> will cause the clock period to be assigned to the default clock domain, &lt;code>sync&lt;/code>.&lt;/p>
+&lt;h2 id="the-process-function">The process function&lt;/h2>
+&lt;p>The &lt;code>process&lt;/code> function is a Python generator that nMigen calls to see what to do next in the simulation. Since it is a generator, process must &lt;code>yield&lt;/code> a statement to perform. For example:&lt;/p>
+&lt;pre>&lt;code>def process():
+yield x.eq(0)
+yield y.eq(0xFF)
+&lt;/code>&lt;/pre>&lt;p>The above would set &lt;code>x&lt;/code> to 0 and &lt;code>y&lt;/code> to 0xFF, with effectively no delay between them.
+You can yield nMigen &lt;code>Value&lt;/code>, which you can then use to do various comparisons.&lt;/p>
+&lt;pre>&lt;code>def process():
+yield x.eq(0)
+yield Delay(1e-8) # delay 10 nano seconds
+yie y.eq(0xFF)
+yield Settle() # force all combinational computation to happen.
+got = yield yourmodule.sum
+want = yield (x+y)[:8]
+if got != want:
+print(f&amp;quot;Error, result={got:02x},golden={want:02x})
+&lt;/code>&lt;/pre>&lt;p>In the above example, &lt;code>x&lt;/code> will be set to 0, then there will be 10 ns delay, then &lt;code>y&lt;/code> will be set to 0xFF, all combinational logic will be given a chance to settle, and finally &lt;code>yourmodule.sum&lt;/code> and &lt;code>(x+y)[:8]&lt;/code> will be evaluated, and if they are not equal, a diagnostic message is sent to the terminal output.&lt;/p>
+&lt;p>You can even have more that one process running parallel.&lt;/p>
+&lt;pre>&lt;code>def x_process():
+yield Delay(1e-6)
+yield x.eq(0)
+yield Settle()
+def y_process():
+yield Delay(1.2e-6)
+yield y.eq(0xFF)
+yield Settle()
+sim.add_process(x_process)
+sim.add_process(y_process)
+&lt;/code>&lt;/pre>&lt;p>In the above example, &lt;code>x&lt;/code> will be set to 0 at time 1 us, and &lt;code>y&lt;/code> will be set to 0xFF at time 1.2 us.&lt;/p>
+&lt;p>&lt;strong>Warning&lt;/strong>: driving the same signal from more than one process can lead to undefined behavior if both processes assign to the signal simultaneously.&lt;/p>
+&lt;h2 id="non-synchronous-processes">Non-synchronous processes&lt;/h2>
+&lt;p>If you want to specify exactly when signals change based on time, then you can create a non-synchronous &lt;code>process&lt;/code>. You must add such a process to the simulator via &lt;code>add_process&lt;/code>:&lt;/p>
+&lt;pre>&lt;code>sim.add_process(process)
+&lt;/code>&lt;/pre>&lt;h2 id="synchronous-process">Synchronous process&lt;/h2>
+&lt;p>If you want to specify when signals change base on clock edges, then you can create a synchronous &lt;code>process&lt;/code>. You can add such a process to the simulator via &lt;code>add_sync_process&lt;/code>, specifying the clock domain it should be clocked from:&lt;/p>
+&lt;pre>&lt;code>sim.add_sync_process(process1, domain= &amp;quot;name1&amp;quot;)
+sim.add_sync_process(process2, domain= &amp;quot;name2&amp;quot;)
+&lt;/code>&lt;/pre>&lt;p>If you &lt;code>yield&lt;/code> with no value from a synchronous process, then the process will wait for the next clock edge. Note that for synchronous processes, one clock edge will occur before the process starts, so take that into account when you look at your traces.
+It is also important to understand when statements are executed in relation to clock edges. They are always executed infinitesimally after the previous clock edge. Thus, in this example.&lt;/p>
+&lt;pre>&lt;code>def process():
+yield x.eq(0)
+yield
+yield x.eq(1)
+yield
+&lt;/code>&lt;/pre></description></item><item><title>[Day04] Bit selection</title><link>https://waxpple.github.io/posts/day04/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day04/</guid><pubDate>Tue, 13 Jul 2021 09:48:38 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
 &lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
 &lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
 &lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; from nmigen import *
