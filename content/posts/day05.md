@@ -41,3 +41,71 @@ if __name__ == "__main__":
 >sim = Simulator(m)
 >```
 >Inside your `process`, refer to this input as `input1`, not `yourmodule.input1`. This will force nMigen to include `input1` in the trace file.
+## Define your clocks, if any
+If you have clocks, add each clock after the `Simulator` constrction, giving the clock period in seconds. For example, a 100MHz clock for clock domain `fast_clock` and a nearly 166MHz clock for `faster clock`.
+```
+...
+sim = Simulator()
+sim.add_clock(1e-8,domain="fast_clock")
+sim.add_clock(6e-9,domain="faster_clock")
+```
+Leaving out `domain` will cause the clock period to be assigned to the default clock domain, `sync`.
+## The process function
+The `process` function is a Python generator that nMigen calls to see what to do next in the simulation. Since it is a generator, process must `yield` a statement to perform. For example:
+```
+def process():
+    yield x.eq(0)
+    yield y.eq(0xFF)
+```
+The above would set `x` to 0 and `y` to 0xFF, with effectively no delay between them.
+You can yield nMigen `Value`, which you can then use to do various comparisons.
+```
+def process():
+    yield x.eq(0)
+    yield Delay(1e-8) # delay 10 nano seconds
+    yie y.eq(0xFF)
+    yield Settle() # force all combinational computation to happen.
+    got = yield yourmodule.sum
+    want = yield (x+y)[:8]
+    if got != want:
+        print(f"Error, result={got:02x},golden={want:02x})
+```
+In the above example, `x` will be set to 0, then there will be 10 ns delay, then `y` will be set to 0xFF, all combinational logic will be given a chance to settle, and finally `yourmodule.sum` and `(x+y)[:8]` will be evaluated, and if they are not equal, a diagnostic message is sent to the terminal output.
+
+You can even have more that one process running parallel.
+```
+def x_process():
+    yield Delay(1e-6)
+    yield x.eq(0)
+    yield Settle()
+def y_process():
+    yield Delay(1.2e-6)
+    yield y.eq(0xFF)
+    yield Settle()
+sim.add_process(x_process)
+sim.add_process(y_process)
+```
+In the above example, `x` will be set to 0 at time 1 us, and `y` will be set to 0xFF at time 1.2 us.
+
+**Warning**: driving the same signal from more than one process can lead to undefined behavior if both processes assign to the signal simultaneously.
+
+## Non-synchronous processes
+If you want to specify exactly when signals change based on time, then you can create a non-synchronous `process`. You must add such a process to the simulator via `add_process`:
+```
+sim.add_process(process)
+```
+## Synchronous process
+If you want to specify when signals change base on clock edges, then you can create a synchronous `process`. You can add such a process to the simulator via `add_sync_process`, specifying the clock domain it should be clocked from:
+```
+sim.add_sync_process(process1, domain= "name1")
+sim.add_sync_process(process2, domain= "name2")
+```
+If you `yield` with no value from a synchronous process, then the process will wait for the next clock edge. Note that for synchronous processes, one clock edge will occur before the process starts, so take that into account when you look at your traces.
+It is also important to understand when statements are executed in relation to clock edges. They are always executed infinitesimally after the previous clock edge. Thus, in this example.
+```
+def process():
+    yield x.eq(0)
+    yield 
+    yield x.eq(1)
+    yield
+    
