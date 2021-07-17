@@ -104,8 +104,11 @@ If you `yield` with no value from a synchronous process, then the process will w
 It is also important to understand when statements are executed in relation to clock edges. They are always executed infinitesimally after the previous clock edge. Thus, in this example.
 ```
 def process():
-    yield x.eq(0)
-    yield 
-    yield x.eq(1)
-    yield
-    
+    yield x.eq(0)   #step1
+    yield           #step2
+    yield x.eq(1)   #step3
+    yield           #step4
+```
+There will be one clock edge that always takes place before the process runs. Then `x` is set to 0 (step 1). Then another clock edge happens(step 2). `x` is set to 1 infinitesimally after that clock edge (step 3). Then another clock signals that appear to change coincident with a clock edge actuvally change just after that clock edge. Outputs that change like that can be consider to have been "driven" by the clock edge.
+## Passive and active processes
+Processed may be passive or active. When an active process
