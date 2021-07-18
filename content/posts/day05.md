@@ -111,4 +111,25 @@ def process():
 ```
 There will be one clock edge that always takes place before the process runs. Then `x` is set to 0 (step 1). Then another clock edge happens(step 2). `x` is set to 1 infinitesimally after that clock edge (step 3). Then another clock signals that appear to change coincident with a clock edge actuvally change just after that clock edge. Outputs that change like that can be consider to have been "driven" by the clock edge.
 ## Passive and active processes
-Processed may be passive or active. When an active process
+Processed may be passive or active. When an active process runs out of things to tell the simulator to do, it asks the simulator to finish. In effect, it controls the endpoint of the simulator. The simulation ends when all active processes are done. A *passive* process, on the other hand, doesn't ask the simulator to finish.
+
+By default, processes added with `add_process` and `add_sync_process` are active. A process can change its mode using `yield Active()` or `yield Passive()`.
+
+## Ending the simulation
+As mentioned above, the simulation ends when all active processes are done. This is how `sim.run()` works.
+
+However, you can instead use `sim.run_until()`, which lets you end the simulation at a particular time. The `run_passive` key is `False` by default, meaning that the simulation will also end if all active processes are done. This behavior can be changed by setting `run_passive` to `True`, in which case the simulation will only end once the specified time is reached. For example, the following will run the simulation for 100 microseconds and then stop, regardless of whether the active processes are done.
+```
+with sim.write_vcd("test.vcd", "test.gtkw", traces=yourmodule.ports()):
+    sim.run_until(100e-6, run_passive=True)
+```
+## Running the simulation and viewing the output
+The simulation is run simply by running the main module:
+```
+python3 main_module.py
+```
+The output should be a `test.vcd` file and a `test.gtkw` file. Running `gtkwave` will allow you to view the output. Running it on `test.vcd` will make you select the signals you want to see when `gtkwave` opens, while running it on `test.gtkw` will open `gtkwave` showing the signals in the `traces` key that you you gave in the call to `sim.write_vcd()`.
+```
+gtkwave test.vcd
+gtkwave test.gtkw
+```
