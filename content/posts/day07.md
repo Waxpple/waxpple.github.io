@@ -16,3 +16,4 @@ Devices supported as of 18 JUL 2021:
 |Xilinx Spartan 3A|Xilinx | ISE|
 |Xilinx Spartan 6|Xilinx | ISE|
 |Xilinx 7-series (Arty, Spartan, Kintex, Virtex)|Xilinx|Vivado|
+|Xilinx UltraScale|XilinxUltraScalePlatform|Vivado|
