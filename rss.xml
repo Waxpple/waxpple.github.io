@@ -1,4 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sun, 18 Jul 2021 03:07:53 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day05] Simulations</title><link>https://waxpple.github.io/posts/day05/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day05/</guid><pubDate>Wed, 14 Jul 2021 15:28:58 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="simulating">Simulating&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sun, 18 Jul 2021 03:21:56 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day06] Formal_verification</title><link>https://waxpple.github.io/posts/day06/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day06/</guid><pubDate>Sun, 18 Jul 2021 09:50:15 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="assert-assume-and-cover-for-fun-and-profit">Assert, Assume, and Cover for fun and profit.&lt;/h1>
+&lt;pre>&lt;code>from nmigen.asserts import Assert, Assume, Cover
+from nmigen.cli import main_parser, main_runner
+from somewhere import Adder
+if __name__ == &amp;quot;__main__&amp;quot;:
+parser = main_parser()
+args = parser.parse_args()
+m = Module()
+m.submodules.adder = adder = Adder()
+m.d.comb += Assert(adder.out == (adder.x + adder.y)[:8])
+with m.If(adder.x == (adder.y &amp;lt;&amp;lt; 1)):
+m.d.comb += Cover((adder.out &amp;gt; 0x00) &amp;amp; (adder.out &amp;lt; 0x40))
+main_runner(parser, args, m, ports=[] + adder.ports())
+&lt;/code>&lt;/pre>&lt;h1 id="past-rose-fell-stable">Past, Rose, Fell, Stable&lt;/h1>
+&lt;pre>&lt;code>from nmigen.asserts import Assert, Assume, Cover
+from nmigen.asserts import Past, Rose, Fell, Stable
+&lt;/code>&lt;/pre>&lt;h1 id="not-ready-yet">Not ready yet.&lt;/h1></description></item><item><title>[Day05] Simulations</title><link>https://waxpple.github.io/posts/day05/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day05/</guid><pubDate>Wed, 14 Jul 2021 15:28:58 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="simulating">Simulating&lt;/h1>
 &lt;p>The best way to simulate a module is through nMigen&amp;rsquo;s &lt;code>Simulator&lt;/code>.&lt;/p>
 &lt;h2 id="define-you-ports">Define you ports&lt;/h2>
 &lt;p>Define a &lt;code>ports&lt;/code> function in your module which returns an array of your module&amp;rsquo;s ports:&lt;/p>
