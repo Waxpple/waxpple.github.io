@@ -1,7 +1,7 @@
 ---
 title: "[Day07] Synthesis"
 date: 2021-07-18T11:20:21+08:00
-draft: true
+draft: false
 ---
 # Supported devices
 See the [vendor directory] (https://github.com/m-labs/nmigen/tree/master/nmigen/vendor) for supported devices and toolchain details.
