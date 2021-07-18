@@ -1,4 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sun, 18 Jul 2021 04:39:00 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day06] Formal_verification</title><link>https://waxpple.github.io/posts/day06/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day06/</guid><pubDate>Sun, 18 Jul 2021 09:50:15 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="assert-assume-and-cover-for-fun-and-profit">Assert, Assume, and Cover for fun and profit.&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sun, 18 Jul 2021 04:46:09 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day07] Synthesis</title><link>https://waxpple.github.io/posts/day07/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day07/</guid><pubDate>Sun, 18 Jul 2021 11:20:21 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="supported-devices">Supported devices&lt;/h1>
+&lt;p>See the [vendor directory] (&lt;a href="https://github.com/m-labs/nmigen/tree/master/nmigen/vendor">https://github.com/m-labs/nmigen/tree/master/nmigen/vendor&lt;/a>) for supported devices and toolchain details.&lt;/p>
+&lt;p>Devices supported as of 18 JUL 2021:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Device&lt;/th>
+&lt;th>Platform&lt;/th>
+&lt;th>Toolchain required&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Lattice iCE40&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yosys+nextpnr, LSE-iCECube2, Synplify-iCECube2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Lattice MachXO2&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Diamond&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Lattice ECP5&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>Yosys+nextpnr, Diamond&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Xilinx Spartan 3A&lt;/td>
+&lt;td>Xilinx&lt;/td>
+&lt;td>ISE&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Xilinx Spartan 6&lt;/td>
+&lt;td>Xilinx&lt;/td>
+&lt;td>ISE&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Xilinx 7-series (Arty, Spartan, Kintex, Virtex)&lt;/td>
+&lt;td>Xilinx&lt;/td>
+&lt;td>Vivado&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Xilinx UltraScale&lt;/td>
+&lt;td>XilinxUltraScalePlatform&lt;/td>
+&lt;td>Vivado&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Intel&lt;/td>
+&lt;td>IntelPlatform&lt;/td>
+&lt;td>Quartus&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h1 id="defining-your-board">Defining your board&lt;/h1>
+&lt;p>Many boards are defined for you at &lt;a href="https://github.com/m-labs/nmigen-boards/tree/master/nmigen_boards">nmigen_boards&lt;/a>.&lt;/p>
+&lt;p>You can copy one from there and modify it to suit you needs, or create a new class subclassed from one of the above supported device platform classes.
+For example, I am using &lt;a href="https://github.com/m-labs/nmigen-boards/blob/master/nmigen_boards/kc705.py">Xilinx-KC705&lt;/a> for my development.&lt;/p>
+&lt;h2 id="class-properties">Class properties&lt;/h2>
+&lt;ul>
+&lt;li>&lt;code>device&lt;/code>: a string. See the base platform class for which one to choose. This affects options passed to the toolchain so that it compiles for the correct chip.&lt;/li>
+&lt;li>&lt;code>package&lt;/code>: a string. See the base platform class for which one to choose. This affects options passed to the toolchain so that it compiles for the correct package of the chip.&lt;/li>
+&lt;li>&lt;code>resources&lt;/code>: a list of &lt;code>Resource&lt;/code>. This names the pins you want to use, and configuration options for each such pin.&lt;/li>
+&lt;li>&lt;code>default_clk&lt;/code>: the name of the resource that is the clock for the default clock domain.&lt;/li>
+&lt;/ul></description></item><item><title>[Day06] Formal_verification</title><link>https://waxpple.github.io/posts/day06/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day06/</guid><pubDate>Sun, 18 Jul 2021 09:50:15 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="assert-assume-and-cover-for-fun-and-profit">Assert, Assume, and Cover for fun and profit.&lt;/h1>
 &lt;pre>&lt;code>from nmigen.asserts import Assert, Assume, Cover
 from nmigen.cli import main_parser, main_runner
 from somewhere import Adder
