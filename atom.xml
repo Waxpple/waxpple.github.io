@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-18T04:46:09+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day07] Synthesis</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day07/"/><id>https://waxpple.github.io/posts/day07/</id><updated>2021-07-18T04:46:05+00:00</updated><published>2021-07-18T11:20:21+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Supported devices See the [vendor directory] (https://github.com/m-labs/nmigen/tree/master/nmigen/vendor) for supported devices and toolchain details.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-21T07:17:49+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day07] Synthesis</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day07/"/><id>https://waxpple.github.io/posts/day07/</id><updated>2021-07-21T07:17:42+00:00</updated><published>2021-07-18T11:20:21+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Supported devices See the [vendor directory] (https://github.com/m-labs/nmigen/tree/master/nmigen/vendor) for supported devices and toolchain details.
 Devices supported as of 18 JUL 2021:
 Device Platform Toolchain required Lattice iCE40 Yosys+nextpnr, LSE-iCECube2, Synplify-iCECube2 Lattice MachXO2 Diamond Lattice ECP5 Yosys+nextpnr, Diamond Xilinx Spartan 3A Xilinx ISE Xilinx Spartan 6 Xilinx ISE Xilinx 7-series (Arty, Spartan, Kintex, Virtex) Xilinx Vivado Xilinx UltraScale XilinxUltraScalePlatform Vivado Intel IntelPlatform Quartus Defining your board Many boards are defined for you at nmigen_boards.</summary><content type="html">&lt;h1 id="supported-devices">Supported devices&lt;/h1>
 &lt;p>See the [vendor directory] (&lt;a href="https://github.com/m-labs/nmigen/tree/master/nmigen/vendor">https://github.com/m-labs/nmigen/tree/master/nmigen/vendor&lt;/a>) for supported devices and toolchain details.&lt;/p>
@@ -64,7 +64,278 @@ For example, I am using &lt;a href="https://github.com/m-labs/nmigen-boards/blob
 &lt;li>&lt;code>package&lt;/code>: a string. See the base platform class for which one to choose. This affects options passed to the toolchain so that it compiles for the correct package of the chip.&lt;/li>
 &lt;li>&lt;code>resources&lt;/code>: a list of &lt;code>Resource&lt;/code>. This names the pins you want to use, and configuration options for each such pin.&lt;/li>
 &lt;li>&lt;code>default_clk&lt;/code>: the name of the resource that is the clock for the default clock domain.&lt;/li>
-&lt;/ul></content></entry><entry><title type="text">[Day06] Formal_verification</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day06/"/><id>https://waxpple.github.io/posts/day06/</id><updated>2021-07-18T04:46:05+00:00</updated><published>2021-07-18T09:50:15+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Assert, Assume, and Cover for fun and profit. from nmigen.asserts import Assert, Assume, Cover from nmigen.cli import main_parser, main_runner from somewhere import Adder if __name__ == &amp;quot;__main__&amp;quot;: parser = main_parser() args = parser.parse_args() m = Module() m.submodules.adder = adder = Adder() m.d.comb += Assert(adder.</summary><content type="html">&lt;h1 id="assert-assume-and-cover-for-fun-and-profit">Assert, Assume, and Cover for fun and profit.&lt;/h1>
+&lt;li>&lt;code>default_rst&lt;/code>: the name of the resource that is the reset for the default clock domain.&lt;/li>
+&lt;li>&lt;code>connectors&lt;/code>: optional, a list of &lt;code>Connector&lt;/code>. It isn&amp;rsquo;t obvious what purpose this serves. It may have something to do with certain toolchains.&lt;/li>
+&lt;/ul>
+&lt;h2 id="resources">Resources&lt;/h2>
+&lt;p>A &lt;code>Resource&lt;/code> is a structure that contains a name, a number, and one or more configuration items for the resource. Adding a &lt;code>Resource&lt;/code> to a board does two things:&lt;/p>
+&lt;ul>
+&lt;li>configures pin on the device&lt;/li>
+&lt;li>allows you to request a resource&amp;rsquo;s &lt;code>pin&lt;/code> by name from the platform in your &lt;code>elaborate&lt;/code> function.Such a &lt;code>pin&lt;/code> has several &lt;code>signal&lt;/code> associated with it, such as &lt;code>i&lt;/code> for input and &lt;code>o&lt;/code> for output, which you can then use in your module.&lt;/li>
+&lt;/ul>
+&lt;p>For example, by including this &lt;code>Resource&lt;/code> into the platform&amp;rsquo;s &lt;code>resource&lt;/code> list:&lt;/p>
+&lt;pre>&lt;code>Resource(&amp;quot;abc&amp;quot;, 0, Pins(&amp;quot;J3&amp;quot;, dir=&amp;quot;i&amp;quot;))
+&lt;/code>&lt;/pre>&lt;p>Then pin &lt;code>J3&lt;/code> on the device will be configured as an input, and you can request the &lt;code>abc&lt;/code> resource&amp;rsquo;s input &lt;code>Signal&lt;/code> like this&lt;/p>
+&lt;pre>&lt;code>platform.request(&amp;quot;abc&amp;quot;).i
+&lt;/code>&lt;/pre>&lt;h2 id="resource-configuration-items">Resource configuration items&lt;/h2>
+&lt;ul>
+&lt;li>&lt;code>Pins&lt;/code>: specifies the space-separated pin names associated with resource, their direction type, and whether the signal should be automativally inverted when crossing the pin(for, e.g., active low signals). Direction types are:&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;ul>
+&lt;li>&lt;code>i&lt;/code>: input only. Signal for the pin is &lt;code>.i&lt;/code>&lt;/li>
+&lt;li>&lt;code>o&lt;/code>: output only. Signal for the pin is &lt;code>.o&lt;/code>&lt;/li>
+&lt;li>&lt;code>io&lt;/code>: bidirectional. Signals for the pin are &lt;code>.o&lt;/code> for the output, and &lt;code>.oe&lt;/code> is the direction for the pin: 0 for input, 1 for output.&lt;/li>
+&lt;li>&lt;code>oe&lt;/code>: tristate. Signals for the pin &lt;code>.o&lt;/code> for the output, and &lt;code>.oe&lt;/code> to enable output: 0 for disable, 1 for enable.&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>&lt;code>PinsN&lt;/code>: shorthand for &lt;code>Pins&lt;/code>, where all pins are active low.&lt;/li>
+&lt;li>&lt;code>DiffPairs&lt;/code>: specifies the space-separated pin names for one or more differential pairs (positive and negative pins)&lt;/li>
+&lt;li>&lt;code>Clock&lt;/code>: specifies that the resource is a clock with the given frequency in Hz.&lt;/li>
+&lt;li>&lt;code>Attrs&lt;/code>: platform-specific attributes such as voltage standard to select.&lt;/li>
+&lt;/ul>
+&lt;p>A full resource specification for a clock pin used on a Lattice ICE40 board could be as follows:&lt;/p>
+&lt;pre>&lt;code>Resource(&amp;quot;clk&amp;quot;, 0, Pins(&amp;quot;J3&amp;quot;,dir=&amp;quot;i&amp;quot;), Clock(12e6),Attrs(GLOBAL=True, IO_STANDARD=&amp;quot;SB_LVCMOS&amp;quot;))
+&lt;/code>&lt;/pre>&lt;p>This example says that the &lt;code>clk&lt;/code> resource is at pin &lt;code>J3&lt;/code> on the FPGA. &lt;code>J3&lt;/code> is defined by vender of your FPGA. For example, KC705 pin map can be found at &lt;a href="https://www.xilinx.com/support/documentation/boards_and_kits/kc705/ug810_KC705_Eval_Bd.pdf">here&lt;/a>. &lt;code>clk&lt;/code> has a frequency of 12MHz, is a &amp;ldquo;global&amp;rdquo; signal, and uses the LVCMOS voltage standard. Without knowing about the toolchain for the platform, you will not know what attributes are required.&lt;/p>
+&lt;h2 id="example-for-the-xilinx-kc705">Example for the Xilinx-KC705.&lt;/h2>
+&lt;pre>&lt;code>import os
+import subprocess
+from nmigen.build import *
+from nmigen.vendor.xilinx_7series import *
+from .resources import *
+__all__ = [&amp;quot;KC705Platform&amp;quot;]
+class KC705Platform(Xilinx7SeriesPlatform):
+device = &amp;quot;xc7k325t&amp;quot;
+package = &amp;quot;ffg900&amp;quot;
+speed = &amp;quot;2&amp;quot;
+default_clk = &amp;quot;clk156&amp;quot;
+resources = [
+Resource(&amp;quot;clk156&amp;quot;, 0, DiffPairs(&amp;quot;K28&amp;quot;, &amp;quot;K29&amp;quot;, dir=&amp;quot;i&amp;quot;),
+Clock(156e6), Attrs(IOSTANDARD=&amp;quot;LVDS_25&amp;quot;)),
+*LEDResources(pins=&amp;quot;AB8 AA8 AC9 AB9 AE26 G19 E18 F16&amp;quot;,
+attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS15&amp;quot;)),
+UARTResource(0,
+rx=&amp;quot;M19&amp;quot;, tx=&amp;quot;K24&amp;quot;,
+attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)
+),
+]
+connectors = []
+def toolchain_program(self, products, name):
+openocd = os.environ.get(&amp;quot;OPENOCD&amp;quot;, &amp;quot;openocd&amp;quot;)
+with products.extract(&amp;quot;{}.bit&amp;quot;.format(name)) as bitstream_filename:
+subprocess.check_call([openocd,
+&amp;quot;-c&amp;quot;, &amp;quot;source [find board/kc705.cfg]; init; pld load 0 {}; exit&amp;quot;
+.format(bitstream_filename)
+])
+if __name__ == &amp;quot;__main__&amp;quot;:
+from .test.blinky import *
+KC705Platform().build(Blinky(), do_program=True)
+&lt;/code>&lt;/pre>&lt;p>You can see that it is not well define yet. Let&amp;rsquo;s take a look into arty-a7 board.&lt;/p>
+&lt;pre>&lt;code>import os
+import subprocess
+from nmigen.build import *
+from nmigen.vendor.xilinx_7series import *
+from .resources import *
+__all__ = [&amp;quot;ArtyA7Platform&amp;quot;]
+class ArtyA7Platform(Xilinx7SeriesPlatform):
+device = &amp;quot;xc7a35ti&amp;quot;
+package = &amp;quot;csg324&amp;quot;
+speed = &amp;quot;1L&amp;quot;
+default_clk = &amp;quot;clk100&amp;quot;
+resources = [
+Resource(&amp;quot;clk100&amp;quot;, 0, Pins(&amp;quot;E3&amp;quot;, dir=&amp;quot;i&amp;quot;),
+Clock(100e6), Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+*LEDResources(pins=&amp;quot;H5 J5 T9 T10&amp;quot;, attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+RGBLEDResource(0, r=&amp;quot;G6&amp;quot;, g=&amp;quot;F6&amp;quot;, b=&amp;quot;E1&amp;quot;, attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+RGBLEDResource(1, r=&amp;quot;G3&amp;quot;, g=&amp;quot;J4&amp;quot;, b=&amp;quot;G4&amp;quot;, attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+RGBLEDResource(2, r=&amp;quot;J3&amp;quot;, g=&amp;quot;J2&amp;quot;, b=&amp;quot;H4&amp;quot;, attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+RGBLEDResource(3, r=&amp;quot;K1&amp;quot;, g=&amp;quot;H6&amp;quot;, b=&amp;quot;K2&amp;quot;, attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+*ButtonResources(pins=&amp;quot;D9 C9 B9 B8 &amp;quot;, attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+*SwitchResources(pins=&amp;quot;A8 C11 C10 A10&amp;quot;, attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+UARTResource(0,
+rx=&amp;quot;A9&amp;quot;, tx=&amp;quot;D10&amp;quot;,
+attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)
+),
+Resource(&amp;quot;cpu_reset&amp;quot;, 0, Pins(&amp;quot;C2&amp;quot;, dir=&amp;quot;o&amp;quot;), Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+SPIResource(0,
+cs=&amp;quot;C1&amp;quot;, clk=&amp;quot;F1&amp;quot;, mosi=&amp;quot;H1&amp;quot;, miso=&amp;quot;G1&amp;quot;,
+attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)
+),
+Resource(&amp;quot;i2c&amp;quot;, 0,
+Subsignal(&amp;quot;scl&amp;quot;, Pins(&amp;quot;L18&amp;quot;, dir=&amp;quot;io&amp;quot;)),
+Subsignal(&amp;quot;sda&amp;quot;, Pins(&amp;quot;M18&amp;quot;, dir=&amp;quot;io&amp;quot;)),
+Subsignal(&amp;quot;scl_pullup&amp;quot;, Pins(&amp;quot;A14&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;sda_pullup&amp;quot;, Pins(&amp;quot;A13&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)
+),
+*SPIFlashResources(0,
+cs=&amp;quot;L13&amp;quot;, clk=&amp;quot;L16&amp;quot;, mosi=&amp;quot;K17&amp;quot;, miso=&amp;quot;K18&amp;quot;, wp=&amp;quot;L14&amp;quot;, hold=&amp;quot;M14&amp;quot;,
+attrs=Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)
+),
+Resource(&amp;quot;ddr3&amp;quot;, 0,
+Subsignal(&amp;quot;rst&amp;quot;, PinsN(&amp;quot;K6&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;clk&amp;quot;, DiffPairs(&amp;quot;U9&amp;quot;, &amp;quot;V9&amp;quot;, dir=&amp;quot;o&amp;quot;), Attrs(IOSTANDARD=&amp;quot;DIFF_SSTL135&amp;quot;)),
+Subsignal(&amp;quot;clk_en&amp;quot;, Pins(&amp;quot;N5&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;cs&amp;quot;, PinsN(&amp;quot;U8&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;we&amp;quot;, PinsN(&amp;quot;P5&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;ras&amp;quot;, PinsN(&amp;quot;P3&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;cas&amp;quot;, PinsN(&amp;quot;M4&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;a&amp;quot;, Pins(&amp;quot;R2 M6 N4 T1 N6 R7 V6 U7 R8 V7 R6 U6 T6 T8&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;ba&amp;quot;, Pins(&amp;quot;R1 P4 P2&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;dqs&amp;quot;, DiffPairs(&amp;quot;N2 U2&amp;quot;, &amp;quot;N1 V2&amp;quot;, dir=&amp;quot;io&amp;quot;),
+Attrs(IOSTANDARD=&amp;quot;DIFF_SSTL135&amp;quot;)),
+Subsignal(&amp;quot;dq&amp;quot;, Pins(&amp;quot;K5 L3 K3 L6 M3 M1 L4 M2 V4 T5 U4 V5 V1 T3 U3 R3&amp;quot;, dir=&amp;quot;io&amp;quot;),
+Attrs(IN_TERM=&amp;quot;UNTUNED_SPLIT_40&amp;quot;)),
+Subsignal(&amp;quot;dm&amp;quot;, Pins(&amp;quot;L1 U1&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;odt&amp;quot;, Pins(&amp;quot;R5&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Attrs(IOSTANDARD=&amp;quot;SSTL135&amp;quot;, SLEW=&amp;quot;FAST&amp;quot;),
+),
+Resource(&amp;quot;eth_clk25&amp;quot;, 0, Pins(&amp;quot;G18&amp;quot;, dir=&amp;quot;o&amp;quot;),
+Clock(25e6), Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+Resource(&amp;quot;eth_clk50&amp;quot;, 0, Pins(&amp;quot;G18&amp;quot;, dir=&amp;quot;o&amp;quot;),
+Clock(50e6), Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)),
+Resource(&amp;quot;eth_mii&amp;quot;, 0,
+Subsignal(&amp;quot;rst&amp;quot;, PinsN(&amp;quot;C16&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;mdio&amp;quot;, Pins(&amp;quot;K13&amp;quot;, dir=&amp;quot;io&amp;quot;)),
+Subsignal(&amp;quot;mdc&amp;quot;, Pins(&amp;quot;F16&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;tx_clk&amp;quot;, Pins(&amp;quot;H16&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Subsignal(&amp;quot;tx_en&amp;quot;, Pins(&amp;quot;H15&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;tx_data&amp;quot;, Pins(&amp;quot;H14 J14 J13 H17&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;rx_clk&amp;quot;, Pins(&amp;quot;F15&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Subsignal(&amp;quot;rx_dv&amp;quot;, Pins(&amp;quot;G16&amp;quot;, dir=&amp;quot;i&amp;quot;), Attrs(PULLDOWN=&amp;quot;TRUE&amp;quot;)), # strap to select MII
+Subsignal(&amp;quot;rx_er&amp;quot;, Pins(&amp;quot;C17&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Subsignal(&amp;quot;rx_data&amp;quot;, Pins(&amp;quot;D18 E17 E18 G17&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Subsignal(&amp;quot;col&amp;quot;, Pins(&amp;quot;D17&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Subsignal(&amp;quot;crs&amp;quot;, Pins(&amp;quot;G14&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)
+),
+Resource(&amp;quot;eth_rmii&amp;quot;, 0,
+Subsignal(&amp;quot;rst&amp;quot;, PinsN(&amp;quot;C16&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;mdio&amp;quot;, Pins(&amp;quot;K13&amp;quot;, dir=&amp;quot;io&amp;quot;)),
+Subsignal(&amp;quot;mdc&amp;quot;, Pins(&amp;quot;F16&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;tx_en&amp;quot;, Pins(&amp;quot;H15&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;tx_data&amp;quot;, Pins(&amp;quot;H14 J14&amp;quot;, dir=&amp;quot;o&amp;quot;)),
+Subsignal(&amp;quot;rx_crs_dv&amp;quot;, Pins(&amp;quot;G14&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Subsignal(&amp;quot;rx_dv&amp;quot;, Pins(&amp;quot;G16&amp;quot;, dir=&amp;quot;i&amp;quot;), Attrs(PULLUP=&amp;quot;TRUE&amp;quot;)), # strap to select RMII
+Subsignal(&amp;quot;rx_er&amp;quot;, Pins(&amp;quot;C17&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Subsignal(&amp;quot;rx_data&amp;quot;, Pins(&amp;quot;D18 E17&amp;quot;, dir=&amp;quot;i&amp;quot;)),
+Attrs(IOSTANDARD=&amp;quot;LVCMOS33&amp;quot;)
+)
+]
+connectors = [
+Connector(&amp;quot;pmod&amp;quot;, 0, &amp;quot;G13 B11 A11 D12 - - D13 B18 A18 K16 - -&amp;quot;), # JA
+Connector(&amp;quot;pmod&amp;quot;, 1, &amp;quot;E15 E16 D15 C15 - - J17 J18 K15 J15 - -&amp;quot;), # JB
+Connector(&amp;quot;pmod&amp;quot;, 2, &amp;quot;U12 V12 V10 V11 - - U14 V14 T13 U13 - -&amp;quot;), # JC
+Connector(&amp;quot;pmod&amp;quot;, 3, &amp;quot; D4 D3 F4 F3 - - E2 D2 H2 G2 - -&amp;quot;), # JD
+Connector(&amp;quot;ck_io&amp;quot;, 0, {
+# Outer Digital Header
+&amp;quot;io0&amp;quot;: &amp;quot;V15&amp;quot;,
+&amp;quot;io1&amp;quot;: &amp;quot;U16&amp;quot;,
+&amp;quot;io2&amp;quot;: &amp;quot;P14&amp;quot;,
+&amp;quot;io3&amp;quot;: &amp;quot;T11&amp;quot;,
+&amp;quot;io4&amp;quot;: &amp;quot;R12&amp;quot;,
+&amp;quot;io5&amp;quot;: &amp;quot;T14&amp;quot;,
+&amp;quot;io6&amp;quot;: &amp;quot;T15&amp;quot;,
+&amp;quot;io7&amp;quot;: &amp;quot;T16&amp;quot;,
+&amp;quot;io8&amp;quot;: &amp;quot;N15&amp;quot;,
+&amp;quot;io9&amp;quot;: &amp;quot;M16&amp;quot;,
+&amp;quot;io10&amp;quot;: &amp;quot;V17&amp;quot;,
+&amp;quot;io11&amp;quot;: &amp;quot;U18&amp;quot;,
+&amp;quot;io12&amp;quot;: &amp;quot;R17&amp;quot;,
+&amp;quot;io13&amp;quot;: &amp;quot;P17&amp;quot;,
+# Inner Digital Header
+&amp;quot;io26&amp;quot;: &amp;quot;U11&amp;quot;,
+&amp;quot;io27&amp;quot;: &amp;quot;V16&amp;quot;,
+&amp;quot;io28&amp;quot;: &amp;quot;M13&amp;quot;,
+&amp;quot;io29&amp;quot;: &amp;quot;R10&amp;quot;,
+&amp;quot;io30&amp;quot;: &amp;quot;R11&amp;quot;,
+&amp;quot;io31&amp;quot;: &amp;quot;R13&amp;quot;,
+&amp;quot;io32&amp;quot;: &amp;quot;R15&amp;quot;,
+&amp;quot;io33&amp;quot;: &amp;quot;P15&amp;quot;,
+&amp;quot;io34&amp;quot;: &amp;quot;R16&amp;quot;,
+&amp;quot;io35&amp;quot;: &amp;quot;N16&amp;quot;,
+&amp;quot;io36&amp;quot;: &amp;quot;N14&amp;quot;,
+&amp;quot;io37&amp;quot;: &amp;quot;U17&amp;quot;,
+&amp;quot;io38&amp;quot;: &amp;quot;T18&amp;quot;,
+&amp;quot;io39&amp;quot;: &amp;quot;R18&amp;quot;,
+&amp;quot;io40&amp;quot;: &amp;quot;P18&amp;quot;,
+&amp;quot;io41&amp;quot;: &amp;quot;N17&amp;quot;,
+# Outer Analog Header as Digital IO
+&amp;quot;a0&amp;quot;: &amp;quot;F5&amp;quot;,
+&amp;quot;a1&amp;quot;: &amp;quot;D8&amp;quot;,
+&amp;quot;a2&amp;quot;: &amp;quot;C7&amp;quot;,
+&amp;quot;a3&amp;quot;: &amp;quot;E7&amp;quot;,
+&amp;quot;a4&amp;quot;: &amp;quot;D7&amp;quot;,
+&amp;quot;a5&amp;quot;: &amp;quot;D5&amp;quot;,
+# Inner Analog Header as Digital IO
+&amp;quot;io20&amp;quot;: &amp;quot;B7&amp;quot;,
+&amp;quot;io21&amp;quot;: &amp;quot;B6&amp;quot;,
+&amp;quot;io22&amp;quot;: &amp;quot;E6&amp;quot;,
+&amp;quot;io23&amp;quot;: &amp;quot;E5&amp;quot;,
+&amp;quot;io24&amp;quot;: &amp;quot;A4&amp;quot;,
+&amp;quot;io25&amp;quot;: &amp;quot;A3&amp;quot;
+}),
+Connector(&amp;quot;xadc&amp;quot;, 0, {
+# Outer Analog Header
+&amp;quot;vaux4_n&amp;quot;: &amp;quot;C5&amp;quot;,
+&amp;quot;vaux4_p&amp;quot;: &amp;quot;C6&amp;quot;,
+&amp;quot;vaux5_n&amp;quot;: &amp;quot;A5&amp;quot;,
+&amp;quot;vaux5_p&amp;quot;: &amp;quot;A6&amp;quot;,
+&amp;quot;vaux6_n&amp;quot;: &amp;quot;B4&amp;quot;,
+&amp;quot;vaux6_p&amp;quot;: &amp;quot;C4&amp;quot;,
+&amp;quot;vaux7_n&amp;quot;: &amp;quot;A1&amp;quot;,
+&amp;quot;vaux7_p&amp;quot;: &amp;quot;B1&amp;quot;,
+&amp;quot;vaux15_n&amp;quot;: &amp;quot;B2&amp;quot;,
+&amp;quot;vaux15_p&amp;quot;: &amp;quot;B3&amp;quot;,
+&amp;quot;vaux0_n&amp;quot;: &amp;quot;C14&amp;quot;,
+&amp;quot;vaux0_p&amp;quot;: &amp;quot;D14&amp;quot;,
+# Inner Analog Header
+&amp;quot;vaux12_n&amp;quot;: &amp;quot;B7&amp;quot;,
+&amp;quot;vaux12_p&amp;quot;: &amp;quot;B6&amp;quot;,
+&amp;quot;vaux13_n&amp;quot;: &amp;quot;E6&amp;quot;,
+&amp;quot;vaux13_p&amp;quot;: &amp;quot;E5&amp;quot;,
+&amp;quot;vaux14_n&amp;quot;: &amp;quot;A4&amp;quot;,
+&amp;quot;vaux14_p&amp;quot;: &amp;quot;A3&amp;quot;,
+# Power Measurements
+&amp;quot;vsnsuv_n&amp;quot;: &amp;quot;B17&amp;quot;,
+&amp;quot;vsnsuv_p&amp;quot;: &amp;quot;B16&amp;quot;,
+&amp;quot;vsns5v0_n&amp;quot;: &amp;quot;B12&amp;quot;,
+&amp;quot;vsns5v0_p&amp;quot;: &amp;quot;C12&amp;quot;,
+&amp;quot;isns5v0_n&amp;quot;: &amp;quot;F14&amp;quot;,
+&amp;quot;isns5v0_n&amp;quot;: &amp;quot;F13&amp;quot;,
+&amp;quot;isns0v95_n&amp;quot;: &amp;quot;A16&amp;quot;,
+&amp;quot;isns0v95_n&amp;quot;: &amp;quot;A15&amp;quot;,
+})
+]
+def toolchain_prepare(self, fragment, name, **kwargs):
+overrides = {
+&amp;quot;script_before_bitstream&amp;quot;:
+&amp;quot;set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]&amp;quot;,
+&amp;quot;script_after_bitstream&amp;quot;:
+&amp;quot;write_cfgmem -force -format bin -interface spix4 -size 16 &amp;quot;
+&amp;quot;-loadbit \&amp;quot;up 0x0 {name}.bit\&amp;quot; -file {name}.bin&amp;quot;.format(name=name),
+&amp;quot;add_constraints&amp;quot;:
+&amp;quot;set_property INTERNAL_VREF 0.675 [get_iobanks 34]&amp;quot;
+}
+return super().toolchain_prepare(fragment, name, **overrides, **kwargs)
+def toolchain_program(self, products, name):
+xc3sprog = os.environ.get(&amp;quot;XC3SPROG&amp;quot;, &amp;quot;xc3sprog&amp;quot;)
+with products.extract(&amp;quot;{}.bit&amp;quot;.format(name)) as bitstream_filename:
+subprocess.run([xc3sprog, &amp;quot;-c&amp;quot;, &amp;quot;nexys4&amp;quot;, bitstream_filename], check=True)
+if __name__ == &amp;quot;__main__&amp;quot;:
+from .test.blinky import *
+ArtyA7Platform().build(Blinky(), do_program=True)
+{&amp;quot;mode&amp;quot;:&amp;quot;full&amp;quot;,&amp;quot;isActive&amp;quot;:false}
+&lt;/code>&lt;/pre>&lt;h1 id="building">Building&lt;/h1>
+&lt;pre>&lt;code>python3 file.py
+&lt;/code>&lt;/pre>&lt;p>This will result in a directory, &lt;code>build&lt;/code>, containing the output files:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>top.il&lt;/code>: The ilang output for yosys.&lt;/li>
+&lt;li>&lt;code>top.bin&lt;/code>: The bitstream to send to the device (e.g. via iceprog)&lt;/li>
+&lt;li>&lt;code>top.rpt&lt;/code>: Statistics from nextpnr. The most useful is the cell and LUT&lt;/li>
+&lt;li>&lt;code>top.tim&lt;/code>: Timing analysis. Shows how fast you can go. Probably.&lt;/li>
+&lt;/ul></content></entry><entry><title type="text">[Day06] Formal_verification</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day06/"/><id>https://waxpple.github.io/posts/day06/</id><updated>2021-07-21T07:17:42+00:00</updated><published>2021-07-18T09:50:15+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Assert, Assume, and Cover for fun and profit. from nmigen.asserts import Assert, Assume, Cover from nmigen.cli import main_parser, main_runner from somewhere import Adder if __name__ == &amp;quot;__main__&amp;quot;: parser = main_parser() args = parser.parse_args() m = Module() m.submodules.adder = adder = Adder() m.d.comb += Assert(adder.</summary><content type="html">&lt;h1 id="assert-assume-and-cover-for-fun-and-profit">Assert, Assume, and Cover for fun and profit.&lt;/h1>
 &lt;pre>&lt;code>from nmigen.asserts import Assert, Assume, Cover
 from nmigen.cli import main_parser, main_runner
 from somewhere import Adder
@@ -80,7 +351,7 @@ main_runner(parser, args, m, ports=[] + adder.ports())
 &lt;/code>&lt;/pre>&lt;h1 id="past-rose-fell-stable">Past, Rose, Fell, Stable&lt;/h1>
 &lt;pre>&lt;code>from nmigen.asserts import Assert, Assume, Cover
 from nmigen.asserts import Past, Rose, Fell, Stable
-&lt;/code>&lt;/pre>&lt;h1 id="not-ready-yet">Not ready yet.&lt;/h1></content></entry><entry><title type="text">[Day05] Simulations</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day05/"/><id>https://waxpple.github.io/posts/day05/</id><updated>2021-07-18T04:46:05+00:00</updated><published>2021-07-14T15:28:58+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Simulating The best way to simulate a module is through nMigen&amp;rsquo;s Simulator.
+&lt;/code>&lt;/pre>&lt;h1 id="not-ready-yet">Not ready yet.&lt;/h1></content></entry><entry><title type="text">[Day05] Simulations</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day05/"/><id>https://waxpple.github.io/posts/day05/</id><updated>2021-07-21T07:17:42+00:00</updated><published>2021-07-14T15:28:58+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Simulating The best way to simulate a module is through nMigen&amp;rsquo;s Simulator.
 Define you ports Define a ports function in your module which returns an array of your module&amp;rsquo;s ports:
 class YourModule(Elaboratable): ... def ports(self): return [self.youmodule.p1, self.yourmodule.p2, ...] Create a top-level module Create a top-level module for your simulation:</summary><content type="html">&lt;h1 id="simulating">Simulating&lt;/h1>
 &lt;p>The best way to simulate a module is through nMigen&amp;rsquo;s &lt;code>Simulator&lt;/code>.&lt;/p>
@@ -178,7 +449,7 @@ sim.run_until(100e-6, run_passive=True)
 &lt;/code>&lt;/pre>&lt;p>The output should be a &lt;code>test.vcd&lt;/code> file and a &lt;code>test.gtkw&lt;/code> file. Running &lt;code>gtkwave&lt;/code> will allow you to view the output. Running it on &lt;code>test.vcd&lt;/code> will make you select the signals you want to see when &lt;code>gtkwave&lt;/code> opens, while running it on &lt;code>test.gtkw&lt;/code> will open &lt;code>gtkwave&lt;/code> showing the signals in the &lt;code>traces&lt;/code> key that you you gave in the call to &lt;code>sim.write_vcd()&lt;/code>.&lt;/p>
 &lt;pre>&lt;code>gtkwave test.vcd
 gtkwave test.gtkw
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day04] Bit selection</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day04/"/><id>https://waxpple.github.io/posts/day04/</id><updated>2021-07-18T04:46:05+00:00</updated><published>2021-07-13T09:48:38+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Spliting and combining signals Slicing signals We can get the least significant bit by x[0] or the most significant bit by x[15].
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day04] Bit selection</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day04/"/><id>https://waxpple.github.io/posts/day04/</id><updated>2021-07-21T07:17:42+00:00</updated><published>2021-07-13T09:48:38+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Spliting and combining signals Slicing signals We can get the least significant bit by x[0] or the most significant bit by x[15].
 &amp;gt;&amp;gt;&amp;gt; from nmigen import * &amp;gt;&amp;gt;&amp;gt; x = Signal(16) &amp;gt;&amp;gt;&amp;gt; x (sig x) &amp;gt;&amp;gt;&amp;gt; x.shape() Shape(width=16, signed=False) &amp;gt;&amp;gt;&amp;gt; x[15] (slice (sig x) 15:16) &amp;gt;&amp;gt;&amp;gt; x[15].</summary><content type="html">&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
 &lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
 &lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
@@ -365,7 +636,7 @@ bus2.eq(self.master_record),
 bus3.eq(self.master_record),
 ...
 ]
-&lt;/code>&lt;/pre>&lt;p>But this is longer, and also doesn&amp;rsquo;t handle when the master record has extra signals that not in the subordinate records.&lt;/p></content></entry><entry><title type="text">[Day03] Branching</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day03/"/><id>https://waxpple.github.io/posts/day03/</id><updated>2021-07-18T04:46:05+00:00</updated><published>2021-07-12T14:38:07+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">If-Elif-Else you cannot use the standard python if-elif-else statements to create statements. Instead, using nMigen branching.
+&lt;/code>&lt;/pre>&lt;p>But this is longer, and also doesn&amp;rsquo;t handle when the master record has extra signals that not in the subordinate records.&lt;/p></content></entry><entry><title type="text">[Day03] Branching</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day03/"/><id>https://waxpple.github.io/posts/day03/</id><updated>2021-07-21T07:17:42+00:00</updated><published>2021-07-12T14:38:07+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">If-Elif-Else you cannot use the standard python if-elif-else statements to create statements. Instead, using nMigen branching.
 with m.If(condition1): m.d.comb += statements1 with m.Elif(condition2): m.d.comb += statements2 with m.Else(): m.d.comb += statements3 If you use regular Python if-elif-else, then those will be evaluated during generation of the logic, not the logic itself.</summary><content type="html">&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
 &lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
 &lt;pre>&lt;code>with m.If(condition1):
@@ -415,7 +686,7 @@ statement1
 &lt;pre>&lt;code>with m.Switch(a):
 with m.Case(&amp;quot;11---&amp;quot;,3,b):
 statement1
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-18T04:46:05+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-21T07:17:42+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
 Modules come with two domain built in: a combinational domain and a sequential(synchronous) domain.</summary><content type="html">&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
@@ -622,7 +893,7 @@ Remember that one signal can only be assigned to one domains, otherwise, it will
 &lt;pre>&lt;code># Wrong code
 m.d.comb += x.eq(y+1)
 m.d.sync += x.eq(y+1)
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-18T04:46:05+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-21T07:17:42+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
 from nmigen import * from nmigen.build import Platform class ThingBlock(Elaboratable): def __init__(self): pass def elaborate(self, platform: Platform) -&amp;gt; Module: m = Module() return m Elaborating a module from nmigen.</summary><content type="html">&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
 &lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
 Thumbs up for his contributions.&lt;/p>
@@ -652,7 +923,7 @@ main(m, ports=[sync.clk,sync.rst])
 &lt;/blockquote>
 &lt;ul>
 &lt;li>Choose RTLIL if using yosys.&lt;/li>
-&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-18T04:46:05+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
+&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-21T07:17:42+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
 安裝nMigen pip install git+https://github.com/m-labs/nmigen.git pip install git+https://github.com/m-labs/nmigen-boards.git 安裝之後就可以開始學習如何使用nMigen製作電路</summary><content type="html">&lt;h1 id="第一天接觸nmigen-先來安裝nmigen">第一天接觸nMigen, 先來安裝　nMigen!&lt;/h1>
 &lt;p>&lt;img src="https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a" alt="1">&lt;/p>
 &lt;h1 id="安裝prerequisites">安裝Prerequisites&lt;/h1>
