@@ -1,4 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-22T07:14:53+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day08] First fight with nMigen on simply a adder!</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day08/"/><id>https://waxpple.github.io/posts/day08/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-22T15:04:50+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html"/><content type="html">&lt;p>&lt;img src="https://i.imgur.com/CT8hlQR.png" alt="Imgur">&lt;/p></content></entry><entry><title type="text">[Day07] Synthesis</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day07/"/><id>https://waxpple.github.io/posts/day07/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-18T11:20:21+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Supported devices See the [vendor directory] (https://github.com/m-labs/nmigen/tree/master/nmigen/vendor) for supported devices and toolchain details.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><title type="text">Waxapple Code Segment</title><subtitle type="html">Risc V daliy base.</subtitle><updated>2021-07-22T07:24:51+00:00</updated><id>https://waxpple.github.io/</id><link rel="alternate" type="text/html" href="https://waxpple.github.io/"/><link rel="self" type="application/atom+xml" href="https://waxpple.github.io/atom.xml"/><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><generator uri="https://gohugo.io/" version="0.81.0">Hugo</generator><entry><title type="text">[Day08] First fight with nMigen on simply a adder!</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day08/"/><id>https://waxpple.github.io/posts/day08/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-22T15:04:50+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Prerequisites If you would like to perform simulation with GTKwave, a opensource free waveform viewer. Download the software here(https://sourceforge.net/projects/gtkwave/) and put it under C:/gtkwave. Go to the windows path setting and add it under the $path variable.
+The main function We create a simple 8-bit adder</summary><content type="html">&lt;h1 id="prerequisites">Prerequisites&lt;/h1>
+&lt;p>If you would like to perform simulation with GTKwave, a opensource free waveform viewer.
+Download the software here(&lt;a href="https://sourceforge.net/projects/gtkwave/">https://sourceforge.net/projects/gtkwave/&lt;/a>)
+and put it under C:/gtkwave.
+Go to the windows path setting and add it under the $path variable.&lt;/p>
+&lt;h1 id="the-main-function">The main function&lt;/h1>
+&lt;p>We create a simple 8-bit adder&lt;/p>
+&lt;pre>&lt;code>from typing import List
+from nmigen import Elaboratable, Module, Signal
+from nmigen.back.pysim import Simulator, Delay
+from nmigen.build import Platform
+from nmigen.cli import main_parser, main_runner
+class Adder(Elaboratable):
+def __init__(self):
+self.x = Signal(8)
+self.y = Signal(8)
+self.out = Signal(8)
+def elaborate(self, paltform: Platform) -&amp;gt; Module:
+m = Module()
+m.d.comb += self.out.eq(self.x + self.y)
+return m
+def ports(self) -&amp;gt; List[Signal]:
+return [self.x, self.y, self.out]
+if __name__ == &amp;quot;__main__&amp;quot;:
+parser = main_parser()
+args = parser.parse_args()
+m = Module()
+m.submodules.adder = adder = Adder()
+# main_runner(parser, args, m, ports=[] + adder.ports())
+x = Signal(8)
+y = Signal(8)
+m.d.comb += adder.x.eq(x)
+m.d.comb += adder.y.eq(y)
+sim = Simulator(m)
+def process():
+yield x.eq(0x00)
+yield y.eq(0x00)
+yield Delay(1e-6)
+yield x.eq(0xFF)
+yield y.eq(0xFF)
+yield Delay(1e-6)
+yield x.eq(0x00)
+yield Delay(1e-6)
+sim.add_process(process)
+with sim.write_vcd(&amp;quot;test.vcd&amp;quot;, &amp;quot;test.gtkw&amp;quot;, traces=[x, y] + adder.ports()):
+sim.run()
+print(&amp;quot;end of code&amp;quot;)
+&lt;/code>&lt;/pre>&lt;h1 id="run-the-simulation">Run the simulation&lt;/h1>
+&lt;pre>&lt;code>python3 adder.py
+&lt;/code>&lt;/pre>&lt;p>Remember to type &lt;strong>python3&lt;/strong>!&lt;/p>
+&lt;h1 id="get-the-simulation-waveform-from-gtkwave">Get the simulation waveform from GTKwave&lt;/h1>
+&lt;p>After firing simulator, it will generate a file call &lt;code>test.vcd&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>gtkwave.exe test.vcd &amp;amp;
+&lt;/code>&lt;/pre>&lt;p>The GTKwave will pop up and click adder on the left. Select the signals and right click &amp;gt; recurse import &amp;gt; append.
+&lt;img src="https://i.imgur.com/CT8hlQR.png" alt="Imgur">&lt;/p></content></entry><entry><title type="text">[Day07] Synthesis</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day07/"/><id>https://waxpple.github.io/posts/day07/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-18T11:20:21+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Supported devices See the [vendor directory] (https://github.com/m-labs/nmigen/tree/master/nmigen/vendor) for supported devices and toolchain details.
 Devices supported as of 18 JUL 2021:
 Device Platform Toolchain required Lattice iCE40 Yosys+nextpnr, LSE-iCECube2, Synplify-iCECube2 Lattice MachXO2 Diamond Lattice ECP5 Yosys+nextpnr, Diamond Xilinx Spartan 3A Xilinx ISE Xilinx Spartan 6 Xilinx ISE Xilinx 7-series (Arty, Spartan, Kintex, Virtex) Xilinx Vivado Xilinx UltraScale XilinxUltraScalePlatform Vivado Intel IntelPlatform Quartus Defining your board Many boards are defined for you at nmigen_boards.</summary><content type="html">&lt;h1 id="supported-devices">Supported devices&lt;/h1>
 &lt;p>See the [vendor directory] (&lt;a href="https://github.com/m-labs/nmigen/tree/master/nmigen/vendor">https://github.com/m-labs/nmigen/tree/master/nmigen/vendor&lt;/a>) for supported devices and toolchain details.&lt;/p>
@@ -335,7 +390,7 @@ ArtyA7Platform().build(Blinky(), do_program=True)
 &lt;li>&lt;code>top.bin&lt;/code>: The bitstream to send to the device (e.g. via iceprog)&lt;/li>
 &lt;li>&lt;code>top.rpt&lt;/code>: Statistics from nextpnr. The most useful is the cell and LUT&lt;/li>
 &lt;li>&lt;code>top.tim&lt;/code>: Timing analysis. Shows how fast you can go. Probably.&lt;/li>
-&lt;/ul></content></entry><entry><title type="text">[Day06] Formal_verification</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day06/"/><id>https://waxpple.github.io/posts/day06/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-18T09:50:15+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Assert, Assume, and Cover for fun and profit. from nmigen.asserts import Assert, Assume, Cover from nmigen.cli import main_parser, main_runner from somewhere import Adder if __name__ == &amp;quot;__main__&amp;quot;: parser = main_parser() args = parser.parse_args() m = Module() m.submodules.adder = adder = Adder() m.d.comb += Assert(adder.</summary><content type="html">&lt;h1 id="assert-assume-and-cover-for-fun-and-profit">Assert, Assume, and Cover for fun and profit.&lt;/h1>
+&lt;/ul></content></entry><entry><title type="text">[Day06] Formal_verification</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day06/"/><id>https://waxpple.github.io/posts/day06/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-18T09:50:15+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Assert, Assume, and Cover for fun and profit. from nmigen.asserts import Assert, Assume, Cover from nmigen.cli import main_parser, main_runner from somewhere import Adder if __name__ == &amp;quot;__main__&amp;quot;: parser = main_parser() args = parser.parse_args() m = Module() m.submodules.adder = adder = Adder() m.d.comb += Assert(adder.</summary><content type="html">&lt;h1 id="assert-assume-and-cover-for-fun-and-profit">Assert, Assume, and Cover for fun and profit.&lt;/h1>
 &lt;pre>&lt;code>from nmigen.asserts import Assert, Assume, Cover
 from nmigen.cli import main_parser, main_runner
 from somewhere import Adder
@@ -351,7 +406,7 @@ main_runner(parser, args, m, ports=[] + adder.ports())
 &lt;/code>&lt;/pre>&lt;h1 id="past-rose-fell-stable">Past, Rose, Fell, Stable&lt;/h1>
 &lt;pre>&lt;code>from nmigen.asserts import Assert, Assume, Cover
 from nmigen.asserts import Past, Rose, Fell, Stable
-&lt;/code>&lt;/pre>&lt;h1 id="not-ready-yet">Not ready yet.&lt;/h1></content></entry><entry><title type="text">[Day05] Simulations</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day05/"/><id>https://waxpple.github.io/posts/day05/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-14T15:28:58+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Simulating The best way to simulate a module is through nMigen&amp;rsquo;s Simulator.
+&lt;/code>&lt;/pre>&lt;h1 id="not-ready-yet">Not ready yet.&lt;/h1></content></entry><entry><title type="text">[Day05] Simulations</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day05/"/><id>https://waxpple.github.io/posts/day05/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-14T15:28:58+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Simulating The best way to simulate a module is through nMigen&amp;rsquo;s Simulator.
 Define you ports Define a ports function in your module which returns an array of your module&amp;rsquo;s ports:
 class YourModule(Elaboratable): ... def ports(self): return [self.youmodule.p1, self.yourmodule.p2, ...] Create a top-level module Create a top-level module for your simulation:</summary><content type="html">&lt;h1 id="simulating">Simulating&lt;/h1>
 &lt;p>The best way to simulate a module is through nMigen&amp;rsquo;s &lt;code>Simulator&lt;/code>.&lt;/p>
@@ -449,7 +504,7 @@ sim.run_until(100e-6, run_passive=True)
 &lt;/code>&lt;/pre>&lt;p>The output should be a &lt;code>test.vcd&lt;/code> file and a &lt;code>test.gtkw&lt;/code> file. Running &lt;code>gtkwave&lt;/code> will allow you to view the output. Running it on &lt;code>test.vcd&lt;/code> will make you select the signals you want to see when &lt;code>gtkwave&lt;/code> opens, while running it on &lt;code>test.gtkw&lt;/code> will open &lt;code>gtkwave&lt;/code> showing the signals in the &lt;code>traces&lt;/code> key that you you gave in the call to &lt;code>sim.write_vcd()&lt;/code>.&lt;/p>
 &lt;pre>&lt;code>gtkwave test.vcd
 gtkwave test.gtkw
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day04] Bit selection</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day04/"/><id>https://waxpple.github.io/posts/day04/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-13T09:48:38+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Spliting and combining signals Slicing signals We can get the least significant bit by x[0] or the most significant bit by x[15].
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day04] Bit selection</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day04/"/><id>https://waxpple.github.io/posts/day04/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-13T09:48:38+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Spliting and combining signals Slicing signals We can get the least significant bit by x[0] or the most significant bit by x[15].
 &amp;gt;&amp;gt;&amp;gt; from nmigen import * &amp;gt;&amp;gt;&amp;gt; x = Signal(16) &amp;gt;&amp;gt;&amp;gt; x (sig x) &amp;gt;&amp;gt;&amp;gt; x.shape() Shape(width=16, signed=False) &amp;gt;&amp;gt;&amp;gt; x[15] (slice (sig x) 15:16) &amp;gt;&amp;gt;&amp;gt; x[15].</summary><content type="html">&lt;h1 id="spliting-and-combining-signals">Spliting and combining signals&lt;/h1>
 &lt;h2 id="slicing-signals">Slicing signals&lt;/h2>
 &lt;p>We can get the least significant bit by &lt;code>x[0]&lt;/code> or the most significant bit by &lt;code>x[15]&lt;/code>.&lt;/p>
@@ -636,7 +691,7 @@ bus2.eq(self.master_record),
 bus3.eq(self.master_record),
 ...
 ]
-&lt;/code>&lt;/pre>&lt;p>But this is longer, and also doesn&amp;rsquo;t handle when the master record has extra signals that not in the subordinate records.&lt;/p></content></entry><entry><title type="text">[Day03] Branching</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day03/"/><id>https://waxpple.github.io/posts/day03/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-12T14:38:07+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">If-Elif-Else you cannot use the standard python if-elif-else statements to create statements. Instead, using nMigen branching.
+&lt;/code>&lt;/pre>&lt;p>But this is longer, and also doesn&amp;rsquo;t handle when the master record has extra signals that not in the subordinate records.&lt;/p></content></entry><entry><title type="text">[Day03] Branching</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day03/"/><id>https://waxpple.github.io/posts/day03/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-12T14:38:07+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">If-Elif-Else you cannot use the standard python if-elif-else statements to create statements. Instead, using nMigen branching.
 with m.If(condition1): m.d.comb += statements1 with m.Elif(condition2): m.d.comb += statements2 with m.Else(): m.d.comb += statements3 If you use regular Python if-elif-else, then those will be evaluated during generation of the logic, not the logic itself.</summary><content type="html">&lt;h1 id="if-elif-else">If-Elif-Else&lt;/h1>
 &lt;p>you cannot use the standard python &lt;code>if-elif-else&lt;/code> statements to create statements. Instead, using nMigen branching.&lt;/p>
 &lt;pre>&lt;code>with m.If(condition1):
@@ -686,7 +741,7 @@ statement1
 &lt;pre>&lt;code>with m.Switch(a):
 with m.Case(&amp;quot;11---&amp;quot;,3,b):
 statement1
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day02] Basic terminology</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day02/"/><id>https://waxpple.github.io/posts/day02/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-12T10:01:41+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Domains A domain in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.
 Modules come with two domain built in: a combinational domain and a sequential(synchronous) domain.</summary><content type="html">&lt;h1 id="domains">Domains&lt;/h1>
 &lt;p>A &lt;em>domain&lt;/em> in its basic definition, is a grouping of logic cells. If consider a module as a blackbox. With its inputs and outputs, any given output is generated within one and only one domain.&lt;br>
 &lt;code>Modules&lt;/code> come with two domain built in: a combinational domain and a sequential(synchronous) domain.&lt;/p>
@@ -893,7 +948,7 @@ Remember that one signal can only be assigned to one domains, otherwise, it will
 &lt;pre>&lt;code># Wrong code
 m.d.comb += x.eq(y+1)
 m.d.sync += x.eq(y+1)
-&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
+&lt;/code>&lt;/pre></content></entry><entry><title type="text">[Day01] Basic nMigen</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day01/"/><id>https://waxpple.github.io/posts/day01/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-10T10:50:02+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Basic structure of modules The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/ Thumbs up for his contributions.
 from nmigen import * from nmigen.build import Platform class ThingBlock(Elaboratable): def __init__(self): pass def elaborate(self, platform: Platform) -&amp;gt; Module: m = Module() return m Elaborating a module from nmigen.</summary><content type="html">&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
 &lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
 Thumbs up for his contributions.&lt;/p>
@@ -923,7 +978,7 @@ main(m, ports=[sync.clk,sync.rst])
 &lt;/blockquote>
 &lt;ul>
 &lt;li>Choose RTLIL if using yosys.&lt;/li>
-&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-22T07:14:46+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
+&lt;/ul></content></entry><entry><title type="text">[Day00] nMigen 戰鬥</title><link rel="alternate" type="text/html" href="https://waxpple.github.io/posts/day00/"/><id>https://waxpple.github.io/posts/day00/</id><updated>2021-07-22T07:24:44+00:00</updated><published>2021-07-09T14:33:00+08:00</published><author><name>Waxapple</name><uri>https://waxpple.github.io/</uri><email>a0910618112@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">第一天接觸nMigen, 先來安裝　nMigen! 安裝Prerequisites sudo apt-get install build-essential clang bison flex libreadline-dev \ gawk tcl-dev libffi-dev git mercurial graphviz \ xdot pkg-config python python3 libftdi-dev gperf \ libboost-program-options-dev autoconf libgmp-dev \ cmake 安裝有的沒的必備程式 參考 https://symbiyosys.readthedocs.io/en/latest/install.html
 安裝nMigen pip install git+https://github.com/m-labs/nmigen.git pip install git+https://github.com/m-labs/nmigen-boards.git 安裝之後就可以開始學習如何使用nMigen製作電路</summary><content type="html">&lt;h1 id="第一天接觸nmigen-先來安裝nmigen">第一天接觸nMigen, 先來安裝　nMigen!&lt;/h1>
 &lt;p>&lt;img src="https://m-labs.hk/images/migen@2x.png?h=43d4e86170d805ce58f90901ae31a64141ea32606f7cefcb4b2b165e362c2b9a" alt="1">&lt;/p>
 &lt;h1 id="安裝prerequisites">安裝Prerequisites&lt;/h1>

@@ -1,4 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 22 Jul 2021 07:14:53 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day08] First fight with nMigen on simply a adder!</title><link>https://waxpple.github.io/posts/day08/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day08/</guid><pubDate>Thu, 22 Jul 2021 15:04:50 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;p>&lt;img src="https://i.imgur.com/CT8hlQR.png" alt="Imgur">&lt;/p></description></item><item><title>[Day07] Synthesis</title><link>https://waxpple.github.io/posts/day07/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day07/</guid><pubDate>Sun, 18 Jul 2021 11:20:21 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="supported-devices">Supported devices&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 22 Jul 2021 07:24:51 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day08] First fight with nMigen on simply a adder!</title><link>https://waxpple.github.io/posts/day08/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day08/</guid><pubDate>Thu, 22 Jul 2021 15:04:50 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="prerequisites">Prerequisites&lt;/h1>
+&lt;p>If you would like to perform simulation with GTKwave, a opensource free waveform viewer.
+Download the software here(&lt;a href="https://sourceforge.net/projects/gtkwave/">https://sourceforge.net/projects/gtkwave/&lt;/a>)
+and put it under C:/gtkwave.
+Go to the windows path setting and add it under the $path variable.&lt;/p>
+&lt;h1 id="the-main-function">The main function&lt;/h1>
+&lt;p>We create a simple 8-bit adder&lt;/p>
+&lt;pre>&lt;code>from typing import List
+from nmigen import Elaboratable, Module, Signal
+from nmigen.back.pysim import Simulator, Delay
+from nmigen.build import Platform
+from nmigen.cli import main_parser, main_runner
+class Adder(Elaboratable):
+def __init__(self):
+self.x = Signal(8)
+self.y = Signal(8)
+self.out = Signal(8)
+def elaborate(self, paltform: Platform) -&amp;gt; Module:
+m = Module()
+m.d.comb += self.out.eq(self.x + self.y)
+return m
+def ports(self) -&amp;gt; List[Signal]:
+return [self.x, self.y, self.out]
+if __name__ == &amp;quot;__main__&amp;quot;:
+parser = main_parser()
+args = parser.parse_args()
+m = Module()
+m.submodules.adder = adder = Adder()
+# main_runner(parser, args, m, ports=[] + adder.ports())
+x = Signal(8)
+y = Signal(8)
+m.d.comb += adder.x.eq(x)
+m.d.comb += adder.y.eq(y)
+sim = Simulator(m)
+def process():
+yield x.eq(0x00)
+yield y.eq(0x00)
+yield Delay(1e-6)
+yield x.eq(0xFF)
+yield y.eq(0xFF)
+yield Delay(1e-6)
+yield x.eq(0x00)
+yield Delay(1e-6)
+sim.add_process(process)
+with sim.write_vcd(&amp;quot;test.vcd&amp;quot;, &amp;quot;test.gtkw&amp;quot;, traces=[x, y] + adder.ports()):
+sim.run()
+print(&amp;quot;end of code&amp;quot;)
+&lt;/code>&lt;/pre>&lt;h1 id="run-the-simulation">Run the simulation&lt;/h1>
+&lt;pre>&lt;code>python3 adder.py
+&lt;/code>&lt;/pre>&lt;p>Remember to type &lt;strong>python3&lt;/strong>!&lt;/p>
+&lt;h1 id="get-the-simulation-waveform-from-gtkwave">Get the simulation waveform from GTKwave&lt;/h1>
+&lt;p>After firing simulator, it will generate a file call &lt;code>test.vcd&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>gtkwave.exe test.vcd &amp;amp;
+&lt;/code>&lt;/pre>&lt;p>The GTKwave will pop up and click adder on the left. Select the signals and right click &amp;gt; recurse import &amp;gt; append.
+&lt;img src="https://i.imgur.com/CT8hlQR.png" alt="Imgur">&lt;/p></description></item><item><title>[Day07] Synthesis</title><link>https://waxpple.github.io/posts/day07/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day07/</guid><pubDate>Sun, 18 Jul 2021 11:20:21 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="supported-devices">Supported devices&lt;/h1>
 &lt;p>See the [vendor directory] (&lt;a href="https://github.com/m-labs/nmigen/tree/master/nmigen/vendor">https://github.com/m-labs/nmigen/tree/master/nmigen/vendor&lt;/a>) for supported devices and toolchain details.&lt;/p>
 &lt;p>Devices supported as of 18 JUL 2021:&lt;/p>
 &lt;table>
