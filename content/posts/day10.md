@@ -68,4 +68,4 @@ if __name__ == "__main__":
 
 ```
 After simulation, here is the waveform.
-
+![Imgur](https://i.imgur.com/6gHk82P.png)
