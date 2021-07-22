@@ -69,3 +69,4 @@ if __name__ == "__main__":
 ```
 After simulation, here is the waveform.
 ![Imgur](https://i.imgur.com/6gHk82P.png)
+As you can see, `x` will be loaded when `load` is high and after the pulse, `x` will keep increasing each cycle until it reaches 100. Then `x` will be clear.
