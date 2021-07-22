@@ -1,5 +1,5 @@
 ---
-title: "[Day10] Formal verification on adder"
+title: "[Day09] Formal verification on adder"
 date: 2021-07-22T16:27:58+08:00
 draft: false
 ---
@@ -178,11 +178,7 @@ prep -top top
 toplevel.il
 ```
 We will talk about the settings later. Fire the thing up.
-```bash
-sby -f adder.sby
-\\output
-SBY 16:53:21 [adder_cover] Removing directory 'adder_cover'.                                                                                                                                                         SBY 16:53:21 [adder_cover] Copy 'toplevel.il' to 'adder_cover/src/toplevel.il'.                                                                                                                                      SBY 16:53:21 [adder_cover] engine_0: smtbmc boolector                                                                                                                                                                SBY 16:53:21 [adder_cover] base: starting process "cd adder_cover/src; yosys -ql ../model/design.log ../model/design.ys"                                                                                             SBY 16:53:21 [adder_cover] base: finished (returncode=0)                                                                                                                                                             SBY 16:53:21 [adder_cover] smt2: starting process "cd adder_cover/model; yosys -ql design_smt2.log design_smt2.ys"                                                                                                   SBY 16:53:21 [adder_cover] smt2: finished (returncode=0)                                                                                                                                                             SBY 16:53:21 [adder_cover] engine_0: starting process "cd adder_cover; yosys-smtbmc -s boolector --presat --unroll -c --noprogress -t 2  --append 0 --dump-vcd engine_0/trace%.vcd --dump-vlogtb engine_0/trace%_tb.v --dump-smtc engine_0/trace%.smtc model/design_smt2.smt2"                                                                                                                                                            SBY 16:53:21 [adder_cover] engine_0: ##   0:00:00  Solver: boolector                                                                                                                                                 SBY 16:53:21 [adder_cover] engine_0: ##   0:00:00  Status: passed                                                                                                                                                    SBY 16:53:21 [adder_cover] engine_0: finished (returncode=0)                                                                                                                                                         SBY 16:53:21 [adder_cover] engine_0: Status returned by engine: pass                                                                                                                                                 SBY 16:53:21 [adder_cover] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)                                                                                                                                 SBY 16:53:21 [adder_cover] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)                                                                                                                               SBY 16:53:21 [adder_cover] summary: engine_0 (smtbmc boolector) returned pass                                                                                                                                        SBY 16:53:21 [adder_cover] DONE (PASS, rc=0)                                                                                                                                                                         SBY 16:53:21 [adder_bmc] Removing directory 'adder_bmc'.                                                                                                                                                             SBY 16:53:21 [adder_bmc] Copy 'toplevel.il' to 'adder_bmc/src/toplevel.il'.                                                                                                                                          SBY 16:53:21 [adder_bmc] engine_0: smtbmc boolector                                                                                                                                                                  SBY 16:53:21 [adder_bmc] base: starting process "cd adder_bmc/src; yosys -ql ../model/design.log ../model/design.ys"                                                                                                 SBY 16:53:21 [adder_bmc] base: finished (returncode=0)                                                                                                                                                               SBY 16:53:21 [adder_bmc] smt2: starting process "cd adder_bmc/model; yosys -ql design_smt2.log design_smt2.ys"                                                                                                       SBY 16:53:21 [adder_bmc] smt2: finished (returncode=0)                                                                                                                                                               SBY 16:53:21 [adder_bmc] engine_0: starting process "cd adder_bmc; yosys-smtbmc -s boolector --presat --unroll --noprogress -t 2  --append 0 --dump-vcd engine_0/trace.vcd --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2"                                                                                                                                                                      SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  Solver: boolector                                                                                                                                                   SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  Checking assumptions in step 0..                                                                                                                                    SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  Checking assertions in step 0..                                                                                                                                     SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  BMC failed!                                                                                                                                                         SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  Assert failed in top: adder.py:27                                                                                                                                   SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  Writing trace to VCD file: engine_0/trace.vcd                                                                                                                       SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  Writing trace to Verilog testbench: engine_0/trace_tb.v                                                                                                             SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  Writing trace to constraints file: engine_0/trace.smtc                                                                                                              SBY 16:53:21 [adder_bmc] engine_0: ##   0:00:00  Status: failed                                                                                                                                                      SBY 16:53:21 [adder_bmc] engine_0: finished (returncode=1)                                                                                                                                                           SBY 16:53:21 [adder_bmc] engine_0: Status returned by engine: FAIL                                                                                                                                                   SBY 16:53:21 [adder_bmc] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)                                                                                                                                   SBY 16:53:21 [adder_bmc] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)                                                                                                                                 SBY 16:53:21 [adder_bmc] summary: engine_0 (smtbmc boolector) returned FAIL                                                                                                                                          SBY 16:53:21 [adder_bmc] summary: counterexample trace: adder_bmc/engine_0/trace.vcd                                                                                                                                 SBY 16:53:21 [adder_bmc] DONE (FAIL, rc=2)                                                                                                                                                                           SBY 16:53:21 One or more tasks produced a non-zero return code.                
-```
+![Imgur](https://i.imgur.com/8AroqBb.png)
 As you can see, cover test passed but bmc test failed. We can trace it by firing
 ```
 gtkwave.exe adder_bmc/engine_0/trace.vcd
@@ -220,7 +216,87 @@ if __name__ == "__main__":
     m.d.comb += Assert(adder.out == (adder.x + adder.y)[:8])
     main_runner(parser, args, m, ports=[] + adder.ports())
 ```
-And now the verification result will be:
-```bash
-SBY 17:00:34 [adder_cover] Removing directory 'adder_cover'.                                                                                                                                                         SBY 17:00:34 [adder_cover] Copy 'toplevel.il' to 'adder_cover/src/toplevel.il'.                                                                                                                                      SBY 17:00:34 [adder_cover] engine_0: smtbmc boolector                                                                                                                                                                SBY 17:00:34 [adder_cover] base: starting process "cd adder_cover/src; yosys -ql ../model/design.log ../model/design.ys"                                                                                             SBY 17:00:34 [adder_cover] base: finished (returncode=0)                                                                                                                                                             SBY 17:00:34 [adder_cover] smt2: starting process "cd adder_cover/model; yosys -ql design_smt2.log design_smt2.ys"                                                                                                   SBY 17:00:34 [adder_cover] smt2: finished (returncode=0)                                                                                                                                                             SBY 17:00:34 [adder_cover] engine_0: starting process "cd adder_cover; yosys-smtbmc -s boolector --presat --unroll -c --noprogress -t 2  --append 0 --dump-vcd engine_0/trace%.vcd --dump-vlogtb engine_0/trace%_tb.v --dump-smtc engine_0/trace%.smtc model/design_smt2.smt2"                                                                                                                                                            SBY 17:00:34 [adder_cover] engine_0: ##   0:00:00  Solver: boolector                                                                                                                                                 SBY 17:00:34 [adder_cover] engine_0: ##   0:00:00  Status: passed                                                                                                                                                    SBY 17:00:34 [adder_cover] engine_0: finished (returncode=0)                                                                                                                                                         SBY 17:00:34 [adder_cover] engine_0: Status returned by engine: pass                                                                                                                                                 SBY 17:00:34 [adder_cover] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)                                                                                                                                 SBY 17:00:34 [adder_cover] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)                                                                                                                               SBY 17:00:34 [adder_cover] summary: engine_0 (smtbmc boolector) returned pass                                                                                                                                        SBY 17:00:34 [adder_cover] DONE (PASS, rc=0)                                                                                                                                                                         SBY 17:00:34 [adder_bmc] Removing directory 'adder_bmc'.                                                                                                                                                             SBY 17:00:34 [adder_bmc] Copy 'toplevel.il' to 'adder_bmc/src/toplevel.il'.                                                                                                                                          SBY 17:00:34 [adder_bmc] engine_0: smtbmc boolector                                                                                                                                                                  SBY 17:00:34 [adder_bmc] base: starting process "cd adder_bmc/src; yosys -ql ../model/design.log ../model/design.ys"                                                                                                 SBY 17:00:34 [adder_bmc] base: finished (returncode=0)                                                                                                                                                               SBY 17:00:34 [adder_bmc] smt2: starting process "cd adder_bmc/model; yosys -ql design_smt2.log design_smt2.ys"                                                                                                       SBY 17:00:34 [adder_bmc] smt2: finished (returncode=0)                                                                                                                                                               SBY 17:00:34 [adder_bmc] engine_0: starting process "cd adder_bmc; yosys-smtbmc -s boolector --presat --unroll --noprogress -t 2  --append 0 --dump-vcd engine_0/trace.vcd --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2"                                                                                                                                                                      SBY 17:00:34 [adder_bmc] engine_0: ##   0:00:00  Solver: boolector                                                                                                                                                   SBY 17:00:34 [adder_bmc] engine_0: ##   0:00:00  Checking assumptions in step 0..                                                                                                                                    SBY 17:00:34 [adder_bmc] engine_0: ##   0:00:00  Checking assertions in step 0..                                                                                                                                     SBY 17:00:34 [adder_bmc] engine_0: ##   0:00:00  Checking assumptions in step 1..                                                                                                                                    SBY 17:00:34 [adder_bmc] engine_0: ##   0:00:00  Checking assertions in step 1..                                                                                                                                     SBY 17:00:34 [adder_bmc] engine_0: ##   0:00:00  Status: passed                                                                                                                                                      SBY 17:00:34 [adder_bmc] engine_0: finished (returncode=0)                                                                                                                                                           SBY 17:00:34 [adder_bmc] engine_0: Status returned by engine: pass                                                                                                                                                   SBY 17:00:34 [adder_bmc] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)                                                                                                                                   SBY 17:00:34 [adder_bmc] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)                                                                                                                                 SBY 17:00:34 [adder_bmc] summary: engine_0 (smtbmc boolector) returned pass                                                                                                                                          SBY 17:00:34 [adder_bmc] DONE (PASS, rc=0) 
+And now the verification result will be correct:
+![Imgur](https://i.imgur.com/bmVfoW0.png)
+
+> Note: If you get error message like "no boolector found", go back to day one and install it properly.
+# Cover function
+```python
+from typing import List
+from nmigen.asserts import Assert,Cover
+from nmigen import Elaboratable, Module, Signal
+from nmigen.back.pysim import Simulator, Delay
+from nmigen.build import Platform
+from nmigen.cli import main_parser, main_runner
+
+class Adder(Elaboratable):
+    def __init__(self):
+        self.x = Signal(8)
+        self.y = Signal(8)
+        self.out = Signal(8)
+
+    def elaborate(self, paltform: Platform) -> Module:
+        m = Module()
+
+        m.d.comb += self.out.eq(self.x + self.y)
+        return m 
+    def ports(self) -> List[Signal]:
+        return [self.x, self.y, self.out]
+if __name__ == "__main__":
+    parser = main_parser()
+    args = parser.parse_args()
+    m = Module()
+    
+    m.submodules.adder = adder = Adder()
+    m.d.comb += Assert(adder.out == (adder.x + adder.y)[:8])
+    m.d.comb += Cover(adder.out == 0xFF)
+    m.d.comb += Cover((adder.out == 0xFE) & (adder.x == 0xFE))
+    main_runner(parser, args, m, ports=[] + adder.ports())
 ```
+Recompile it and run formal verification.
+![Imgur](https://i.imgur.com/al7GTrt.png)
+There is two trace file, let's take a look.
+```
+gtkwave.exe adder_cover/engine_0/trace0.vcd &
+```
+![Imgur](https://i.imgur.com/PaoN3hy.png)
+This is the case one, `out == 0xFF`
+```
+gtkwave.exe adder_cover/engine_0/trace1.vcd &
+```
+![Imgur](https://i.imgur.com/CYb1U3n.png)
+This is the case two, `out == 0xFE and x == 0xFE`.
+Any cover event is independant to any other cover events.
+
+# Assumuption
+Assumption is to assume a signal that is not being a illegal state and the signal will always satisfy specific assumptions.
+```python
+...
+if __name__ == "__main__":
+    parser = main_parser()
+    args = parser.parse_args()
+    m = Module()
+    
+    m.submodules.adder = adder = Adder()
+    m.d.comb += Assert(adder.out == (adder.x + adder.y)[:8])
+    m.d.comb += Assume(adder.x == (adder.y <<1))
+    m.d.comb += Cover((adder.out > 0x00) & (adder.out < 0x40))
+    main_runner(parser, args, m, ports=[] + adder.ports())
+```
+Here we assume `x is always equal to y << 1`. And find one case for `output ranges between 0x00 and 0x40`.
+![Imgur](https://i.imgur.com/mwUwgvn.png)
+We can do some interesting stuff like:
+```python
+if __name__ == "__main__":
+    parser = main_parser()
+    args = parser.parse_args()
+    m = Module()
+    
+    m.submodules.adder = adder = Adder()
+    m.d.comb += Assert(adder.out == (adder.x + adder.y)[:8])
+    with m.If(adder.x == (adder.y <<1)):
+        m.d.comb += Cover((adder.out > 0x00) & (adder.out < 0x40))
+    main_runner(parser, args, m, ports=[] + adder.ports())
+```
+Which means cover the output range if `x == y<<1`.
+![Imgur](https://i.imgur.com/II2DFfW.png)

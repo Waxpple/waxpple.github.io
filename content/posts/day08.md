@@ -1,5 +1,5 @@
 ---
-title: "[Day08] First fight with nMigen on simply a adder!"
+title: "[Day08] First fight with nMigen on simply an adder!"
 date: 2021-07-22T15:04:50+08:00
 draft: false
 ---
