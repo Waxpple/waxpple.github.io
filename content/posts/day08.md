@@ -5,7 +5,7 @@ draft: false
 ---
 # Prerequisites
 If you would like to perform simulation with GTKwave, a opensource free waveform viewer.
-Download the software here(https://sourceforge.net/projects/gtkwave/)
+Download the software [here](https://sourceforge.net/projects/gtkwave/)
 
 and put it under `C:/gtkwave`.
 Go to the windows path setting and add it under the `$path` variable.

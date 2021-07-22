@@ -6,7 +6,7 @@ draft: false
 # Basic structure of modules
 The tutorial is followed by https://github.com/RobertBaruch/nmigen-tutorial/
 Thumbs up for his contributions.
-```
+```python
 from nmigen import *
 from nmigen.build import Platform
 
@@ -18,7 +18,7 @@ class ThingBlock(Elaboratable):
         return m
 ```
 # Elaborating a module
-```
+```python
 from nmigen.cli import main
 
 if __name__== "__main__":

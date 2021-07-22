@@ -23,7 +23,7 @@ pip install git+https://github.com/m-labs/nmigen-boards.git
 安裝之後就可以開始學習如何使用nMigen製作電路
 # Value in migen
 ## Const 永不變
-```
+```python
 from nmigen import *
 a = Const(10)
 a.shape()
@@ -36,7 +36,7 @@ x.shape()
 >> Shape(width=5, signed=True)
 ```
 ## 可以使用Enum 來做常數狀態
-```
+```python
 from enum import Enum, unique
 
 @unique
@@ -60,18 +60,18 @@ const 3'd0
 ```
 ## Signal 是 Wire或者reg
 
-```
+```python
 >>> from nmigen import *
 >>> A = Signal(signed(8))
 >>> A.shape()
 Shape(width=8, signed=True)
 ```
-```
+```python
 >>> x = Signal(range(-5,11))
 >>> x.shape()
 Shape(width=5, signed=True)
 ```
-```
+```python
 >>> x = Signal(Func)
 >>> x
 (sig x)
