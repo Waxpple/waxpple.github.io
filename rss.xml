@@ -1,4 +1,417 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 22 Jul 2021 08:25:16 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day08] First fight with nMigen on simply a adder!</title><link>https://waxpple.github.io/posts/day08/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day08/</guid><pubDate>Thu, 22 Jul 2021 15:04:50 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="prerequisites">Prerequisites&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 22 Jul 2021 09:02:35 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day10] Formal verification on adder</title><link>https://waxpple.github.io/posts/day09/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day09/</guid><pubDate>Thu, 22 Jul 2021 16:27:58 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="perform-formal-verification">Perform formal verification&lt;/h1>
+&lt;p>What is a &amp;ldquo;formal verification&amp;rdquo; ?&lt;/p>
+&lt;p>&lt;code>Formal verification&lt;/code> is a process of checking whether a design satisfies some requirements.&lt;/p>
+&lt;h1 id="example">Example&lt;/h1>
+&lt;p>Here is an adder. It is different from previous one on day 8. In order to make sure the adder in the design satisfies &amp;ldquo;addition&amp;rdquo;. We use assertion to varify the design.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">typing&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">List&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.asserts&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Assert&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Signal&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.back.pysim&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Simulator&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Delay&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.build&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Platform&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.cli&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">main_runner&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Adder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="fm">__init__&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">elaborate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">paltform&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Platform&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">ports&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">Signal&lt;/span>&lt;span class="p">]:&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">parser&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">args&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">parser&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parse_args&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">submodules&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Adder&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Assert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">main_runner&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ports&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ports&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;span class="c1"># x = Signal(8)&lt;/span>
+&lt;span class="c1"># y = Signal(8)&lt;/span>
+&lt;span class="c1"># m.d.comb += adder.x.eq(x)&lt;/span>
+&lt;span class="c1"># m.d.comb += adder.y.eq(y)&lt;/span>
+&lt;span class="c1"># sim = Simulator(m)&lt;/span>
+&lt;span class="c1"># def process():&lt;/span>
+&lt;span class="c1"># yield x.eq(0x00)&lt;/span>
+&lt;span class="c1"># yield y.eq(0x00)&lt;/span>
+&lt;span class="c1"># yield Delay(1e-6)&lt;/span>
+&lt;span class="c1"># yield x.eq(0xFF)&lt;/span>
+&lt;span class="c1"># yield y.eq(0xFF)&lt;/span>
+&lt;span class="c1"># yield Delay(1e-6)&lt;/span>
+&lt;span class="c1"># yield x.eq(0x00)&lt;/span>
+&lt;span class="c1"># yield Delay(1e-6)&lt;/span>
+&lt;span class="c1"># sim.add_process(process)&lt;/span>
+&lt;span class="c1"># with sim.write_vcd(&amp;#34;test.vcd&amp;#34;, &amp;#34;test.gtkw&amp;#34;, traces=[x, y] + adder.ports()):&lt;/span>
+&lt;span class="c1"># sim.run()&lt;/span>
+&lt;span class="c1"># print(&amp;#34;end of code&amp;#34;)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="generate-ilang-file">Generate iLang file&lt;/h1>
+&lt;pre>&lt;code>python3 adder.py generate -t il &amp;gt; toplevel.il
+&lt;/code>&lt;/pre>&lt;p>It will generate &lt;code>toplevel.il&lt;/code> under working directory path.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;span class="lnt">77
+&lt;/span>&lt;span class="lnt">78
+&lt;/span>&lt;span class="lnt">79
+&lt;/span>&lt;span class="lnt">80
+&lt;/span>&lt;span class="lnt">81
+&lt;/span>&lt;span class="lnt">82
+&lt;/span>&lt;span class="lnt">83
+&lt;/span>&lt;span class="lnt">84
+&lt;/span>&lt;span class="lnt">85
+&lt;/span>&lt;span class="lnt">86
+&lt;/span>&lt;span class="lnt">87
+&lt;/span>&lt;span class="lnt">88
+&lt;/span>&lt;span class="lnt">89
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="n">attribute&lt;/span> \&lt;span class="n">generator&lt;/span> &lt;span class="s2">&amp;#34;nMigen&amp;#34;&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">nmigen&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hierarchy&lt;/span> &lt;span class="s2">&amp;#34;top.adder&amp;#34;&lt;/span>
+&lt;span class="n">module&lt;/span> \&lt;span class="n">adder&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:12&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">8&lt;/span> &lt;span class="n">output&lt;/span> &lt;span class="mi">0&lt;/span> \&lt;span class="n">out&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:10&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">8&lt;/span> &lt;span class="nb">input&lt;/span> &lt;span class="mi">1&lt;/span> \&lt;span class="n">x&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:11&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">8&lt;/span> &lt;span class="nb">input&lt;/span> &lt;span class="mi">2&lt;/span> \&lt;span class="n">y&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:17&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">9&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:17&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">9&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:17&amp;#34;&lt;/span>
+&lt;span class="n">cell&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="n">add&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">3&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">A_SIGNED&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;0&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">A_WIDTH&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="s1">&amp;#39;1000&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">B_SIGNED&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;0&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">B_WIDTH&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="s1">&amp;#39;1000&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">Y_WIDTH&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="s1">&amp;#39;1001&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">A&lt;/span> \&lt;span class="n">x&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">B&lt;/span> \&lt;span class="n">y&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">Y&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;span class="n">connect&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;span class="n">process&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="n">group_0&lt;/span>
+&lt;span class="n">assign&lt;/span> \&lt;span class="n">out&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="s1">&amp;#39;00000000&lt;/span>
+&lt;span class="n">assign&lt;/span> \&lt;span class="n">out&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mi">7&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="n">sync&lt;/span> &lt;span class="n">init&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">generator&lt;/span> &lt;span class="s2">&amp;#34;nMigen&amp;#34;&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">top&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">nmigen&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hierarchy&lt;/span> &lt;span class="s2">&amp;#34;top&amp;#34;&lt;/span>
+&lt;span class="n">module&lt;/span> \&lt;span class="n">top&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:10&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">8&lt;/span> &lt;span class="nb">input&lt;/span> &lt;span class="mi">0&lt;/span> \&lt;span class="n">x&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:11&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">8&lt;/span> &lt;span class="nb">input&lt;/span> &lt;span class="mi">1&lt;/span> \&lt;span class="n">y&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:12&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">8&lt;/span> &lt;span class="n">output&lt;/span> &lt;span class="mi">2&lt;/span> \&lt;span class="n">out&lt;/span>
+&lt;span class="n">cell&lt;/span> \&lt;span class="n">adder&lt;/span> \&lt;span class="n">adder&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">out&lt;/span> \&lt;span class="n">out&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">x&lt;/span> \&lt;span class="n">x&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">y&lt;/span> \&lt;span class="n">y&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:27&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">en&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:27&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">check&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:27&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">9&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:27&amp;#34;&lt;/span>
+&lt;span class="n">cell&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="n">add&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">A_SIGNED&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;0&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">A_WIDTH&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="s1">&amp;#39;1000&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">B_SIGNED&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;0&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">B_WIDTH&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="s1">&amp;#39;1000&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">Y_WIDTH&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="s1">&amp;#39;1001&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">A&lt;/span> \&lt;span class="n">x&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">B&lt;/span> \&lt;span class="n">y&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">Y&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:27&amp;#34;&lt;/span>
+&lt;span class="n">wire&lt;/span> &lt;span class="n">width&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">3&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:27&amp;#34;&lt;/span>
+&lt;span class="n">cell&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="n">eq&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">4&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">A_SIGNED&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;0&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">A_WIDTH&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="s1">&amp;#39;1000&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">B_SIGNED&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;0&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">B_WIDTH&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="s1">&amp;#39;1001&lt;/span>
+&lt;span class="n">parameter&lt;/span> \&lt;span class="n">Y_WIDTH&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;1&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">A&lt;/span> \&lt;span class="n">out&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">B&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">Y&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">3&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;span class="n">attribute&lt;/span> \&lt;span class="n">src&lt;/span> &lt;span class="s2">&amp;#34;adder.py:27&amp;#34;&lt;/span>
+&lt;span class="n">cell&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">5&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">A&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">check&lt;/span>
+&lt;span class="n">connect&lt;/span> \&lt;span class="n">EN&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">en&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;span class="n">process&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="n">group_0&lt;/span>
+&lt;span class="n">assign&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">en&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;0&lt;/span>
+&lt;span class="n">assign&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">check&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;0&lt;/span>
+&lt;span class="n">assign&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">check&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="mi">3&lt;/span>
+&lt;span class="n">assign&lt;/span> &lt;span class="err">$&lt;/span>&lt;span class="k">assert&lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">en&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s1">&amp;#39;1&lt;/span>
+&lt;span class="n">sync&lt;/span> &lt;span class="n">init&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;span class="n">end&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="a-sby-file-for-formal-verification">A sby file for formal verification&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="p">[&lt;/span>&lt;span class="n">tasks&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="n">cover&lt;/span>
+&lt;span class="n">bmc&lt;/span>
+&lt;span class="p">[&lt;/span>&lt;span class="n">options&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="n">bmc&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">mode&lt;/span> &lt;span class="n">bmc&lt;/span>
+&lt;span class="n">cover&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">mode&lt;/span> &lt;span class="n">cover&lt;/span>
+&lt;span class="n">depth&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;span class="n">multiclock&lt;/span> &lt;span class="n">off&lt;/span>
+&lt;span class="p">[&lt;/span>&lt;span class="n">engines&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="n">smtbmc&lt;/span> &lt;span class="n">boolector&lt;/span>
+&lt;span class="p">[&lt;/span>&lt;span class="n">script&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="n">read_ilang&lt;/span> &lt;span class="n">toplevel&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">il&lt;/span>
+&lt;span class="n">prep&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">top&lt;/span> &lt;span class="n">top&lt;/span>
+&lt;span class="p">[&lt;/span>&lt;span class="n">files&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="n">toplevel&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">il&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>We will talk about the settings later. Fire the thing up.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">sby -f adder.sby
+&lt;span class="se">\\&lt;/span>output
+SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> Removing directory &lt;span class="s1">&amp;#39;adder_cover&amp;#39;&lt;/span>. SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> Copy &lt;span class="s1">&amp;#39;toplevel.il&amp;#39;&lt;/span> to &lt;span class="s1">&amp;#39;adder_cover/src/toplevel.il&amp;#39;&lt;/span>. SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: smtbmc boolector SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> base: starting process &lt;span class="s2">&amp;#34;cd adder_cover/src; yosys -ql ../model/design.log ../model/design.ys&amp;#34;&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> base: finished &lt;span class="o">(&lt;/span>&lt;span class="nv">returncode&lt;/span>&lt;span class="o">=&lt;/span>0&lt;span class="o">)&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> smt2: starting process &lt;span class="s2">&amp;#34;cd adder_cover/model; yosys -ql design_smt2.log design_smt2.ys&amp;#34;&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> smt2: finished &lt;span class="o">(&lt;/span>&lt;span class="nv">returncode&lt;/span>&lt;span class="o">=&lt;/span>0&lt;span class="o">)&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: starting process &lt;span class="s2">&amp;#34;cd adder_cover; yosys-smtbmc -s boolector --presat --unroll -c --noprogress -t 2 --append 0 --dump-vcd engine_0/trace%.vcd --dump-vlogtb engine_0/trace%_tb.v --dump-smtc engine_0/trace%.smtc model/design_smt2.smt2&amp;#34;&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: &lt;span class="c1">## 0:00:00 Solver: boolector SBY 16:53:21 [adder_cover] engine_0: ## 0:00:00 Status: passed SBY 16:53:21 [adder_cover] engine_0: finished (returncode=0) SBY 16:53:21 [adder_cover] engine_0: Status returned by engine: pass SBY 16:53:21 [adder_cover] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0) SBY 16:53:21 [adder_cover] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0) SBY 16:53:21 [adder_cover] summary: engine_0 (smtbmc boolector) returned pass SBY 16:53:21 [adder_cover] DONE (PASS, rc=0) SBY 16:53:21 [adder_bmc] Removing directory &amp;#39;adder_bmc&amp;#39;. SBY 16:53:21 [adder_bmc] Copy &amp;#39;toplevel.il&amp;#39; to &amp;#39;adder_bmc/src/toplevel.il&amp;#39;. SBY 16:53:21 [adder_bmc] engine_0: smtbmc boolector SBY 16:53:21 [adder_bmc] base: starting process &amp;#34;cd adder_bmc/src; yosys -ql ../model/design.log ../model/design.ys&amp;#34; SBY 16:53:21 [adder_bmc] base: finished (returncode=0) SBY 16:53:21 [adder_bmc] smt2: starting process &amp;#34;cd adder_bmc/model; yosys -ql design_smt2.log design_smt2.ys&amp;#34; SBY 16:53:21 [adder_bmc] smt2: finished (returncode=0) SBY 16:53:21 [adder_bmc] engine_0: starting process &amp;#34;cd adder_bmc; yosys-smtbmc -s boolector --presat --unroll --noprogress -t 2 --append 0 --dump-vcd engine_0/trace.vcd --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2&amp;#34; SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Solver: boolector SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Checking assumptions in step 0.. SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Checking assertions in step 0.. SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 BMC failed! SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Assert failed in top: adder.py:27 SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Writing trace to VCD file: engine_0/trace.vcd SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Writing trace to Verilog testbench: engine_0/trace_tb.v SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Writing trace to constraints file: engine_0/trace.smtc SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Status: failed SBY 16:53:21 [adder_bmc] engine_0: finished (returncode=1) SBY 16:53:21 [adder_bmc] engine_0: Status returned by engine: FAIL SBY 16:53:21 [adder_bmc] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0) SBY 16:53:21 [adder_bmc] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0) SBY 16:53:21 [adder_bmc] summary: engine_0 (smtbmc boolector) returned FAIL SBY 16:53:21 [adder_bmc] summary: counterexample trace: adder_bmc/engine_0/trace.vcd SBY 16:53:21 [adder_bmc] DONE (FAIL, rc=2) SBY 16:53:21 One or more tasks produced a non-zero return code. &lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>As you can see, cover test passed but bmc test failed. We can trace it by firing&lt;/p>
+&lt;pre>&lt;code>gtkwave.exe adder_bmc/engine_0/trace.vcd
+&lt;/code>&lt;/pre>&lt;p>&lt;img src="https://i.imgur.com/cLjnGam.png" alt="Imgur">
+But yes, 0xFF + 0x01 == 0x00. What is the deal with it? Well, in assertion, we didn&amp;rsquo;t truncate the signal which makes it 8-bit verse 9-bit signal. Here is how we fix our design.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">typing&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">List&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.asserts&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Assert&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Signal&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.back.pysim&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Simulator&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Delay&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.build&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Platform&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.cli&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">main_runner&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Adder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="fm">__init__&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">elaborate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">paltform&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Platform&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">ports&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">Signal&lt;/span>&lt;span class="p">]:&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">parser&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">args&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">parser&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parse_args&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">submodules&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Adder&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="c1"># Truncated&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Assert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">)[:&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;span class="n">main_runner&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ports&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ports&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And now the verification result will be:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> Removing directory &lt;span class="s1">&amp;#39;adder_cover&amp;#39;&lt;/span>. SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> Copy &lt;span class="s1">&amp;#39;toplevel.il&amp;#39;&lt;/span> to &lt;span class="s1">&amp;#39;adder_cover/src/toplevel.il&amp;#39;&lt;/span>. SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: smtbmc boolector SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> base: starting process &lt;span class="s2">&amp;#34;cd adder_cover/src; yosys -ql ../model/design.log ../model/design.ys&amp;#34;&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> base: finished &lt;span class="o">(&lt;/span>&lt;span class="nv">returncode&lt;/span>&lt;span class="o">=&lt;/span>0&lt;span class="o">)&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> smt2: starting process &lt;span class="s2">&amp;#34;cd adder_cover/model; yosys -ql design_smt2.log design_smt2.ys&amp;#34;&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> smt2: finished &lt;span class="o">(&lt;/span>&lt;span class="nv">returncode&lt;/span>&lt;span class="o">=&lt;/span>0&lt;span class="o">)&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: starting process &lt;span class="s2">&amp;#34;cd adder_cover; yosys-smtbmc -s boolector --presat --unroll -c --noprogress -t 2 --append 0 --dump-vcd engine_0/trace%.vcd --dump-vlogtb engine_0/trace%_tb.v --dump-smtc engine_0/trace%.smtc model/design_smt2.smt2&amp;#34;&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: &lt;span class="c1">## 0:00:00 Solver: boolector SBY 17:00:34 [adder_cover] engine_0: ## 0:00:00 Status: passed SBY 17:00:34 [adder_cover] engine_0: finished (returncode=0) SBY 17:00:34 [adder_cover] engine_0: Status returned by engine: pass SBY 17:00:34 [adder_cover] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0) SBY 17:00:34 [adder_cover] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0) SBY 17:00:34 [adder_cover] summary: engine_0 (smtbmc boolector) returned pass SBY 17:00:34 [adder_cover] DONE (PASS, rc=0) SBY 17:00:34 [adder_bmc] Removing directory &amp;#39;adder_bmc&amp;#39;. SBY 17:00:34 [adder_bmc] Copy &amp;#39;toplevel.il&amp;#39; to &amp;#39;adder_bmc/src/toplevel.il&amp;#39;. SBY 17:00:34 [adder_bmc] engine_0: smtbmc boolector SBY 17:00:34 [adder_bmc] base: starting process &amp;#34;cd adder_bmc/src; yosys -ql ../model/design.log ../model/design.ys&amp;#34; SBY 17:00:34 [adder_bmc] base: finished (returncode=0) SBY 17:00:34 [adder_bmc] smt2: starting process &amp;#34;cd adder_bmc/model; yosys -ql design_smt2.log design_smt2.ys&amp;#34; SBY 17:00:34 [adder_bmc] smt2: finished (returncode=0) SBY 17:00:34 [adder_bmc] engine_0: starting process &amp;#34;cd adder_bmc; yosys-smtbmc -s boolector --presat --unroll --noprogress -t 2 --append 0 --dump-vcd engine_0/trace.vcd --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2&amp;#34; SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Solver: boolector SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Checking assumptions in step 0.. SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Checking assertions in step 0.. SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Checking assumptions in step 1.. SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Checking assertions in step 1.. SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Status: passed SBY 17:00:34 [adder_bmc] engine_0: finished (returncode=0) SBY 17:00:34 [adder_bmc] engine_0: Status returned by engine: pass SBY 17:00:34 [adder_bmc] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0) SBY 17:00:34 [adder_bmc] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0) SBY 17:00:34 [adder_bmc] summary: engine_0 (smtbmc boolector) returned pass SBY 17:00:34 [adder_bmc] DONE (PASS, rc=0) &lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>[Day08] First fight with nMigen on simply a adder!</title><link>https://waxpple.github.io/posts/day08/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day08/</guid><pubDate>Thu, 22 Jul 2021 15:04:50 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="prerequisites">Prerequisites&lt;/h1>
 &lt;p>If you would like to perform simulation with GTKwave, a opensource free waveform viewer.
 Download the software &lt;a href="https://sourceforge.net/projects/gtkwave/">here&lt;/a>&lt;/p>
 &lt;p>and put it under &lt;code>C:/gtkwave&lt;/code>.
@@ -2040,7 +2453,24 @@ cmake
 &lt;pre>&lt;code>pip install git+https://github.com/m-labs/nmigen.git
 pip install git+https://github.com/m-labs/nmigen-boards.git
 &lt;/code>&lt;/pre>&lt;p>安裝之後就可以開始學習如何使用nMigen製作電路&lt;/p>
-&lt;h1 id="value-in-migen">Value in migen&lt;/h1>
+&lt;ul>
+&lt;li>Boolector (important!)&lt;/li>
+&lt;/ul>
+&lt;pre>&lt;code># Download and build Boolector
+git clone https://github.com/boolector/boolector
+cd boolector
+# Download and build Lingeling
+./contrib/setup-lingeling.sh
+# Download and build BTOR2Tools
+./contrib/setup-btor2tools.sh
+# Build Boolector
+./configure.sh &amp;amp;&amp;amp; cd build &amp;amp;&amp;amp; make
+./configure.sh --py3
+cd build
+make
+sudo cp build/bin/{boolector,btor*} /usr/local/bin/
+sudo cp deps/btor2tools/bin/btorsim /usr/local/bin/
+&lt;/code>&lt;/pre>&lt;h1 id="value-in-migen">Value in migen&lt;/h1>
 &lt;h2 id="const-永不變">Const 永不變&lt;/h2>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
