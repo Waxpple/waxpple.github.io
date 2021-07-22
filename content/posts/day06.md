@@ -4,7 +4,7 @@ date: 2021-07-18T09:50:15+08:00
 draft: false
 ---
 # Assert, Assume, and Cover for fun and profit.
-```
+```python
 from nmigen.asserts import Assert, Assume, Cover
 from nmigen.cli import main_parser, main_runner
 from somewhere import Adder

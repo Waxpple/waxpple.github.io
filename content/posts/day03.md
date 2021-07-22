@@ -5,7 +5,7 @@ draft: false
 ---
 # If-Elif-Else
 you cannot use the standard python `if-elif-else` statements to create statements. Instead, using nMigen branching.
-```
+```python
 with m.If(condition1):
     m.d.comb += statements1
 with m.Elif(condition2):
@@ -14,7 +14,7 @@ with m.Else():
     m.d.comb += statements3
 ```
 If you use regular Python `if-elif-else`, then those will be evaluated during *generation* of the logic, not the logic itself. This can be useful if you want a flag to cause different logic implement to be generated, and this is a good use of platform string pass to elaborate().
-```
+```python
 if (platform== "KC705")
     m.d.comb += statement1
 else:
@@ -28,7 +28,7 @@ If you have a signal with more than one bit and use it as the condition, use `wi
 
 # Switch-Case-Default
 You can use `Switch-Case-Default` just as in standard HDLs using the following `with` constructs:
-```
+```python
 with m.Switch(expression):
     with m.Case(value1):
         statements1
@@ -38,7 +38,7 @@ with m.Switch(expression):
         statements3
 ```
 Although it is suggested that using `full-case` switch that we used to do in verilog. You can use multiple values in one case statement.
-```
+```python
 with m.Switch(expression):
     with m.Case(value1,value2):
         statements1
@@ -46,7 +46,7 @@ with m.Switch(expression):
         statements3
 ```
 You can leave out the `Defalt()`, but not suggest you to do that.
-```
+```python
 m.d.comb += x.eq(1)
 with m.Switch (y):
     with m.Case(0,1,2):
@@ -57,12 +57,12 @@ In this example, if `y is in [0, 1, 2]` then `x` is assigned 2. Otherwise `x` re
 
 # Specify a bit patterns
 The way to specify a matching pattern in a `Case` is with a Python string of binary digits. For example, `"0011101011"`. A don't-care bit is specified using a dash `-`, so for example `"00111-----"`. The number of bits in the string must exactly the same as the number of bits in the expression it is being compared to.
-```
+```python
 with m.If(a.matches("11---",3,b)):
     statement1
 ```
 Is equivelent to
-```
+```python
 with m.Switch(a):
     with m.Case("11---",3,b):
         statement1

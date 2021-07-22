@@ -60,7 +60,7 @@ Resource("clk", 0, Pins("J3",dir="i"), Clock(12e6),Attrs(GLOBAL=True, IO_STANDAR
 ```
 This example says that the `clk` resource is at pin `J3` on the FPGA. `J3` is defined by vender of your FPGA. For example, KC705 pin map can be found at [here](https://www.xilinx.com/support/documentation/boards_and_kits/kc705/ug810_KC705_Eval_Bd.pdf). `clk` has a frequency of 12MHz, is a "global" signal, and uses the LVCMOS voltage standard. Without knowing about the toolchain for the platform, you will not know what attributes are required.
 ## Example for the Xilinx-KC705.
-```
+```python
 import os
 import subprocess
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     KC705Platform().build(Blinky(), do_program=True)
 ```
 You can see that it is not well define yet. Let's take a look into arty-a7 board.
-```
+```python
 import os
 import subprocess
 
@@ -329,7 +329,7 @@ if __name__ == "__main__":
 ```
 
 # Building
-```
+```python
 python3 file.py
 ```
 This will result in a directory, `build`, containing the output files:

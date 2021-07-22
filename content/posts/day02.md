@@ -16,7 +16,7 @@ Unless otherwise specified, there is one synchronous domain in a `Module` called
 # Creating more domains
 There is no reason to create combinational domains. As mentioned above, modules already contain one combinational domain, comb. \
 You can create a synchronous clock domain using `ClockDomain("<domain-name>", clk_edge="pos|neg")`. This gives you both the clock and the reset signal for the domain. By default, the domain name is `sync` and the clock edge is `pos`.
-```
+```python
 m = Module()
 mydomain = ClockDomain("clk")
 m.domains += mydomain
@@ -28,22 +28,22 @@ You can access a domain within a module by its name. So a domain created via Clo
 - `ResetSignal(domain="<domain>")` gives you the reset signal for the given domain.
 # Tips: Clock domains with the same clock but different edges.
 This can be done simply by creating one `clockdomain`
-```
+```python
 pos = ClockDomain("pos")
 neg = ClockDomain("neg", clk_edge="neg")
 ```
 Next, assign them with same clock driven
-```
+```python
 neg.clk = pos.clk
 neg.rst = pos.rst
 ```
 And then you can add these to the module. We can add more than domain to a module with the same statement.
-```
+```python
 m.domains += [pos, neg]
 ```
 # Access to domains
 A module can access its domains via its `d` attribute. By default, if a synchronous domain is added to a module's `domain`, then all modules everywhere will also have access to that domain via their d attribute, even if that module is not a submodule of the module where the domain was added.
-```
+```python
 m = Module()
 m2 = Module()
 m.domains += ClockDomain("thing")
@@ -52,7 +52,7 @@ m.d.thing += # logic
 m2.d.thing += #logic
 ```
 If you want to explicitly inhibit this global propagation by setting the `local` named parameter of the `ClockDomain` to `True`.
-```
+```python
 m = Module()
 m2 = Module()
 m.domains += ClockDomain("thing", local=True)
@@ -62,7 +62,7 @@ m2.d.thing += # logic
 ```
 # Ports
 The equivalent of ports in a module is public attributes. In the following example, `a` and `data` are publicly available to other modules, while `b` is not, just as `a` and `data` are publicly available to other python classes, and `b` is not.
-```
+```python
 class ThingBlock(Elaboratable):
     def __init__(self):
         # Public accessible
@@ -76,12 +76,12 @@ class ThingBlock(Elaboratable):
 ```
 # Reset/default values for signals
 If a `Signal` is set in the *combinational* or *synchronous* domain, then you can specify the default value of the signal if it is not set. By default value of the signal if it is not set. By default, it is zero, but for a non-zero value, you can specify the default value for a signal when constructing the signal by setting the `reset` named parameter in the constructor. For example, this create a 16-bit signed signal, self.x, which initial value set to 0xFFFF.
-```
+```python
 self.x = Signal(signed(16), reset=0xFFFF) # initial value "0xFFFF"
 ```
 # Explicitly not resetting
 For synchronous signals(that is, a signal set in a synchronous domain), you can specify that it is not reset on the reset signal, instead only getting an initial balue on power-up. This is done by setting the `reset_less` named parameter in the constructor to `True`
-```
+```python
 self.x = Signal(signed(16),reset= 0xFFFF, reset_less = True)
 ```
 This is especially useful during simulation or formal verification where you want to activate the reset, but keep some signals "outside" the reset. For example, a cycle counter that maintains its count across resets.
@@ -116,7 +116,7 @@ Attemped to convert nMigen value to boolean error will occur.
 
 # Effects of operations on result width
 Two unsigned/signed 4-bit signals addition will result in unsigned/signed 5-bit result.
-```
+```python
 >>> s1 = Signal(signed(4))
 >>> s2 = Signal(signed(4))
 >>> v2 = s1 + s2
@@ -126,7 +126,7 @@ Shape(width=5, signed=True)
 
 # Multiplexing signals
 `Mux()` returns one signal if the condition is true, the other signal otherwise:
-```
+```python
 y.eq(Mux(cond,x1,x2))
 ```
 In this case, if `cond` is true then `y` is set to x1, otherwise x2. It is the same as `y = cond?x1:x2;`. \
@@ -134,7 +134,7 @@ In this case, if `cond` is true then `y` is set to x1, otherwise x2. It is the s
 
 # Placing statements in domains
 Statements are written in the combinational domain of a module as we used to in verilog. Ofcourse, can be used in sequential circuits.
-```
+```python
 # Combinational circuit
 m.d.comb += x.eq(y+1)
 # Sequential circuit
@@ -143,7 +143,7 @@ m.d.sync += x.eq(y+1)
 For example, y is `IDLE` and x is next_state.
 # Adding multiple statements
 The `+=` operator for a domain can take one statement, or a list of statements, which is pretty ease to use.
-```
+```python
 m.d.comb += [
     x.eq(y+1),
     z.eq(w+2)
@@ -151,13 +151,13 @@ m.d.comb += [
 ```
 # Conflict statements will be override
 If a statement sets the same signal that previous statement set, the the second set takes precedence.
-```
+```python
 m.d.comb += x.eq(y+1)
 m.d.comb += x.eq(y+2)
 ```
 In this case, x will get y+2 not y+1.
 Remember that one signal can only be assigned to one domains, otherwise, it will result in a driver-driver conflict.
-```
+```python
 # Wrong code
 m.d.comb += x.eq(y+1)
 m.d.sync += x.eq(y+1)

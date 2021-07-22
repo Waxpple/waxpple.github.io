@@ -6,11 +6,12 @@ draft: false
 # Prerequisites
 If you would like to perform simulation with GTKwave, a opensource free waveform viewer.
 Download the software here(https://sourceforge.net/projects/gtkwave/)
-and put it under C:/gtkwave.
-Go to the windows path setting and add it under the $path variable.
+
+and put it under `C:/gtkwave`.
+Go to the windows path setting and add it under the `$path` variable.
 # The main function
 We create a simple 8-bit adder
-```
+```python
 from typing import List
 
 from nmigen import Elaboratable, Module, Signal
