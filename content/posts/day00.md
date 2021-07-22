@@ -21,6 +21,27 @@ pip install git+https://github.com/m-labs/nmigen.git
 pip install git+https://github.com/m-labs/nmigen-boards.git
 ```
 安裝之後就可以開始學習如何使用nMigen製作電路
+- Boolector (important!)
+```
+# Download and build Boolector
+git clone https://github.com/boolector/boolector
+cd boolector
+
+# Download and build Lingeling
+./contrib/setup-lingeling.sh
+
+# Download and build BTOR2Tools
+./contrib/setup-btor2tools.sh
+
+# Build Boolector
+./configure.sh && cd build && make
+
+./configure.sh --py3
+cd build
+make
+sudo cp build/bin/{boolector,btor*} /usr/local/bin/
+sudo cp deps/btor2tools/bin/btorsim /usr/local/bin/
+```
 # Value in migen
 ## Const 永不變
 ```python
