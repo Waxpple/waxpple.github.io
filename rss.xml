@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 22 Jul 2021 07:34:15 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day08] First fight with nMigen on simply a adder!</title><link>https://waxpple.github.io/posts/day08/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day08/</guid><pubDate>Thu, 22 Jul 2021 15:04:50 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="prerequisites">Prerequisites&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 22 Jul 2021 08:22:12 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day08] First fight with nMigen on simply a adder!</title><link>https://waxpple.github.io/posts/day08/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day08/</guid><pubDate>Thu, 22 Jul 2021 15:04:50 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="prerequisites">Prerequisites&lt;/h1>
 &lt;p>If you would like to perform simulation with GTKwave, a opensource free waveform viewer.
-Download the software here(&lt;a href="https://sourceforge.net/projects/gtkwave/">https://sourceforge.net/projects/gtkwave/&lt;/a>)&lt;/p>
+Download the software &lt;a href="https://sourceforge.net/projects/gtkwave/">here&lt;/a>&lt;/p>
 &lt;p>and put it under &lt;code>C:/gtkwave&lt;/code>.
 Go to the windows path setting and add it under the &lt;code>$path&lt;/code> variable.&lt;/p>
 &lt;h1 id="the-main-function">The main function&lt;/h1>
@@ -1968,24 +1968,56 @@ Remember that one signal can only be assigned to one domains, otherwise, it will
 &lt;/div></description></item><item><title>[Day01] Basic nMigen</title><link>https://waxpple.github.io/posts/day01/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day01/</guid><pubDate>Sat, 10 Jul 2021 10:50:02 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="basic-structure-of-modules">Basic structure of modules&lt;/h1>
 &lt;p>The tutorial is followed by &lt;a href="https://github.com/RobertBaruch/nmigen-tutorial/">https://github.com/RobertBaruch/nmigen-tutorial/&lt;/a>
 Thumbs up for his contributions.&lt;/p>
-&lt;pre>&lt;code>from nmigen import *
-from nmigen.build import Platform
-class ThingBlock(Elaboratable):
-def __init__(self):
-pass
-def elaborate(self, platform: Platform) -&amp;gt; Module:
-m = Module()
-return m
-&lt;/code>&lt;/pre>&lt;h1 id="elaborating-a-module">Elaborating a module&lt;/h1>
-&lt;pre>&lt;code>from nmigen.cli import main
-if __name__== &amp;quot;__main__&amp;quot;:
-sync = ClockDomain()
-block = ThingBlock()
-m = Module()
-m.domains += sync
-m.submodules += block
-main(m, ports=[sync.clk,sync.rst])
-&lt;/code>&lt;/pre>&lt;ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.build&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Platform&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">ThingBlock&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="fm">__init__&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">pass&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">elaborate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Platform&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="elaborating-a-module">Elaborating a module&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.cli&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">main&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span>&lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">sync&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ClockDomain&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">block&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ThingBlock&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">domains&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">sync&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">submodules&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">block&lt;/span>
+&lt;span class="n">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ports&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">sync&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">clk&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">sync&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rst&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
 &lt;li>main(module, ports=[&lt;ports>], platform=&amp;quot;&lt;platform>&amp;quot;) translate the given module into verilog. This is call &lt;em>elaboration&lt;/em>. All elaborate() medthod will have its platform argument set to the given platform like particular chips or evaluation boards.&lt;/li>
 &lt;/ul>
 &lt;pre>&lt;code>python3 thing.py generate -t [v|il] &amp;gt; thing.[v|il]
@@ -2010,47 +2042,120 @@ pip install git+https://github.com/m-labs/nmigen-boards.git
 &lt;/code>&lt;/pre>&lt;p>安裝之後就可以開始學習如何使用nMigen製作電路&lt;/p>
 &lt;h1 id="value-in-migen">Value in migen&lt;/h1>
 &lt;h2 id="const-永不變">Const 永不變&lt;/h2>
-&lt;pre>&lt;code>from nmigen import *
-a = Const(10)
-a.shape()
-&amp;gt;&amp;gt; Shape(width=4, signed=False)
-a = Const(10)
-a.shape()
-&amp;gt;&amp;gt; Shape(width=5, signed=True)
-x = Const(3,range(-5,11))
-x.shape()
-&amp;gt;&amp;gt; Shape(width=5, signed=True)
-&lt;/code>&lt;/pre>&lt;h2 id="可以使用enum-來做常數狀態">可以使用Enum 來做常數狀態&lt;/h2>
-&lt;pre>&lt;code>from enum import Enum, unique
-@unique
-class Func(Enum):
-NONE = 0
-ADD = 1
-SUB = 2
-MUL = 3
-DIV = 4
-...
-&amp;gt;&amp;gt;&amp;gt; x = Const(2, Func)
-&amp;gt;&amp;gt;&amp;gt; x.shape()
-unsigned(3)
-&amp;gt;&amp;gt;&amp;gt; x = Value.cast(Func.NONE)
-&amp;gt;&amp;gt;&amp;gt; x
-const 3'd0
-&lt;/code>&lt;/pre>&lt;h2 id="signal-是-wire或者reg">Signal 是 Wire或者reg&lt;/h2>
-&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; from nmigen import *
-&amp;gt;&amp;gt;&amp;gt; A = Signal(signed(8))
-&amp;gt;&amp;gt;&amp;gt; A.shape()
-Shape(width=8, signed=True)
-&lt;/code>&lt;/pre>&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x = Signal(range(-5,11))
-&amp;gt;&amp;gt;&amp;gt; x.shape()
-Shape(width=5, signed=True)
-&lt;/code>&lt;/pre>&lt;pre>&lt;code>&amp;gt;&amp;gt;&amp;gt; x = Signal(Func)
-&amp;gt;&amp;gt;&amp;gt; x
-(sig x)
-&amp;gt;&amp;gt;&amp;gt; x = Signal(unsigned(16),name=&amp;quot;dout&amp;quot;)
-&amp;gt;&amp;gt;&amp;gt; x.name
-'dout'
-&lt;/code>&lt;/pre>&lt;hr>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Const&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">shape&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">Shape&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">width&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">signed&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">False&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Const&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">shape&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">Shape&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">width&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">signed&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Const&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">11&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">x&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">shape&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">Shape&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">width&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">signed&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="可以使用enum-來做常數狀態">可以使用Enum 來做常數狀態&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">enum&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Enum&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">unique&lt;/span>
+&lt;span class="nd">@unique&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Func&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Enum&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">NONE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;span class="n">ADD&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;span class="n">SUB&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;span class="n">MUL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>
+&lt;span class="n">DIV&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">4&lt;/span>
+&lt;span class="o">...&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Const&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Func&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">shape&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">unsigned&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Value&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cast&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Func&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">NONE&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span>
+&lt;span class="n">const&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="s1">&amp;#39;d0&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="signal-是-wire或者reg">Signal 是 Wire或者reg&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">A&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">signed&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">A&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">shape&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">Shape&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">width&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">signed&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">11&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">shape&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">Shape&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">width&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">signed&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Func&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="n">sig&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">unsigned&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">16&lt;/span>&lt;span class="p">),&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;dout&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">name&lt;/span>
+&lt;span class="s1">&amp;#39;dout&amp;#39;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
 &lt;blockquote>
 &lt;p>但是我安裝Miniconda 後整個WSL的ssl都掛了，建議不要安裝&lt;/p>
 &lt;h1 id="安裝miniconda">安裝Miniconda&lt;/h1>
