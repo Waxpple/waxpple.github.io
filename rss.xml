@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 22 Jul 2021 09:02:35 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day10] Formal verification on adder</title><link>https://waxpple.github.io/posts/day09/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day09/</guid><pubDate>Thu, 22 Jul 2021 16:27:58 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="perform-formal-verification">Perform formal verification&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 22 Jul 2021 09:50:24 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day09] Formal verification on adder</title><link>https://waxpple.github.io/posts/day09/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day09/</guid><pubDate>Thu, 22 Jul 2021 16:27:58 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="perform-formal-verification">Perform formal verification&lt;/h1>
 &lt;p>What is a &amp;ldquo;formal verification&amp;rdquo; ?&lt;/p>
 &lt;p>&lt;code>Formal verification&lt;/code> is a process of checking whether a design satisfies some requirements.&lt;/p>
 &lt;h1 id="example">Example&lt;/h1>
@@ -325,20 +325,9 @@
 &lt;span class="n">toplevel&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">il&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>We will talk about the settings later. Fire the thing up.&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">sby -f adder.sby
-&lt;span class="se">\\&lt;/span>output
-SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> Removing directory &lt;span class="s1">&amp;#39;adder_cover&amp;#39;&lt;/span>. SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> Copy &lt;span class="s1">&amp;#39;toplevel.il&amp;#39;&lt;/span> to &lt;span class="s1">&amp;#39;adder_cover/src/toplevel.il&amp;#39;&lt;/span>. SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: smtbmc boolector SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> base: starting process &lt;span class="s2">&amp;#34;cd adder_cover/src; yosys -ql ../model/design.log ../model/design.ys&amp;#34;&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> base: finished &lt;span class="o">(&lt;/span>&lt;span class="nv">returncode&lt;/span>&lt;span class="o">=&lt;/span>0&lt;span class="o">)&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> smt2: starting process &lt;span class="s2">&amp;#34;cd adder_cover/model; yosys -ql design_smt2.log design_smt2.ys&amp;#34;&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> smt2: finished &lt;span class="o">(&lt;/span>&lt;span class="nv">returncode&lt;/span>&lt;span class="o">=&lt;/span>0&lt;span class="o">)&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: starting process &lt;span class="s2">&amp;#34;cd adder_cover; yosys-smtbmc -s boolector --presat --unroll -c --noprogress -t 2 --append 0 --dump-vcd engine_0/trace%.vcd --dump-vlogtb engine_0/trace%_tb.v --dump-smtc engine_0/trace%.smtc model/design_smt2.smt2&amp;#34;&lt;/span> SBY 16:53:21 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: &lt;span class="c1">## 0:00:00 Solver: boolector SBY 16:53:21 [adder_cover] engine_0: ## 0:00:00 Status: passed SBY 16:53:21 [adder_cover] engine_0: finished (returncode=0) SBY 16:53:21 [adder_cover] engine_0: Status returned by engine: pass SBY 16:53:21 [adder_cover] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0) SBY 16:53:21 [adder_cover] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0) SBY 16:53:21 [adder_cover] summary: engine_0 (smtbmc boolector) returned pass SBY 16:53:21 [adder_cover] DONE (PASS, rc=0) SBY 16:53:21 [adder_bmc] Removing directory &amp;#39;adder_bmc&amp;#39;. SBY 16:53:21 [adder_bmc] Copy &amp;#39;toplevel.il&amp;#39; to &amp;#39;adder_bmc/src/toplevel.il&amp;#39;. SBY 16:53:21 [adder_bmc] engine_0: smtbmc boolector SBY 16:53:21 [adder_bmc] base: starting process &amp;#34;cd adder_bmc/src; yosys -ql ../model/design.log ../model/design.ys&amp;#34; SBY 16:53:21 [adder_bmc] base: finished (returncode=0) SBY 16:53:21 [adder_bmc] smt2: starting process &amp;#34;cd adder_bmc/model; yosys -ql design_smt2.log design_smt2.ys&amp;#34; SBY 16:53:21 [adder_bmc] smt2: finished (returncode=0) SBY 16:53:21 [adder_bmc] engine_0: starting process &amp;#34;cd adder_bmc; yosys-smtbmc -s boolector --presat --unroll --noprogress -t 2 --append 0 --dump-vcd engine_0/trace.vcd --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2&amp;#34; SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Solver: boolector SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Checking assumptions in step 0.. SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Checking assertions in step 0.. SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 BMC failed! SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Assert failed in top: adder.py:27 SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Writing trace to VCD file: engine_0/trace.vcd SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Writing trace to Verilog testbench: engine_0/trace_tb.v SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Writing trace to constraints file: engine_0/trace.smtc SBY 16:53:21 [adder_bmc] engine_0: ## 0:00:00 Status: failed SBY 16:53:21 [adder_bmc] engine_0: finished (returncode=1) SBY 16:53:21 [adder_bmc] engine_0: Status returned by engine: FAIL SBY 16:53:21 [adder_bmc] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0) SBY 16:53:21 [adder_bmc] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0) SBY 16:53:21 [adder_bmc] summary: engine_0 (smtbmc boolector) returned FAIL SBY 16:53:21 [adder_bmc] summary: counterexample trace: adder_bmc/engine_0/trace.vcd SBY 16:53:21 [adder_bmc] DONE (FAIL, rc=2) SBY 16:53:21 One or more tasks produced a non-zero return code. &lt;/span>
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>As you can see, cover test passed but bmc test failed. We can trace it by firing&lt;/p>
+&lt;/div>&lt;p>We will talk about the settings later. Fire the thing up.
+&lt;img src="https://i.imgur.com/8AroqBb.png" alt="Imgur">
+As you can see, cover test passed but bmc test failed. We can trace it by firing&lt;/p>
 &lt;pre>&lt;code>gtkwave.exe adder_bmc/engine_0/trace.vcd
 &lt;/code>&lt;/pre>&lt;p>&lt;img src="https://i.imgur.com/cLjnGam.png" alt="Imgur">
 But yes, 0xFF + 0x01 == 0x00. What is the deal with it? Well, in assertion, we didn&amp;rsquo;t truncate the signal which makes it 8-bit verse 9-bit signal. Here is how we fix our design.&lt;/p>
@@ -402,16 +391,143 @@ But yes, 0xFF + 0x01 == 0x00. What is the deal with it? Well, in assertion, we d
 &lt;span class="n">main_runner&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ports&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ports&lt;/span>&lt;span class="p">())&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>And now the verification result will be:&lt;/p>
+&lt;/div>&lt;p>And now the verification result will be correct:
+&lt;img src="https://i.imgur.com/bmVfoW0.png" alt="Imgur">&lt;/p>
+&lt;blockquote>
+&lt;p>Note: If you get error message like &amp;ldquo;no boolector found&amp;rdquo;, go back to day one and install it properly.&lt;/p>
+&lt;/blockquote>
+&lt;h1 id="cover-function">Cover function&lt;/h1>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> Removing directory &lt;span class="s1">&amp;#39;adder_cover&amp;#39;&lt;/span>. SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> Copy &lt;span class="s1">&amp;#39;toplevel.il&amp;#39;&lt;/span> to &lt;span class="s1">&amp;#39;adder_cover/src/toplevel.il&amp;#39;&lt;/span>. SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: smtbmc boolector SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> base: starting process &lt;span class="s2">&amp;#34;cd adder_cover/src; yosys -ql ../model/design.log ../model/design.ys&amp;#34;&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> base: finished &lt;span class="o">(&lt;/span>&lt;span class="nv">returncode&lt;/span>&lt;span class="o">=&lt;/span>0&lt;span class="o">)&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> smt2: starting process &lt;span class="s2">&amp;#34;cd adder_cover/model; yosys -ql design_smt2.log design_smt2.ys&amp;#34;&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> smt2: finished &lt;span class="o">(&lt;/span>&lt;span class="nv">returncode&lt;/span>&lt;span class="o">=&lt;/span>0&lt;span class="o">)&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: starting process &lt;span class="s2">&amp;#34;cd adder_cover; yosys-smtbmc -s boolector --presat --unroll -c --noprogress -t 2 --append 0 --dump-vcd engine_0/trace%.vcd --dump-vlogtb engine_0/trace%_tb.v --dump-smtc engine_0/trace%.smtc model/design_smt2.smt2&amp;#34;&lt;/span> SBY 17:00:34 &lt;span class="o">[&lt;/span>adder_cover&lt;span class="o">]&lt;/span> engine_0: &lt;span class="c1">## 0:00:00 Solver: boolector SBY 17:00:34 [adder_cover] engine_0: ## 0:00:00 Status: passed SBY 17:00:34 [adder_cover] engine_0: finished (returncode=0) SBY 17:00:34 [adder_cover] engine_0: Status returned by engine: pass SBY 17:00:34 [adder_cover] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0) SBY 17:00:34 [adder_cover] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0) SBY 17:00:34 [adder_cover] summary: engine_0 (smtbmc boolector) returned pass SBY 17:00:34 [adder_cover] DONE (PASS, rc=0) SBY 17:00:34 [adder_bmc] Removing directory &amp;#39;adder_bmc&amp;#39;. SBY 17:00:34 [adder_bmc] Copy &amp;#39;toplevel.il&amp;#39; to &amp;#39;adder_bmc/src/toplevel.il&amp;#39;. SBY 17:00:34 [adder_bmc] engine_0: smtbmc boolector SBY 17:00:34 [adder_bmc] base: starting process &amp;#34;cd adder_bmc/src; yosys -ql ../model/design.log ../model/design.ys&amp;#34; SBY 17:00:34 [adder_bmc] base: finished (returncode=0) SBY 17:00:34 [adder_bmc] smt2: starting process &amp;#34;cd adder_bmc/model; yosys -ql design_smt2.log design_smt2.ys&amp;#34; SBY 17:00:34 [adder_bmc] smt2: finished (returncode=0) SBY 17:00:34 [adder_bmc] engine_0: starting process &amp;#34;cd adder_bmc; yosys-smtbmc -s boolector --presat --unroll --noprogress -t 2 --append 0 --dump-vcd engine_0/trace.vcd --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2&amp;#34; SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Solver: boolector SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Checking assumptions in step 0.. SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Checking assertions in step 0.. SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Checking assumptions in step 1.. SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Checking assertions in step 1.. SBY 17:00:34 [adder_bmc] engine_0: ## 0:00:00 Status: passed SBY 17:00:34 [adder_bmc] engine_0: finished (returncode=0) SBY 17:00:34 [adder_bmc] engine_0: Status returned by engine: pass SBY 17:00:34 [adder_bmc] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0) SBY 17:00:34 [adder_bmc] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0) SBY 17:00:34 [adder_bmc] summary: engine_0 (smtbmc boolector) returned pass SBY 17:00:34 [adder_bmc] DONE (PASS, rc=0) &lt;/span>
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">typing&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">List&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.asserts&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Assert&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">Cover&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Signal&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.back.pysim&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Simulator&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Delay&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.build&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Platform&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.cli&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">main_runner&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Adder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="fm">__init__&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">elaborate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">paltform&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Platform&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">ports&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">Signal&lt;/span>&lt;span class="p">]:&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">parser&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">args&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">parser&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parse_args&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">submodules&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Adder&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Assert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">)[:&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Cover&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mh">0xFF&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Cover&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mh">0xFE&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mh">0xFE&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">main_runner&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ports&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ports&lt;/span>&lt;span class="p">())&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>[Day08] First fight with nMigen on simply a adder!</title><link>https://waxpple.github.io/posts/day08/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day08/</guid><pubDate>Thu, 22 Jul 2021 15:04:50 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="prerequisites">Prerequisites&lt;/h1>
+&lt;/div>&lt;p>Recompile it and run formal verification.
+&lt;img src="https://i.imgur.com/al7GTrt.png" alt="Imgur">
+There is two trace file, let&amp;rsquo;s take a look.&lt;/p>
+&lt;pre>&lt;code>gtkwave.exe adder_cover/engine_0/trace0.vcd &amp;amp;
+&lt;/code>&lt;/pre>&lt;p>&lt;img src="https://i.imgur.com/PaoN3hy.png" alt="Imgur">
+This is the case one, &lt;code>out == 0xFF&lt;/code>&lt;/p>
+&lt;pre>&lt;code>gtkwave.exe adder_cover/engine_0/trace1.vcd &amp;amp;
+&lt;/code>&lt;/pre>&lt;p>&lt;img src="https://i.imgur.com/CYb1U3n.png" alt="Imgur">
+This is the case two, &lt;code>out == 0xFE and x == 0xFE&lt;/code>.
+Any cover event is independant to any other cover events.&lt;/p>
+&lt;h1 id="assumuption">Assumuption&lt;/h1>
+&lt;p>Assumption is to assume a signal that is not being a illegal state and the signal will always satisfy specific assumptions.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="o">...&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">parser&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">args&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">parser&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parse_args&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">submodules&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Adder&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Assert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">)[:&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Assume&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Cover&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mh">0x00&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mh">0x40&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">main_runner&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ports&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ports&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Here we assume &lt;code>x is always equal to y &amp;lt;&amp;lt; 1&lt;/code>. And find one case for &lt;code>output ranges between 0x00 and 0x40&lt;/code>.
+&lt;img src="https://i.imgur.com/mwUwgvn.png" alt="Imgur">
+We can do some interesting stuff like:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">parser&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">args&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">parser&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">parse_args&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">submodules&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">adder&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Adder&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Assert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">)[:&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">If&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)):&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">Cover&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mh">0x00&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mh">0x40&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">main_runner&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ports&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">adder&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ports&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Which means cover the output range if &lt;code>x == y&amp;lt;&amp;lt;1&lt;/code>.
+&lt;img src="https://i.imgur.com/II2DFfW.png" alt="Imgur">&lt;/p></description></item><item><title>[Day08] First fight with nMigen on simply an adder!</title><link>https://waxpple.github.io/posts/day08/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day08/</guid><pubDate>Thu, 22 Jul 2021 15:04:50 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="prerequisites">Prerequisites&lt;/h1>
 &lt;p>If you would like to perform simulation with GTKwave, a opensource free waveform viewer.
 Download the software &lt;a href="https://sourceforge.net/projects/gtkwave/">here&lt;/a>&lt;/p>
 &lt;p>and put it under &lt;code>C:/gtkwave&lt;/code>.
