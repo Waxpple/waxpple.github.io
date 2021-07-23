@@ -222,6 +222,28 @@ if __name__ == "__main__":
     main_runner(parser, args, m, ports=[] + clocky.ports())
 ```
 
-The answer is ... no!
+The answer is ...still no!
 
 ![Imgur](https://i.imgur.com/U6VfrDO.png)
+
+As you can see, you must be very careful about condtion in formal verification especially in a complex design.
+
+Here is the correct condition:
+
+```python
+if __name__ == "__main__":
+    parser = main_parser()
+    args = parser.parse_args()
+
+    m = Module()
+    m.submodules.clocky = clocky = Clocky()
+
+    rst = ResetSignal()
+    with m.If((clocky.x > 0) & (Past(clocky.load) == 0)):
+        m.d.sync += Assert(clocky.x == (Past(clocky.x) + 1)[:7])
+    with m.If((clocky.x == 0) & (Past(rst) == 0) & (Past(clocky.load) == 0)):
+        m.d.sync += Assert(Past(clocky.x) == 100)
+    main_runner(parser, args, m, ports=[] + clocky.ports())
+```
+And here is the result:
+![Imgur](https://i.imgur.com/CrqKUZl.png)
