@@ -2,12 +2,10 @@
 title: "[Day10] Clock domain simulation!"
 date: 2021-07-22T23:17:22+08:00
 draft: false
-category: 
-  - "Development"
-  - "VIM"
 ---
 # Cycle accurate simulation
 In previous session, we use combinational circuit design. Now, it is time for some sequential circuits!
+
 ```python
 from typing import List
 from nmigen.asserts import Assert,Cover,Assume
@@ -70,6 +68,7 @@ if __name__ == "__main__":
         sim.run()
 
 ```
+
 After simulation, here is the waveform.
 ![Imgur](https://i.imgur.com/6gHk82P.png)
 As you can see, `x` will be loaded when `load` is high and after the pulse, `x` will keep increasing each cycle until it reaches 100. Then `x` will be clear.
