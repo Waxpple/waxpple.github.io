@@ -2,7 +2,7 @@
 title: "[Day10] Clock domain simulation!"
 date: 2021-07-22T23:17:22+08:00
 draft: false
-categories = ["Development"]
+category: categories
 ---
 # Cycle accurate simulation
 In previous session, we use combinational circuit design. Now, it is time for some sequential circuits!
