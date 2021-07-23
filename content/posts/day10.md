@@ -2,6 +2,7 @@
 title: "[Day10] Clock domain simulation!"
 date: 2021-07-22T23:17:22+08:00
 draft: false
+tag: nMigen
 ---
 # Cycle accurate simulation
 In previous session, we use combinational circuit design. Now, it is time for some sequential circuits!
@@ -70,3 +71,7 @@ if __name__ == "__main__":
 After simulation, here is the waveform.
 ![Imgur](https://i.imgur.com/6gHk82P.png)
 As you can see, `x` will be loaded when `load` is high and after the pulse, `x` will keep increasing each cycle until it reaches 100. Then `x` will be clear.
+
+You might want to ask, why would `x` is not loaded at rising edge of load? That is becuase `load` is changing not simutanously with clock edge but infinitesimally close after clock rising edge. Which also applys to clock falling edge.
+
+# Formal verification
