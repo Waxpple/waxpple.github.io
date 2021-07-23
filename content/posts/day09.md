@@ -178,6 +178,11 @@ prep -top top
 toplevel.il
 ```
 We will talk about the settings later. Fire the thing up.
+
+```
+sby -f adder.sby
+```
+
 ![Imgur](https://i.imgur.com/8AroqBb.png)
 As you can see, cover test passed but bmc test failed. We can trace it by firing
 ```
