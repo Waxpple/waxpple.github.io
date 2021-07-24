@@ -1,8 +1,9 @@
 ---
-title: "[Day11] Icesugar-Pro Development!"
-date: 2021-07-24T23:20:22+08:00
-draft: false
+title: "[Day11]New toy Icesugar-Pro!"
+date: 2021-07-24T21:12:30+08:00
+draft: true
 ---
+
 
 # Install Project Trellis
 The FPGA use EPC5 chips from lattice. We can use Trellis+ yosys+ nextpnr to develope our design.
