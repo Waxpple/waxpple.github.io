@@ -1,10 +1,10 @@
 ---
-title: "[Day11]New toy Icesugar-Pro!"
+title: "[Day11]New toy iCESugar-Pro!"
 date: 2021-07-24T21:12:30+08:00
 draft: false
 ---
 
-
+![iCESugar-pro](https://www.muselab-tech.com/content/images/2021/03/iCESugar-pro-1.jpg)
 # Install Project Trellis
 The FPGA use EPC5 chips from lattice. We can use Trellis+ yosys+ nextpnr to develope our design.
 [https://github.com/SymbiFlow/prjtrellis](https://github.com/SymbiFlow/prjtrellis) 
@@ -59,3 +59,8 @@ sudo make install
 ```
 
 This step takes long time to make, especially large ram usage. If failed, you can see [https://github.com/YosysHQ/nextpnr/issues/115](https://github.com/YosysHQ/nextpnr/issues/115) for more detailed build information.
+
+# Build a program on FPGAs
+
+```python
+```
