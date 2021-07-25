@@ -118,6 +118,7 @@ python3 blinky.py
 ```
 # Yosys report
 In the build folder under python file directory, here is the tree structure.
+![Imgur](https://i.imgur.com/W3ykQRW.gif)
 ```bash
 .
 ├── build_top.bat
