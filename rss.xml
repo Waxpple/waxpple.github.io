@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sun, 25 Jul 2021 08:30:44 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day11]New toy iCESugar-Pro!</title><link>https://waxpple.github.io/posts/day11/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day11/</guid><pubDate>Sat, 24 Jul 2021 21:12:30 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="icesugar-pro">iCESugar-pro&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sun, 25 Jul 2021 10:47:54 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day11]New toy iCESugar-Pro!</title><link>https://waxpple.github.io/posts/day11/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day11/</guid><pubDate>Sat, 24 Jul 2021 21:12:30 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="icesugar-pro">iCESugar-pro&lt;/h1>
 &lt;p>&lt;img src="https://www.muselab-tech.com/content/images/2021/03/iCESugar-pro-1.jpg" alt="iCESugar-pro">
 Offical github site: &lt;a href="https://github.com/wuxx/icesugar-pro">https://github.com/wuxx/icesugar-pro&lt;/a>&lt;/p>
 &lt;h1 id="install-project-trellis">Install Project Trellis&lt;/h1>
@@ -129,13 +129,6 @@ sudo make install
 &lt;/span>&lt;span class="lnt">43
 &lt;/span>&lt;span class="lnt">44
 &lt;/span>&lt;span class="lnt">45
-&lt;/span>&lt;span class="lnt">46
-&lt;/span>&lt;span class="lnt">47
-&lt;/span>&lt;span class="lnt">48
-&lt;/span>&lt;span class="lnt">49
-&lt;/span>&lt;span class="lnt">50
-&lt;/span>&lt;span class="lnt">51
-&lt;/span>&lt;span class="lnt">52
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
 &lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">import&lt;/span> &lt;span class="nn">os&lt;/span>
@@ -150,15 +143,11 @@ sudo make install
 &lt;span class="k">def&lt;/span> &lt;span class="fm">__init__&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;span class="k">pass&lt;/span>
 &lt;span class="k">def&lt;/span> &lt;span class="nf">elaborate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Platform&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">led&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">request&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;led&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">timer&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;span class="n">clk_freq&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">default_clk_frequency&lt;/span>
-&lt;span class="n">timer&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">clk_freq&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">reset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">clk_freq&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;span class="n">led&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">request&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;led&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">o&lt;/span>
-&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">If&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timer&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">timer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">reset&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">led&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">~&lt;/span>&lt;span class="n">led&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Else&lt;/span>&lt;span class="p">():&lt;/span>
-&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">timer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timer&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">timer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timer&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">comb&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">led&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">o&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timer&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">])&lt;/span>
 &lt;span class="k">return&lt;/span> &lt;span class="n">m&lt;/span>
 &lt;span class="k">def&lt;/span> &lt;span class="nf">ports&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">Signal&lt;/span>&lt;span class="p">]:&lt;/span>
 &lt;span class="k">return&lt;/span> &lt;span class="p">[]&lt;/span>
@@ -170,22 +159,609 @@ sudo make install
 &lt;span class="n">default_rst&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;rst&amp;#34;&lt;/span>
 &lt;span class="n">resources&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
 &lt;span class="n">Resource&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;clk1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Pins&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;P6&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nb">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;i&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Clock&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mf">25e6&lt;/span>&lt;span class="p">),&lt;/span>
-&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">GLOBAL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">IO_STANDARD&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
-&lt;span class="n">Resource&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;led&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Pins&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;B11&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nb">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;o&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
-&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">GLOBAL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">IO_STANDARD&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
+&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IO_TYPE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
 &lt;span class="n">Resource&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;rst&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Pins&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;L14&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nb">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;i&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
-&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">GLOBAL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">IO_STANDARD&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
+&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IO_TYPE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
+&lt;span class="n">Resource&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;led&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Pins&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;B11&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nb">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;o&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IO_TYPE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
 &lt;span class="p">]&lt;/span>
 &lt;span class="n">connectors&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
 &lt;span class="k">def&lt;/span> &lt;span class="nf">toolchain_program&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">products&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">name&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;span class="n">iceprog&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">environ&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;ICEPROG&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;iceprog.exe&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">iceprog&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">environ&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;ICEPROG&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;iceprog&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="k">with&lt;/span> &lt;span class="n">products&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">extract&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;{}.bin&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">format&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">bitstream_filename&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;span class="n">subprocess&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">check_call&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">iceprog&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">bitstream_filename&lt;/span>&lt;span class="p">])&lt;/span>
 &lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;span class="n">Board&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Blinker&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="n">do_program&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="bp">False&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>[Day10] Clock domain simulation!</title><link>https://waxpple.github.io/posts/day10/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day10/</guid><pubDate>Thu, 22 Jul 2021 23:17:22 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="cycle-accurate-simulation">Cycle accurate simulation&lt;/h1>
+&lt;/div>&lt;ul>
+&lt;li>Note: In EPC5, IO_STANDARD is IO_TYPE and GLOBAL is not used.&lt;/li>
+&lt;/ul>
+&lt;pre>&lt;code>python3 blinky.py
+&lt;/code>&lt;/pre>&lt;h1 id="yosys-report">Yosys report&lt;/h1>
+&lt;p>In the build folder under python file directory, here is the tree structure.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">.
+├── build_top.bat
+├── build_top.sh
+├── top.bit
+├── top.config
+├── top.debug.v
+├── top.il
+├── top.json
+├── top.lpf
+├── top.rpt
+├── top.svf
+├── top.tim
+└── top.ys
+&lt;span class="m">0&lt;/span> directories, &lt;span class="m">12&lt;/span> files
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In &lt;code>top.rpt&lt;/code>, you can see the report for FPGA utilization.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="o">===&lt;/span> &lt;span class="nv">top&lt;/span> &lt;span class="o">===&lt;/span>
+Number of wires: &lt;span class="m">23&lt;/span>
+Number of wire bits: &lt;span class="m">99&lt;/span>
+Number of public wires: &lt;span class="m">23&lt;/span>
+Number of public wire bits: &lt;span class="m">99&lt;/span>
+Number of memories: &lt;span class="m">0&lt;/span>
+Number of memory bits: &lt;span class="m">0&lt;/span>
+Number of processes: &lt;span class="m">0&lt;/span>
+Number of cells: &lt;span class="m">37&lt;/span>
+CCU2C &lt;span class="m">10&lt;/span>
+LUT4 &lt;span class="m">1&lt;/span>
+SGSR &lt;span class="m">1&lt;/span>
+TRELLIS_FF &lt;span class="m">22&lt;/span>
+TRELLIS_IO &lt;span class="m">3&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The number of cells is not nessecarily relevant to the code quality. Maybe you change something that you don&amp;rsquo;t think it will impact any design but it does. There is some randomness in synthesis.&lt;/p>
+&lt;p>In &lt;code>top.tim&lt;/code>, you can check timing.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;span class="lnt">136
+&lt;/span>&lt;span class="lnt">137
+&lt;/span>&lt;span class="lnt">138
+&lt;/span>&lt;span class="lnt">139
+&lt;/span>&lt;span class="lnt">140
+&lt;/span>&lt;span class="lnt">141
+&lt;/span>&lt;span class="lnt">142
+&lt;/span>&lt;span class="lnt">143
+&lt;/span>&lt;span class="lnt">144
+&lt;/span>&lt;span class="lnt">145
+&lt;/span>&lt;span class="lnt">146
+&lt;/span>&lt;span class="lnt">147
+&lt;/span>&lt;span class="lnt">148
+&lt;/span>&lt;span class="lnt">149
+&lt;/span>&lt;span class="lnt">150
+&lt;/span>&lt;span class="lnt">151
+&lt;/span>&lt;span class="lnt">152
+&lt;/span>&lt;span class="lnt">153
+&lt;/span>&lt;span class="lnt">154
+&lt;/span>&lt;span class="lnt">155
+&lt;/span>&lt;span class="lnt">156
+&lt;/span>&lt;span class="lnt">157
+&lt;/span>&lt;span class="lnt">158
+&lt;/span>&lt;span class="lnt">159
+&lt;/span>&lt;span class="lnt">160
+&lt;/span>&lt;span class="lnt">161
+&lt;/span>&lt;span class="lnt">162
+&lt;/span>&lt;span class="lnt">163
+&lt;/span>&lt;span class="lnt">164
+&lt;/span>&lt;span class="lnt">165
+&lt;/span>&lt;span class="lnt">166
+&lt;/span>&lt;span class="lnt">167
+&lt;/span>&lt;span class="lnt">168
+&lt;/span>&lt;span class="lnt">169
+&lt;/span>&lt;span class="lnt">170
+&lt;/span>&lt;span class="lnt">171
+&lt;/span>&lt;span class="lnt">172
+&lt;/span>&lt;span class="lnt">173
+&lt;/span>&lt;span class="lnt">174
+&lt;/span>&lt;span class="lnt">175
+&lt;/span>&lt;span class="lnt">176
+&lt;/span>&lt;span class="lnt">177
+&lt;/span>&lt;span class="lnt">178
+&lt;/span>&lt;span class="lnt">179
+&lt;/span>&lt;span class="lnt">180
+&lt;/span>&lt;span class="lnt">181
+&lt;/span>&lt;span class="lnt">182
+&lt;/span>&lt;span class="lnt">183
+&lt;/span>&lt;span class="lnt">184
+&lt;/span>&lt;span class="lnt">185
+&lt;/span>&lt;span class="lnt">186
+&lt;/span>&lt;span class="lnt">187
+&lt;/span>&lt;span class="lnt">188
+&lt;/span>&lt;span class="lnt">189
+&lt;/span>&lt;span class="lnt">190
+&lt;/span>&lt;span class="lnt">191
+&lt;/span>&lt;span class="lnt">192
+&lt;/span>&lt;span class="lnt">193
+&lt;/span>&lt;span class="lnt">194
+&lt;/span>&lt;span class="lnt">195
+&lt;/span>&lt;span class="lnt">196
+&lt;/span>&lt;span class="lnt">197
+&lt;/span>&lt;span class="lnt">198
+&lt;/span>&lt;span class="lnt">199
+&lt;/span>&lt;span class="lnt">200
+&lt;/span>&lt;span class="lnt">201
+&lt;/span>&lt;span class="lnt">202
+&lt;/span>&lt;span class="lnt">203
+&lt;/span>&lt;span class="lnt">204
+&lt;/span>&lt;span class="lnt">205
+&lt;/span>&lt;span class="lnt">206
+&lt;/span>&lt;span class="lnt">207
+&lt;/span>&lt;span class="lnt">208
+&lt;/span>&lt;span class="lnt">209
+&lt;/span>&lt;span class="lnt">210
+&lt;/span>&lt;span class="lnt">211
+&lt;/span>&lt;span class="lnt">212
+&lt;/span>&lt;span class="lnt">213
+&lt;/span>&lt;span class="lnt">214
+&lt;/span>&lt;span class="lnt">215
+&lt;/span>&lt;span class="lnt">216
+&lt;/span>&lt;span class="lnt">217
+&lt;/span>&lt;span class="lnt">218
+&lt;/span>&lt;span class="lnt">219
+&lt;/span>&lt;span class="lnt">220
+&lt;/span>&lt;span class="lnt">221
+&lt;/span>&lt;span class="lnt">222
+&lt;/span>&lt;span class="lnt">223
+&lt;/span>&lt;span class="lnt">224
+&lt;/span>&lt;span class="lnt">225
+&lt;/span>&lt;span class="lnt">226
+&lt;/span>&lt;span class="lnt">227
+&lt;/span>&lt;span class="lnt">228
+&lt;/span>&lt;span class="lnt">229
+&lt;/span>&lt;span class="lnt">230
+&lt;/span>&lt;span class="lnt">231
+&lt;/span>&lt;span class="lnt">232
+&lt;/span>&lt;span class="lnt">233
+&lt;/span>&lt;span class="lnt">234
+&lt;/span>&lt;span class="lnt">235
+&lt;/span>&lt;span class="lnt">236
+&lt;/span>&lt;span class="lnt">237
+&lt;/span>&lt;span class="lnt">238
+&lt;/span>&lt;span class="lnt">239
+&lt;/span>&lt;span class="lnt">240
+&lt;/span>&lt;span class="lnt">241
+&lt;/span>&lt;span class="lnt">242
+&lt;/span>&lt;span class="lnt">243
+&lt;/span>&lt;span class="lnt">244
+&lt;/span>&lt;span class="lnt">245
+&lt;/span>&lt;span class="lnt">246
+&lt;/span>&lt;span class="lnt">247
+&lt;/span>&lt;span class="lnt">248
+&lt;/span>&lt;span class="lnt">249
+&lt;/span>&lt;span class="lnt">250
+&lt;/span>&lt;span class="lnt">251
+&lt;/span>&lt;span class="lnt">252
+&lt;/span>&lt;span class="lnt">253
+&lt;/span>&lt;span class="lnt">254
+&lt;/span>&lt;span class="lnt">255
+&lt;/span>&lt;span class="lnt">256
+&lt;/span>&lt;span class="lnt">257
+&lt;/span>&lt;span class="lnt">258
+&lt;/span>&lt;span class="lnt">259
+&lt;/span>&lt;span class="lnt">260
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">Info: constraining clock net &lt;span class="s1">&amp;#39;clk1_0__io&amp;#39;&lt;/span> to 25.00 MHz
+Info: Logic utilisation before packing:
+Info: Total LUT4s: 21/24288 0%
+Info: logic LUTs: 1/24288 0%
+Info: carry LUTs: 20/24288 0%
+Info: RAM LUTs: 0/12144 0%
+Info: RAMW LUTs: 0/ &lt;span class="m">6072&lt;/span> 0%
+Info: Total DFFs: 44/24288 0%
+Info: Packing IOs..
+Info: rst_0__io feeds TRELLIS_IO pin_rst_0.rst_0_0, removing &lt;span class="nv">$nextpnr_ibuf&lt;/span> rst_0__io.
+Info: pin &lt;span class="s1">&amp;#39;pin_rst_0.rst_0_0&amp;#39;&lt;/span> constrained to Bel &lt;span class="s1">&amp;#39;X72/Y32/PIOC&amp;#39;&lt;/span>.
+Info: led_0__io feeds TRELLIS_IO pin_led_0.led_0_0, removing &lt;span class="nv">$nextpnr_obuf&lt;/span> led_0__io.
+Info: pin &lt;span class="s1">&amp;#39;pin_led_0.led_0_0&amp;#39;&lt;/span> constrained to Bel &lt;span class="s1">&amp;#39;X49/Y0/PIOA&amp;#39;&lt;/span>.
+Info: clk1_0__io feeds TRELLIS_IO pin_clk1_0.clk1_0_0, removing &lt;span class="nv">$nextpnr_ibuf&lt;/span> clk1_0__io.
+Info: pin &lt;span class="s1">&amp;#39;pin_clk1_0.clk1_0_0&amp;#39;&lt;/span> constrained to Bel &lt;span class="s1">&amp;#39;X0/Y47/PIOC&amp;#39;&lt;/span>.
+Info: Packing constants..
+Info: Packing carries...
+Info: Finding LUTFF pairs...
+Info: Packing LUT5-7s...
+Info: Finding LUT-LUT pairs...
+Info: Packing paired LUTs into a SLICE...
+Info: Packing unpaired LUTs into a SLICE...
+Info: Packing unpaired FFs into a SLICE...
+Info: Generating derived timing constraints...
+Info: Promoting globals...
+Info: promoting clock net cd_sync_clk1_0__i to global network
+Info: Checksum: 0xd8bc23f8
+Info: Annotating ports with timing budgets &lt;span class="k">for&lt;/span> target frequency 12.00 MHz
+Info: Checksum: 0x2027cd80
+Info: Device utilisation:
+Info: TRELLIS_SLICE: 16/12144 0%
+Info: TRELLIS_IO: 3/ &lt;span class="m">197&lt;/span> 1%
+Info: DCCA: 1/ &lt;span class="m">56&lt;/span> 1%
+Info: DP16KD: 0/ &lt;span class="m">56&lt;/span> 0%
+Info: MULT18X18D: 0/ &lt;span class="m">28&lt;/span> 0%
+Info: ALU54B: 0/ &lt;span class="m">14&lt;/span> 0%
+Info: EHXPLLL: 0/ &lt;span class="m">2&lt;/span> 0%
+Info: EXTREFB: 0/ &lt;span class="m">1&lt;/span> 0%
+Info: DCUA: 0/ &lt;span class="m">1&lt;/span> 0%
+Info: PCSCLKDIV: 0/ &lt;span class="m">2&lt;/span> 0%
+Info: IOLOGIC: 0/ &lt;span class="m">128&lt;/span> 0%
+Info: SIOLOGIC: 0/ &lt;span class="m">69&lt;/span> 0%
+Info: GSR: 1/ &lt;span class="m">1&lt;/span> 100%
+Info: JTAGG: 0/ &lt;span class="m">1&lt;/span> 0%
+Info: OSCG: 0/ &lt;span class="m">1&lt;/span> 0%
+Info: SEDGA: 0/ &lt;span class="m">1&lt;/span> 0%
+Info: DTR: 0/ &lt;span class="m">1&lt;/span> 0%
+Info: USRMCLK: 0/ &lt;span class="m">1&lt;/span> 0%
+Info: CLKDIVF: 0/ &lt;span class="m">4&lt;/span> 0%
+Info: ECLKSYNCB: 0/ &lt;span class="m">10&lt;/span> 0%
+Info: DLLDELD: 0/ &lt;span class="m">8&lt;/span> 0%
+Info: DDRDLL: 0/ &lt;span class="m">4&lt;/span> 0%
+Info: DQSBUFM: 0/ &lt;span class="m">8&lt;/span> 0%
+Info: TRELLIS_ECLKBUF: 0/ &lt;span class="m">8&lt;/span> 0%
+Info: ECLKBRIDGECS: 0/ &lt;span class="m">2&lt;/span> 0%
+Info: DCSC: 0/ &lt;span class="m">2&lt;/span> 0%
+Info: Placed &lt;span class="m">4&lt;/span> cells based on constraints.
+Info: Creating initial analytic placement &lt;span class="k">for&lt;/span> &lt;span class="m">4&lt;/span> cells, random placement &lt;span class="nv">wirelen&lt;/span> &lt;span class="o">=&lt;/span> 272.
+Info: at initial placer iter 0, &lt;span class="nv">wirelen&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">112&lt;/span>
+Info: at initial placer iter 1, &lt;span class="nv">wirelen&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">112&lt;/span>
+Info: at initial placer iter 2, &lt;span class="nv">wirelen&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">112&lt;/span>
+Info: at initial placer iter 3, &lt;span class="nv">wirelen&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">112&lt;/span>
+Info: Running main analytical placer.
+Info: at iteration &lt;span class="c1">#1, type TRELLIS_SLICE: wirelen solved = 112, spread = 114, legal = 119; time = 0.00s&lt;/span>
+Info: HeAP Placer Time: 0.01s
+Info: of which solving equations: 0.00s
+Info: of which spreading cells: 0.00s
+Info: of which strict legalisation: 0.00s
+Info: Running simulated annealing placer &lt;span class="k">for&lt;/span> refinement.
+Info: at iteration &lt;span class="c1">#1: temp = 0.000000, timing cost = 9, wirelen = 119&lt;/span>
+Info: at iteration &lt;span class="c1">#3: temp = 0.000000, timing cost = 9, wirelen = 115&lt;/span>
+Info: SA placement &lt;span class="nb">time&lt;/span> 0.00s
+Info: Max frequency &lt;span class="k">for&lt;/span> clock &lt;span class="s1">&amp;#39;$glbnet$cd_sync_clk1_0__i&amp;#39;&lt;/span>: 289.52 MHz &lt;span class="o">(&lt;/span>PASS at 25.00 MHz&lt;span class="o">)&lt;/span>
+Info: Max delay &amp;lt;async&amp;gt; -&amp;gt; &amp;lt;async&amp;gt; : 4.68 ns
+Info: Max delay &amp;lt;async&amp;gt; -&amp;gt; posedge &lt;span class="nv">$glbnet$cd_sync_clk1_0__i&lt;/span>: 8.64 ns
+Info: Max delay posedge &lt;span class="nv">$glbnet$cd_sync_clk1_0__i&lt;/span> -&amp;gt; &amp;lt;async&amp;gt; : 6.41 ns
+Info: Slack histogram:
+Info: legend: * represents &lt;span class="m">1&lt;/span> endpoint&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+Info: + represents &lt;span class="o">[&lt;/span>1,1&lt;span class="o">)&lt;/span> endpoint&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 31364, 33877&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>*
+Info: &lt;span class="o">[&lt;/span> 33877, 36390&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 36390, 38903&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>*********************
+Info: &lt;span class="o">[&lt;/span> 38903, 41416&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 41416, 43929&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 43929, 46442&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 46442, 48955&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 48955, 51468&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 51468, 53981&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 53981, 56494&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 56494, 59007&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 59007, 61520&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 61520, 64033&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 64033, 66546&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 66546, 69059&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 69059, 71572&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 71572, 74085&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 74085, 76598&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 76598, 79111&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>**
+Info: &lt;span class="o">[&lt;/span> 79111, 81624&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>*
+Info: Checksum: 0x607e8c2f
+Info: Routing globals...
+Info: routing clock net &lt;span class="nv">$glbnet$cd_sync_clk1_0__i&lt;/span> using global &lt;span class="m">0&lt;/span>
+Info: Routing..
+Info: Setting up routing queue.
+Info: Routing &lt;span class="m">58&lt;/span> arcs.
+Info: &lt;span class="p">|&lt;/span> &lt;span class="o">(&lt;/span>re-&lt;span class="o">)&lt;/span>routed arcs &lt;span class="p">|&lt;/span> delta &lt;span class="p">|&lt;/span> remaining&lt;span class="p">|&lt;/span> &lt;span class="nb">time&lt;/span> spent &lt;span class="p">|&lt;/span>
+Info: IterCnt &lt;span class="p">|&lt;/span> w/ripup wo/ripup &lt;span class="p">|&lt;/span> w/r wo/r &lt;span class="p">|&lt;/span> arcs&lt;span class="p">|&lt;/span> batch&lt;span class="o">(&lt;/span>sec&lt;span class="o">)&lt;/span> total&lt;span class="o">(&lt;/span>sec&lt;span class="o">)&lt;/span>&lt;span class="p">|&lt;/span>
+Info: &lt;span class="m">58&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="m">0&lt;/span> &lt;span class="m">58&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="m">0&lt;/span> &lt;span class="m">58&lt;/span> &lt;span class="p">|&lt;/span> 0&lt;span class="p">|&lt;/span> 0.02 0.02&lt;span class="p">|&lt;/span>
+Info: Routing complete.
+Info: Router1 &lt;span class="nb">time&lt;/span> 0.02s
+Info: Checksum: 0xe0791b74
+Info: Critical path report &lt;span class="k">for&lt;/span> clock &lt;span class="s1">&amp;#39;$glbnet$cd_sync_clk1_0__i&amp;#39;&lt;/span> &lt;span class="o">(&lt;/span>posedge -&amp;gt; posedge&lt;span class="o">)&lt;/span>:
+Info: curr total
+Info: 0.5 0.5 Source timer&lt;span class="nv">$next_CCU2C_S0_9$CCU2_SLICE&lt;/span>.Q0
+Info: 0.8 1.3 Net timer&lt;span class="o">[&lt;/span>0&lt;span class="o">]&lt;/span> budget 18.993000 ns &lt;span class="o">(&lt;/span>47,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>47,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_9$CCU2_SLICE&lt;/span>.B0
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.4 1.8 Source timer&lt;span class="nv">$next_CCU2C_S0_9$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 1.8 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>1&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>47,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>47,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_3$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.1 1.9 Source timer&lt;span class="nv">$next_CCU2C_S0_3$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 1.9 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>3&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>47,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>47,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_2$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.1 1.9 Source timer&lt;span class="nv">$next_CCU2C_S0_2$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 1.9 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>5&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>47,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>48,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_1$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.1 2.0 Source timer&lt;span class="nv">$next_CCU2C_S0_1$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 2.0 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>7&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>48,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>48,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.1 2.1 Source timer&lt;span class="nv">$next_CCU2C_S0$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 2.1 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>9&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>48,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>48,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_8$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.1 2.2 Source timer&lt;span class="nv">$next_CCU2C_S0_8$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 2.2 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>11&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>48,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>48,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_7$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.1 2.2 Source timer&lt;span class="nv">$next_CCU2C_S0_7$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 2.2 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>13&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>48,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>49,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_6$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.1 2.3 Source timer&lt;span class="nv">$next_CCU2C_S0_6$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 2.3 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>15&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>49,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>49,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_5$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.1 2.4 Source timer&lt;span class="nv">$next_CCU2C_S0_5$CCU2_SLICE&lt;/span>.FCO
+Info: 0.0 2.4 Net timer&lt;span class="nv">$next_CCU2C_S0_4_COUT&lt;/span>&lt;span class="o">[&lt;/span>17&lt;span class="o">]&lt;/span> budget 0.000000 ns &lt;span class="o">(&lt;/span>49,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>49,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_4$CCU2_SLICE&lt;/span>.FCI
+Info: Defined in:
+Info: blinky.py:18
+Info: /usr/local/bin/../share/yosys/ecp5/arith_map.v:63.22-63.23
+Info: 0.4 2.8 Source timer&lt;span class="nv">$next_CCU2C_S0_4$CCU2_SLICE&lt;/span>.F0
+Info: 0.1 2.9 Net timer&lt;span class="nv">$next&lt;/span>&lt;span class="o">[&lt;/span>18&lt;span class="o">]&lt;/span> budget 19.007999 ns &lt;span class="o">(&lt;/span>49,2&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>49,2&lt;span class="o">)&lt;/span>
+Info: Sink timer&lt;span class="nv">$next_CCU2C_S0_4$CCU2_SLICE&lt;/span>.DI0
+Info: Defined in:
+Info: blinky.py:15
+Info: 0.0 2.9 Setup timer&lt;span class="nv">$next_CCU2C_S0_4$CCU2_SLICE&lt;/span>.DI0
+Info: 2.0 ns logic, 1.0 ns routing
+Info: Critical path report &lt;span class="k">for&lt;/span> cross-domain path &lt;span class="s1">&amp;#39;&amp;lt;async&amp;gt;&amp;#39;&lt;/span> -&amp;gt; &lt;span class="s1">&amp;#39;&amp;lt;async&amp;gt;&amp;#39;&lt;/span>:
+Info: curr total
+Info: 0.0 0.0 Source pin_clk1_0.clk1_0_0.O
+Info: 1.7 1.7 Net cd_sync_clk1_0__i budget 41.667000 ns &lt;span class="o">(&lt;/span>0,47&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>3,25&lt;span class="o">)&lt;/span>
+Info: Sink &lt;span class="nv">$gbuf$cd_sync_clk1_0__i&lt;/span>.CLKI
+Info: Defined in:
+Info: /home/waxapple/.local/lib/python3.8/site-packages/nmigen/build/res.py:137
+Info: 0.0 1.7 Source &lt;span class="nv">$gbuf$cd_sync_clk1_0__i&lt;/span>.CLKO
+Info: 0.0 1.7 Net &lt;span class="nv">$glbnet$cd_sync_clk1_0__i&lt;/span> budget 41.666000 ns &lt;span class="o">(&lt;/span>3,25&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>4,49&lt;span class="o">)&lt;/span>
+Info: Sink cd_sync.U&lt;span class="nv">$$&lt;/span>2.CLK
+Info: 0.0 ns logic, 1.7 ns routing
+Info: Critical path report &lt;span class="k">for&lt;/span> cross-domain path &lt;span class="s1">&amp;#39;&amp;lt;async&amp;gt;&amp;#39;&lt;/span> -&amp;gt; &lt;span class="s1">&amp;#39;posedge $glbnet$cd_sync_clk1_0__i&amp;#39;&lt;/span>:
+Info: curr total
+Info: 0.0 0.0 Source pin_rst_0.rst_0_0.O
+Info: 3.1 3.1 Net cd_sync_rst_0__i budget 19.882000 ns &lt;span class="o">(&lt;/span>72,32&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>21,33&lt;span class="o">)&lt;/span>
+Info: Sink cd_sync.rst_0__i_LUT4_D_SLICE.D1
+Info: Defined in:
+Info: /home/waxapple/.local/lib/python3.8/site-packages/nmigen/build/res.py:137
+Info: 0.2 3.3 Source cd_sync.rst_0__i_LUT4_D_SLICE.F1
+Info: 0.1 3.5 Net cd_sync.U&lt;span class="nv">$$&lt;/span>0_DI budget 19.882000 ns &lt;span class="o">(&lt;/span>21,33&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>21,33&lt;span class="o">)&lt;/span>
+Info: Sink cd_sync.rst_0__i_LUT4_D_SLICE.DI1
+Info: Defined in:
+Info: /home/waxapple/.local/lib/python3.8/site-packages/nmigen/vendor/lattice_ecp5.py:334
+Info: 0.0 3.5 Setup cd_sync.rst_0__i_LUT4_D_SLICE.DI1
+Info: 0.2 ns logic, 3.2 ns routing
+Info: Critical path report &lt;span class="k">for&lt;/span> cross-domain path &lt;span class="s1">&amp;#39;posedge $glbnet$cd_sync_clk1_0__i&amp;#39;&lt;/span> -&amp;gt; &lt;span class="s1">&amp;#39;&amp;lt;async&amp;gt;&amp;#39;&lt;/span>:
+Info: curr total
+Info: 0.5 0.5 Source cd_sync.U&lt;span class="nv">$$&lt;/span>1_SLICE.Q0
+Info: 3.0 3.5 Net cd_sync.gsr1 budget 82.807999 ns &lt;span class="o">(&lt;/span>21,33&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="o">(&lt;/span>4,49&lt;span class="o">)&lt;/span>
+Info: Sink cd_sync.U&lt;span class="nv">$$&lt;/span>2.GSR
+Info: Defined in:
+Info: /home/waxapple/.local/lib/python3.8/site-packages/nmigen/vendor/lattice_ecp5.py:330
+Info: 0.5 ns logic, 3.0 ns routing
+Info: Max frequency &lt;span class="k">for&lt;/span> clock &lt;span class="s1">&amp;#39;$glbnet$cd_sync_clk1_0__i&amp;#39;&lt;/span>: 340.48 MHz &lt;span class="o">(&lt;/span>PASS at 25.00 MHz&lt;span class="o">)&lt;/span>
+Info: Max delay &amp;lt;async&amp;gt; -&amp;gt; &amp;lt;async&amp;gt; : 1.74 ns
+Info: Max delay &amp;lt;async&amp;gt; -&amp;gt; posedge &lt;span class="nv">$glbnet$cd_sync_clk1_0__i&lt;/span>: 3.45 ns
+Info: Max delay posedge &lt;span class="nv">$glbnet$cd_sync_clk1_0__i&lt;/span> -&amp;gt; &amp;lt;async&amp;gt; : 3.51 ns
+Info: Slack histogram:
+Info: legend: * represents &lt;span class="m">1&lt;/span> endpoint&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+Info: + represents &lt;span class="o">[&lt;/span>1,1&lt;span class="o">)&lt;/span> endpoint&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 36545, 38816&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>*********************
+Info: &lt;span class="o">[&lt;/span> 38816, 41087&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>*
+Info: &lt;span class="o">[&lt;/span> 41087, 43358&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 43358, 45629&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 45629, 47900&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 47900, 50171&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 50171, 52442&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 52442, 54713&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 54713, 56984&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 56984, 59255&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 59255, 61526&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 61526, 63797&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 63797, 66068&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 66068, 68339&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 68339, 70610&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 70610, 72881&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 72881, 75152&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 75152, 77423&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 77423, 79694&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>
+Info: &lt;span class="o">[&lt;/span> 79694, 81965&lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span>***
+Info: Program finished normally.
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="program-bitstream-file-into-fpga">Program bitstream file into FPGA&lt;/h1>
+&lt;p>Wait for the FPGA arrives.&lt;/p></description></item><item><title>[Day10] Clock domain simulation!</title><link>https://waxpple.github.io/posts/day10/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day10/</guid><pubDate>Thu, 22 Jul 2021 23:17:22 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="cycle-accurate-simulation">Cycle accurate simulation&lt;/h1>
 &lt;p>In previous session, we use combinational circuit design. Now, it is time for some sequential circuits!&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
