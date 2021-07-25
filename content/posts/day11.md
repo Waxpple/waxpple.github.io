@@ -62,7 +62,7 @@ sudo make install
 
 This step takes long time to make, especially large ram usage. If failed, you can see [https://github.com/YosysHQ/nextpnr/issues/115](https://github.com/YosysHQ/nextpnr/issues/115) for more detailed build information.
 
-# Build a program on FPGAs
+# Build a program for FPGAs
 
 ```python
 import os
