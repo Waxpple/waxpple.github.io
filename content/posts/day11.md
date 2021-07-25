@@ -3,8 +3,10 @@ title: "[Day11]New toy iCESugar-Pro!"
 date: 2021-07-24T21:12:30+08:00
 draft: false
 ---
-
+# iCESugar-pro
 ![iCESugar-pro](https://www.muselab-tech.com/content/images/2021/03/iCESugar-pro-1.jpg)
+Offical github site: [https://github.com/wuxx/icesugar-pro](https://github.com/wuxx/icesugar-pro)
+
 # Install Project Trellis
 The FPGA use EPC5 chips from lattice. We can use Trellis+ yosys+ nextpnr to develope our design.
 [https://github.com/SymbiFlow/prjtrellis](https://github.com/SymbiFlow/prjtrellis) 
@@ -63,4 +65,56 @@ This step takes long time to make, especially large ram usage. If failed, you ca
 # Build a program on FPGAs
 
 ```python
+import os
+import subprocess
+from typing import List
+from nmigen import Elaboratable, Module, Signal
+from nmigen.build import *
+from nmigen.build.run import LocalBuildProducts
+from nmigen.cli import main_parser, main_runner
+from nmigen.vendor.lattice_ecp5 import *
+
+class Blinker(Elaboratable):
+    def __init__(self):
+        pass
+    def elaborate(self, platform: Platform) -> Module:
+        m = Module()
+
+        clk_freq = platform.default_clk_frequency
+
+        timer = Signal(int(clk_freq // 2), reset=int(clk_freq // 2) - 1)
+        led = platform.request("led").o
+
+        with m.If(timer == 0):
+            m.d.sync += timer.eq(timer.reset)
+            m.d.sync += led.eq(~led)
+        with m.Else():
+            m.d.sync += timer.eq(timer -1)
+        
+        return m
+    
+    def ports(self) -> List[Signal]:
+        return []
+
+class Board(LatticeECP5Platform):
+    device = "LFE5U-25F"
+    package = "BG256"
+    speed = "6"
+    default_clk = "clk1"
+    default_rst = "rst"
+    resources = [
+        Resource("clk1", 0, Pins("P6",dir="i"), Clock(25e6),
+            Attrs(GLOBAL=True, IO_STANDARD = "LVCMOS33")),
+        Resource("led", 0, Pins("B11",dir="o"),
+            Attrs(GLOBAL=True, IO_STANDARD = "LVCMOS33")),
+        Resource("rst", 0, Pins("L14",dir="i"),
+            Attrs(GLOBAL=True, IO_STANDARD = "LVCMOS33")),
+    ]
+    connectors = []
+    def toolchain_program(self, products, name):  
+        iceprog = os.environ.get("ICEPROG", "iceprog.exe")
+        with products.extract("{}.bin".format(name)) as bitstream_filename:
+            subprocess.check_call([iceprog, bitstream_filename])
+if __name__ == "__main__":
+    Board().build(Blinker(), do_program= False)
 ```
