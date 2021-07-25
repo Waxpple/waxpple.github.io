@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sat, 24 Jul 2021 14:34:29 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day11]New toy iCESugar-Pro!</title><link>https://waxpple.github.io/posts/day11/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day11/</guid><pubDate>Sat, 24 Jul 2021 21:12:30 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;p>&lt;img src="https://www.muselab-tech.com/content/images/2021/03/iCESugar-pro-1.jpg" alt="iCESugar-pro">&lt;/p>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sun, 25 Jul 2021 08:17:38 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day11]New toy iCESugar-Pro!</title><link>https://waxpple.github.io/posts/day11/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day11/</guid><pubDate>Sat, 24 Jul 2021 21:12:30 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="icesugar-pro">iCESugar-pro&lt;/h1>
+&lt;p>&lt;img src="https://www.muselab-tech.com/content/images/2021/03/iCESugar-pro-1.jpg" alt="iCESugar-pro">
+Offical github site: &lt;a href="https://github.com/wuxx/icesugar-pro">https://github.com/wuxx/icesugar-pro&lt;/a>&lt;/p>
 &lt;h1 id="install-project-trellis">Install Project Trellis&lt;/h1>
 &lt;p>The FPGA use EPC5 chips from lattice. We can use Trellis+ yosys+ nextpnr to develope our design.
 &lt;a href="https://github.com/SymbiFlow/prjtrellis">https://github.com/SymbiFlow/prjtrellis&lt;/a>&lt;/p>
@@ -82,9 +84,106 @@ sudo make install
 &lt;h1 id="build-a-program-on-fpgas">Build a program on FPGAs&lt;/h1>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;/code>&lt;/pre>&lt;/td>
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">import&lt;/span> &lt;span class="nn">os&lt;/span>
+&lt;span class="kn">import&lt;/span> &lt;span class="nn">subprocess&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">typing&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">List&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Signal&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.build&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.build.run&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">LocalBuildProducts&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.cli&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">main_parser&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">main_runner&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.vendor.lattice_ecp5&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Blinker&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="fm">__init__&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">pass&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">elaborate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Platform&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">clk_freq&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">default_clk_frequency&lt;/span>
+&lt;span class="n">timer&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">clk_freq&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">reset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">clk_freq&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">led&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">request&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;led&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">o&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">If&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timer&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">timer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">reset&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">led&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">~&lt;/span>&lt;span class="n">led&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Else&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">timer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timer&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">ports&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">Signal&lt;/span>&lt;span class="p">]:&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Board&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">LatticeECP5Platform&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">device&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LFE5U-25F&amp;#34;&lt;/span>
+&lt;span class="n">package&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;BG256&amp;#34;&lt;/span>
+&lt;span class="n">speed&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;6&amp;#34;&lt;/span>
+&lt;span class="n">default_clk&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;clk1&amp;#34;&lt;/span>
+&lt;span class="n">default_rst&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;rst&amp;#34;&lt;/span>
+&lt;span class="n">resources&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;span class="n">Resource&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;clk1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Pins&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;P6&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nb">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;i&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Clock&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mf">25e6&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">GLOBAL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">IO_STANDARD&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
+&lt;span class="n">Resource&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;led&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Pins&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;B11&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nb">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;o&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">GLOBAL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">IO_STANDARD&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
+&lt;span class="n">Resource&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;rst&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Pins&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;L14&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nb">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;i&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="n">Attrs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">GLOBAL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="bp">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">IO_STANDARD&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;LVCMOS33&amp;#34;&lt;/span>&lt;span class="p">)),&lt;/span>
+&lt;span class="p">]&lt;/span>
+&lt;span class="n">connectors&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">toolchain_program&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">products&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">name&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">iceprog&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">environ&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;ICEPROG&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;iceprog.exe&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">products&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">extract&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;{}.bin&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">format&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">bitstream_filename&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">subprocess&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">check_call&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">iceprog&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">bitstream_filename&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">Board&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Blinker&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="n">do_program&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="bp">False&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div></description></item><item><title>[Day10] Clock domain simulation!</title><link>https://waxpple.github.io/posts/day10/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day10/</guid><pubDate>Thu, 22 Jul 2021 23:17:22 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="cycle-accurate-simulation">Cycle accurate simulation&lt;/h1>
 &lt;p>In previous session, we use combinational circuit design. Now, it is time for some sequential circuits!&lt;/p>
