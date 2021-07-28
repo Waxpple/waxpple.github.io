@@ -28,3 +28,4 @@ sudo python3 setup.py install
 # Building memory module in nMigen
 
 To use memory module from nmigen, we can make our memory module inherit from `nmigen_soc.wishbone.Interface`, call the parent `__init__` method with the desired address and data widths during initialization, and then access the bus ginals with `self.<signal>`.
+
