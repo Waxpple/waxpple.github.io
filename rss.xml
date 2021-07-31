@@ -1,4 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Thu, 29 Jul 2021 15:11:24 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day12] Simulating memory on a Wishbone Bus</title><link>https://waxpple.github.io/posts/day12/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day12/</guid><pubDate>Wed, 28 Jul 2021 21:06:11 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="reading-from-memory">Reading from memory&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sat, 31 Jul 2021 11:38:30 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day13] Writing a simple state machine</title><link>https://waxpple.github.io/posts/day13/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day13/</guid><pubDate>Fri, 30 Jul 2021 22:27:14 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-missing">What is missing?&lt;/h1>
+&lt;p>Actually, when I am writing this article, there is not much tutorial on nmigen. It is not complete in &lt;a href="https://nmigen.info/nmigen/latest/tutorial.html">nmigen tutorial&lt;/a>. In this tutorial, I will try my best to elaborate a FSM circuit.&lt;/p>
+&lt;h1 id="finite-state-machine">Finite state machine&lt;/h1>
+&lt;p>Let&amp;rsquo;s say&amp;hellip; I want a circuit which samples data every 128+1 clock cycles. Then I need a initial state to reset every signal and one state to add a counter.
+&lt;code>cnt&lt;/code> is a 8-bit counter and &lt;code>data_in&lt;/code> is a input I/O port and &lt;code>data_out&lt;/code> is a output I/O port.
+If &lt;code>cnt[8] == 1&lt;/code> which means counting from 0 to 128 and sampling &lt;code>data_in&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">math&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">ceil&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">log2&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen_soc.memory&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen_soc.wishbone&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">typing&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">List&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nmigen.back.pysim&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="o">*&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Simple_FSM&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Elaboratable&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="fm">__init__&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cnt&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_in&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Signal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">elaborate&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">platform&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Module&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">FSM&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">reset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;START&amp;#34;&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">State&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;START&amp;#34;&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cnt&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;COUNT&amp;#34;&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">State&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;COUNT&amp;#34;&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cnt&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cnt&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">If&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cnt&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sync&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_in&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;START&amp;#34;&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Else&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;COUNT&amp;#34;&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">m&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">dut&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Simple_FSM&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">sim&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Simulator&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dut&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">def&lt;/span> &lt;span class="nf">proc&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="p">):&lt;/span>
+&lt;span class="k">yield&lt;/span> &lt;span class="n">Tick&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="k">yield&lt;/span> &lt;span class="n">dut&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_in&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">eq&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">%&lt;/span>&lt;span class="mi">128&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">yield&lt;/span> &lt;span class="n">Settle&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">sim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add_clock&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="mf">1e-6&lt;/span> &lt;span class="p">)&lt;/span>
+&lt;span class="n">sim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add_sync_process&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">proc&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">with&lt;/span> &lt;span class="n">sim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">write_vcd&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;test.vcd&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;test.gtkw&amp;#34;&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">sim&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;pre>&lt;code>python3 Simple_FSM.py
+gtkwave.exe test.vcd
+&lt;/code>&lt;/pre>&lt;p>&lt;img src="https://i.imgur.com/eoqr4Yi.png" alt="Imgur">&lt;/p>
+&lt;h1 id="now-maybe-we-can-dive-into-spi-communication-using-fsm-to-establish-the-protocal">Now maybe we can dive into SPI communication using FSM to establish the protocal.&lt;/h1></description></item><item><title>[Day12] Simulating memory on a Wishbone Bus</title><link>https://waxpple.github.io/posts/day12/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day12/</guid><pubDate>Wed, 28 Jul 2021 21:06:11 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="reading-from-memory">Reading from memory&lt;/h1>
 &lt;p>This post follows tutorial on &lt;a href="https://vivonomicon.com/2020/04/14/learning-fpga-design-with-nmigen/">https://vivonomicon.com/2020/04/14/learning-fpga-design-with-nmigen/&lt;/a>&lt;/p>
 &lt;p>On the iCESugar-pro, there is a &lt;code>Winbond w25q256jv&lt;/code> which is a 3V 256M-bit serial flash memory with dual/quad spi. Here is a document &lt;a href="https://github.com/wuxx/icesugar-pro/blob/master/doc/w25q256jv.pdf">https://github.com/wuxx/icesugar-pro/blob/master/doc/w25q256jv.pdf&lt;/a> of the SPI module. Using this module, we can program the FPGA by writing the bitstream into flash memory.
 To test reading data from the flash chip, we can write a new module which contains a simple state machine to read data, and a parent module which acts like a very simple CPU. The parent module will increment the address that it reads from, and depending on the returned value, it will either delay for a given number of cycles, toggle one of the leds, or jump back to address zero. This will let us write simple &amp;ldquo;programs&amp;rdquo; which set the leds to different colors at different times.&lt;/p>
