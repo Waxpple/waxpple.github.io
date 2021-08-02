@@ -1,4 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sat, 31 Jul 2021 11:38:30 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day13] Writing a simple state machine</title><link>https://waxpple.github.io/posts/day13/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day13/</guid><pubDate>Fri, 30 Jul 2021 22:27:14 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-missing">What is missing?&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 02 Aug 2021 11:20:03 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day14] COSCUP waxapple wandering</title><link>https://waxpple.github.io/posts/day14/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day14/</guid><pubDate>Sun, 01 Aug 2021 11:23:43 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="skywater-130nm-pdk-oss">Skywater 130nm PDK OSS&lt;/h1>
+&lt;p>&lt;img src="https://i.imgur.com/bYGhJiu.png" alt="Imgur">&lt;/p>
+&lt;h1 id="efabless">eFabless&lt;/h1>
+&lt;p>&lt;img src="https://i.imgur.com/UMSvkOF.png" alt="Imgur">
+&lt;img src="https://i.imgur.com/gbKTYKZ.png" alt="Imgur">
+&lt;img src="https://i.imgur.com/b83uNFO.png" alt="Imgur">&lt;/p>
+&lt;h1 id="openlane">OpenLane&lt;/h1>
+&lt;p>One push button to start your ASIC design!&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/YcgY7pQ.png" alt="Imgur">&lt;/p>
+&lt;h1 id="share-note">Share note&lt;/h1>
+&lt;h3 id="the-efabless-caravel-project---chip-design-for-the-software-oriented---tim-edwards-mohamed-shalan">The efabless Caravel project&amp;mdash;Chip design for the software-oriented - Tim Edwards, Mohamed Shalan&lt;/h3>
+&lt;h6 id="tags-coscup2021-skilled-en-coscup2021-bringing-open-source-software-to-hardware-tr313">tags: &lt;code>COSCUP2021&lt;/code> &lt;code>Skilled&lt;/code> &lt;code>en&lt;/code> &lt;code>COSCUP2021&lt;/code> &lt;code>Bringing Open Source Software to Hardware&lt;/code> &lt;code>TR313&lt;/code>&lt;/h6>
+&lt;p>{%hackmd kra72OaxRTiBzdV8Y4GMKA %}&lt;/p>
+&lt;p>:::info
+Slido: &lt;a href="https://app.sli.do/event/uq1d7voh">https://app.sli.do/event/uq1d7voh&lt;/a>
+:::&lt;/p>
+&lt;p>Hardware 的困難：&lt;/p>
+&lt;ol>
+&lt;li>require EE degree&lt;/li>
+&lt;li>cycle time&lt;/li>
+&lt;li>cost&lt;/li>
+&lt;/ol>
+&lt;p>Open Source EDA -&amp;gt; 需要封閉的 PDK&lt;/p>
+&lt;p>Skywater water-pdk =&amp;gt; SKY130 data&lt;/p>
+&lt;h1 id="成果">成果&lt;/h1>
+&lt;p>caravel picoRV32 搭配 closed source chips
+EDA tool: OpenLane&lt;/p>
+&lt;p>10 mm^2 的 user project space
+可以插入 user chip 跟 picoRV32 搭配&lt;/p>
+&lt;h1 id="openlane-1">OpenLane&lt;/h1>
+&lt;p>RTL to GDSII open source tool&lt;/p>
+&lt;h2 id="synthesis">Synthesis&lt;/h2>
+&lt;p>verilog/VHDL + Standard cell library (SCL) =&amp;gt; gate&lt;/p>
+&lt;h2 id="floor-and-power-planning">Floor and Power Planning&lt;/h2>
+&lt;p>大致決定各部件的擺放位置
+Power metal structure&lt;/p>
+&lt;h2 id="place">Place&lt;/h2>
+&lt;p>Place gates&lt;/p>
+&lt;ul>
+&lt;li>Global place -&amp;gt; 大致位置&lt;/li>
+&lt;li>Detail place -&amp;gt; aligned one grid&lt;/li>
+&lt;/ul>
+&lt;h2 id="clock-tree-synthesis-cts">Clock Tree Synthesis (CTS)&lt;/h2>
+&lt;p>H tree or X tree 確保 clock 信號在 chip 都同步&lt;/p>
+&lt;h2 id="routing">Routing&lt;/h2>
+&lt;p>佈線，將 gate 用 Metal 線連起來&lt;/p>
+&lt;h2 id="signoff">Signoff&lt;/h2>
+&lt;p>DRC + LVS&lt;/p>
+&lt;pre>&lt;code>+ +
+\____/
+&lt;/code>&lt;/pre>&lt;p>OpenLane 希望達到一鍵完成上面所有步驟&lt;/p>
+&lt;p>Caravel all done in open source tool:&lt;/p>
+&lt;h1 id="sofa-skywater-opensource-fpgas">SOFA Skywater opensource FPGAs&lt;/h1>
+&lt;p>&lt;a href="https://github.com/lnis-uofu/Sofa">https://github.com/lnis-uofu/Sofa&lt;/a>&lt;/p>
+&lt;h2 id="slack-group-for-skywater-pdk">Slack group for skywater PDK&lt;/h2>
+&lt;p>裡面是參加eFabless專案的Slack，可以在裡面問任何想問的問題。
+&lt;a href="https://invite.skywater.tools/">https://invite.skywater.tools/&lt;/a>&lt;/p>
+&lt;h1 id="some-useful-links">Some useful links&lt;/h1>
+&lt;p>[1] &lt;a href="https://github.com/chipsalliance/verible">https://github.com/chipsalliance/verible&lt;/a>&lt;/p>
+&lt;p>[2] &lt;a href="https://github.com/idea-fasoc/OpenFASOC">https://github.com/idea-fasoc/OpenFASOC&lt;/a>&lt;/p>
+&lt;p>[3] &lt;a href="https://efabless.com/design_catalog/asic_platform/116">https://efabless.com/design_catalog/asic_platform/116&lt;/a>&lt;/p>
+&lt;p>[4] &lt;a href="https://github.com/efabless/caravel_user_project">https://github.com/efabless/caravel_user_project&lt;/a>&lt;/p>
+&lt;p>[5] &lt;a href="https://chipsalliance.org/workgroups/">https://chipsalliance.org/workgroups/&lt;/a>&lt;/p>
+&lt;p>[6] &lt;a href="https://docs.google.com/presentation/d/e/2PACX-1vQwsMbjsRRKeelhQ5Rjz2jnV1Y90V7g-194o_1UMWSHFbzw1Kuq5DVrK4WwI_5GPA4kgAdBF3OVBoWV/pub?start=false&amp;amp;loop=false&amp;amp;delayms=3000&amp;amp;slide=id.g459757883e_0_2391">https://docs.google.com/presentation/d/e/2PACX-1vQwsMbjsRRKeelhQ5Rjz2jnV1Y90V7g-194o_1UMWSHFbzw1Kuq5DVrK4WwI_5GPA4kgAdBF3OVBoWV/pub?start=false&amp;amp;loop=false&amp;amp;delayms=3000&amp;amp;slide=id.g459757883e_0_2391&lt;/a>&lt;/p></description></item><item><title>[Day13] Writing a simple state machine</title><link>https://waxpple.github.io/posts/day13/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day13/</guid><pubDate>Fri, 30 Jul 2021 22:27:14 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-missing">What is missing?&lt;/h1>
 &lt;p>Actually, when I am writing this article, there is not much tutorial on nmigen. It is not complete in &lt;a href="https://nmigen.info/nmigen/latest/tutorial.html">nmigen tutorial&lt;/a>. In this tutorial, I will try my best to elaborate a FSM circuit.&lt;/p>
 &lt;h1 id="finite-state-machine">Finite state machine&lt;/h1>
 &lt;p>Let&amp;rsquo;s say&amp;hellip; I want a circuit which samples data every 128+1 clock cycles. Then I need a initial state to reset every signal and one state to add a counter.
@@ -95,7 +158,11 @@ If &lt;code>cnt[8] == 1&lt;/code> which means counting from 0 to 128 and samplin
 &lt;/div>&lt;pre>&lt;code>python3 Simple_FSM.py
 gtkwave.exe test.vcd
 &lt;/code>&lt;/pre>&lt;p>&lt;img src="https://i.imgur.com/eoqr4Yi.png" alt="Imgur">&lt;/p>
-&lt;h1 id="now-maybe-we-can-dive-into-spi-communication-using-fsm-to-establish-the-protocal">Now maybe we can dive into SPI communication using FSM to establish the protocal.&lt;/h1></description></item><item><title>[Day12] Simulating memory on a Wishbone Bus</title><link>https://waxpple.github.io/posts/day12/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day12/</guid><pubDate>Wed, 28 Jul 2021 21:06:11 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="reading-from-memory">Reading from memory&lt;/h1>
+&lt;h1 id="now-maybe-we-can-dive-into-spi-communication-using-fsm-to-establish-the-protocal">Now maybe we can dive into SPI communication using FSM to establish the protocal.&lt;/h1>
+&lt;h1 id="coscup">COSCUP&lt;/h1>
+&lt;p>&lt;a href="https://github.com/chipsalliance/verible">https://github.com/chipsalliance/verible&lt;/a>
+&lt;a href="https://github.com/idea-fasoc/OpenFASOC">https://github.com/idea-fasoc/OpenFASOC&lt;/a>
+&lt;a href="https://efabless.com/design_catalog/asic_platform/116">https://efabless.com/design_catalog/asic_platform/116&lt;/a>&lt;/p></description></item><item><title>[Day12] Simulating memory on a Wishbone Bus</title><link>https://waxpple.github.io/posts/day12/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day12/</guid><pubDate>Wed, 28 Jul 2021 21:06:11 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="reading-from-memory">Reading from memory&lt;/h1>
 &lt;p>This post follows tutorial on &lt;a href="https://vivonomicon.com/2020/04/14/learning-fpga-design-with-nmigen/">https://vivonomicon.com/2020/04/14/learning-fpga-design-with-nmigen/&lt;/a>&lt;/p>
 &lt;p>On the iCESugar-pro, there is a &lt;code>Winbond w25q256jv&lt;/code> which is a 3V 256M-bit serial flash memory with dual/quad spi. Here is a document &lt;a href="https://github.com/wuxx/icesugar-pro/blob/master/doc/w25q256jv.pdf">https://github.com/wuxx/icesugar-pro/blob/master/doc/w25q256jv.pdf&lt;/a> of the SPI module. Using this module, we can program the FPGA by writing the bitstream into flash memory.
 To test reading data from the flash chip, we can write a new module which contains a simple state machine to read data, and a parent module which acts like a very simple CPU. The parent module will increment the address that it reads from, and depending on the returned value, it will either delay for a given number of cycles, toggle one of the leds, or jump back to address zero. This will let us write simple &amp;ldquo;programs&amp;rdquo; which set the leds to different colors at different times.&lt;/p>
