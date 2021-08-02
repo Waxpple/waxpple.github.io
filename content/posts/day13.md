@@ -70,3 +70,8 @@ gtkwave.exe test.vcd
 
 # Now maybe we can dive into SPI communication using FSM to establish the protocal.
 
+# COSCUP 
+
+https://github.com/chipsalliance/verible
+https://github.com/idea-fasoc/OpenFASOC
+https://efabless.com/design_catalog/asic_platform/116
