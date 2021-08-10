@@ -7,7 +7,7 @@ draft: false
 
 # Install icesprog
 icesprog is a tool which can program FPGA.
-(https://github.com/FPGAwars/toolchain-icesprog)[https://github.com/FPGAwars/toolchain-icesprog]
+[https://github.com/FPGAwars/toolchain-icesprog](https://github.com/FPGAwars/toolchain-icesprog)
 
 ```
 sudo apt install git && git clone https://github.com/FPGAwars/toolchain-icesprog.git
