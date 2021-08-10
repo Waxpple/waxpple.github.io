@@ -423,4 +423,5 @@ Info: Program finished normally.
 ```
 
 # Program bitstream file into FPGA
-Wait for the FPGA arrives.
+
+![Imgur](https://i.imgur.com/ExHeJTV.gif)
