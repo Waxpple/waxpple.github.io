@@ -18,8 +18,9 @@ cd toolchain-icesprog
 ./build.sh windows_amd64
 ```
 
-In my WSL settings, run `./build.sh windows_amd64` and restart command line tool.
+In my WSL setup, run `./build.sh windows_amd64` and restart command line tool.
 Type `icesprog.exe` will show following message.
+> if not showing anything, please check if you installed icesprog correctly.
 
 ![Imgur](https://i.imgur.com/DTOgoQK.png)
 
@@ -29,6 +30,7 @@ Type `icesprog.exe` will show following message.
 git clone https://github.com/wuxx/icesugar-pro
 icesprog.exe icesugar-pro/demo/linux-with-litex.bit
 ```
+Connect FPGA on your PC.
 
 ![Imgur](https://i.imgur.com/84vbYgL.gif)
 This process will take some times, roughly 1 min.
