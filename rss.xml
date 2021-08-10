@@ -1,4 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 10 Aug 2021 12:13:05 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day14] COSCUP waxapple wandering</title><link>https://waxpple.github.io/posts/day14/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day14/</guid><pubDate>Sun, 01 Aug 2021 11:23:43 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="skywater-130nm-pdk-oss">Skywater 130nm PDK OSS&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 10 Aug 2021 14:42:26 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day15] Linux on LiteX - iCESugar-Pro</title><link>https://waxpple.github.io/posts/day15/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day15/</guid><pubDate>Tue, 10 Aug 2021 21:52:34 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="install-icesprog">Install icesprog&lt;/h1>
+&lt;p>icesprog is a tool which can program FPGA.
+(&lt;a href="https://github.com/FPGAwars/toolchain-icesprog)%5Bhttps://github.com/FPGAwars/toolchain-icesprog%5D">https://github.com/FPGAwars/toolchain-icesprog)[https://github.com/FPGAwars/toolchain-icesprog]&lt;/a>&lt;/p>
+&lt;pre>&lt;code>sudo apt install git &amp;amp;&amp;amp; git clone https://github.com/FPGAwars/toolchain-icesprog.git
+cd toolchain-icesprog
+./build.sh linux_i686
+./build.sh linux_x86_64
+./build.sh windows_x86
+./build.sh windows_amd64
+&lt;/code>&lt;/pre>&lt;p>In my WSL settings, run &lt;code>./build.sh windows_amd64&lt;/code> and restart command line tool.
+Type &lt;code>icesprog.exe&lt;/code> will show following message.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/DTOgoQK.png" alt="Imgur">&lt;/p>
+&lt;h1 id="write-bitstream-file-onto-fpga">write bitstream file onto FPGA&lt;/h1>
+&lt;pre>&lt;code>git clone https://github.com/wuxx/icesugar-pro
+icesprog.exe icesugar-pro/demo/linux-with-litex.bit
+&lt;/code>&lt;/pre>&lt;p>&lt;img src="https://i.imgur.com/84vbYgL.gif" alt="Imgur">
+This process will take some times, roughly 1 min.&lt;/p>
+&lt;p>After Done. We can disconnect the FPGA and prepare for the next step.&lt;/p>
+&lt;blockquote>
+&lt;p>you can use drag and drop the bitstream file onto FPGA iCELink and it will do the same magic!&lt;/p>
+&lt;/blockquote>
+&lt;h1 id="prepare-sd-card-for-system-image">Prepare SD card for system image.&lt;/h1>
+&lt;p>Take a microSD card, format it with FAT32 format. Assume SD card root is under &lt;code>mnt/sdcard&lt;/code>&lt;/p>
+&lt;pre>&lt;code> cp icesugar-pro/linux/* mnt/sdcard/.
+&lt;/code>&lt;/pre>&lt;h1 id="insert-the-microsd-card-on-the-back-side-of-fpga">Insert the microSD card on the back side of FPGA.&lt;/h1>
+&lt;p>After finishing copy system file into SDcard. Insert it on the back side of FPGA.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/C2vPTpS.jpg" alt="Imgur">&lt;/p>
+&lt;p>Connect the FPGA to PC and its led will glowing like this:
+&lt;img src="https://i.imgur.com/MRTdcfM.gif" alt="Imgur">&lt;/p>
+&lt;p>Check port number of the device.
+&lt;img src="https://i.imgur.com/Hs82ye2.png" alt="Imgur">&lt;/p>
+&lt;p>Open Putty on the PC. In serial line, type what you see above. For example, my FPGA is on COM4.&lt;/p>
+&lt;p>Set Speed(baudrate) to 10000000 and type session name &lt;code>LITEX_LINUX&lt;/code> and click save.
+Load &lt;code>LITEX_LINUX&lt;/code> and click open.&lt;/p>
+&lt;blockquote>
+&lt;p>Next time, you can simply load the session without typing again.&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://i.imgur.com/a9VCPQy.png" alt="Imgur">&lt;/p>
+&lt;p>The Terminal will pop up like this:
+&lt;img src="https://i.imgur.com/3Ukks2u.png" alt="Imgur">&lt;/p>
+&lt;p>Press reset button on the FPGA and the terminal will load correct booting information.
+&lt;img src="https://i.imgur.com/UWs3bE4.gif" alt="Imgur">&lt;/p>
+&lt;p>That is all! Next step should be building our own system though liteX.&lt;/p></description></item><item><title>[Day14] COSCUP waxapple wandering</title><link>https://waxpple.github.io/posts/day14/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day14/</guid><pubDate>Sun, 01 Aug 2021 11:23:43 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="skywater-130nm-pdk-oss">Skywater 130nm PDK OSS&lt;/h1>
 &lt;p>&lt;img src="https://i.imgur.com/bYGhJiu.png" alt="Imgur">&lt;/p>
 &lt;h1 id="efabless">eFabless&lt;/h1>
 &lt;p>&lt;img src="https://i.imgur.com/UMSvkOF.png" alt="Imgur">
