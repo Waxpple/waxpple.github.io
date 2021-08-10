@@ -58,7 +58,7 @@ Check port number of the device.
 
 Open Putty on the PC. In serial line, type what you see above. For example, my FPGA is on COM4.
 
-Set Speed(baudrate) to 10000000 and type session name `LITEX_LINUX` and click save.
+Set Speed(baudrate) to 1000000 and type session name `LITEX_LINUX` and click save.
 Load `LITEX_LINUX` and click open.
 > Next time, you can simply load the session without typing again.
 
