@@ -30,7 +30,7 @@ Type `icesprog.exe` will show following message.
 git clone https://github.com/wuxx/icesugar-pro
 icesprog.exe icesugar-pro/demo/linux-with-litex.bit
 ```
-Connect FPGA on your PC.
+> Please make sure that you did connect FPGA on your PC.
 
 ![Imgur](https://i.imgur.com/84vbYgL.gif)
 This process will take some times, roughly 1 min.
