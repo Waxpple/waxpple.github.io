@@ -652,13 +652,13 @@ uglyURLs = false
     autoLoadComments = true
 
     ## Disqus
-    enableDisqus = true
+    enableDisqus = false
     disqusShortname = "https-waxpple-github-io"
 
     ## Valine
-    enableValine = false
-    valineAppId = ""
-    valineAppKey = ""
+    enableValine = true
+    valineAppId = "xGOW3X4swVJDF0KkynycF06Q-MdYXbMMI"
+    valineAppKey = "nRIMRIDiO3URUU7xE2OMhWcr"
     valinePlaceholder = "Just go go"
     valinePath = ""
     valineAvatar = "mm"
@@ -993,7 +993,8 @@ uglyURLs = false
     fontFamilyBody = "'IBM Plex Serif', serif"
 
     # Embed fonts link
-    fontsLink = "https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Comfortaa:wght@700&display=swap"
+    #fontsLink = "https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Comfortaa:wght@700&display=swap"
+    fontsLink = "https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
     # Note: In order for the reader to
     #       experience the fonts you set,
     #       it is best to use web fonts.
