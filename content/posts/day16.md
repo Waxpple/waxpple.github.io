@@ -84,3 +84,108 @@ configure完應該長這樣：
 ![Imgur](https://i.imgur.com/toE1gRw.png)
 
 結果直接不work xD 不知道為什麼...
+
+# Verilator
+
+[參考來源 https://ys-hayashi.me/2020/12/verilator-2/](https://ys-hayashi.me/2020/12/verilator-2/)
+
+## 安裝Verilator [Brew](https://formulae.brew.sh/formula/verilator).
+
+用Brew安裝完，應該也沒什麼問題。
+
+## 測試功能
+
+先準備待測試的verilog code.
+
+```verilog
+module design_under_test(
+    input clk, input rst,
+    output logic valid,
+    output logic [7:0] data
+);
+    logic [39:0] out_all;
+    always_comb begin
+        data = out_all[7:0];
+        valid = (data != '0);
+    end
+
+    always_ff @(posedge clk or negedge rst) begin
+        if (!rst) begin
+            out_all <= "olleH";
+        end else if (valid) begin
+            out_all <= out_all >> 8;
+        end
+    end
+endmodule
+```
+
+要跑的步驟如下
+
+1. 撰寫 testbench `testbench.cpp`
+2. 準備可合成之待測模組 `design_under_test.sv`
+3. 把待測試模組轉換成 C++（或是 SystemC），並指名要使用的 testbench `verilator design_under_test.sv --exe testbench.cpp --cc`
+4. Verilator 產生的檔案都在 `obj_dir` 資料夾（這個是預設名稱）。
+5. 在該資料夾下面編譯產生 binary 
+  `make -C obj_dir -f Vdesign_under_test.mk`。
+6. 執行模擬 `./obj_dir/Vdesign_under_test`。
+
+但是我們先跑一個空白的`testbench.cpp`看怎麼樣。
+
+```bash
+int main() {
+    return 0;
+}
+```
+
+存好`testbench.cpp`後，跑一次上面的流程，可以看到會generate一個資料夾 `obj_dir`下面有一個檔案`Vdesign_under_test.h`的前幾行大概是長這樣：
+
+```c++
+class Vdesign_under_test__Syms;
+
+//----------
+
+VL_MODULE(Vdesign_under_test) {
+  public:
+    
+    // PORTS
+    // The application code writes and reads these signals to
+    // propagate new values into/out from the Verilated model.
+    VL_IN8(clk,0,0);
+    VL_IN8(rst,0,0);
+    VL_OUT8(valid,0,0);
+    VL_OUT8(data,7,0);
+    ...
+```
+
+可以看出來 這四個I/O ports就是我們在verilog定義的。
+因此我們testbench可以這樣寫：
+
+```c++
+#include "Vdesign_under_test.h"
+#include <memory>
+#include <iostream>
+int main(int, char**)
+{
+    std::unique_ptr<Vdesign_under_test> dut(new Vdesign_under_test);
+    dut->clk = 1; dut->rst = 1; dut->eval();
+    dut->rst = 0; dut->eval();
+    dut->rst = 1; dut->eval();
+    for (int i = 0; i < 40; ++i) {
+        dut->clk = 1 - dut->clk; dut->eval();
+        if (dut->clk == 0 and dut->valid == 1)
+        std::cout << char(dut->data) << std::endl;
+    }
+    return 0;
+}
+```
+使用 `dut->eval()` 就會跳一次clock。
+
+依照上面流程跑完應該會看到如下：
+![Imgur](https://i.imgur.com/n2ECM1g.png)
+
+# 本日小節
+
+雖然我看這本書要寫的testbench是應該用 SystemVerilog去寫，然後我發現iverilog不支援 parallel assertion語法，就來研究一下verilator但是verilator要用SystemC來做testbench其實也不是我要的！所以要再survey看看。
+
+附上今日迷因：
+![meme](https://i.pinimg.com/736x/6a/56/eb/6a56eb98767dc0aab0136079493f4c96.jpg)
