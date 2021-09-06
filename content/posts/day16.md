@@ -19,3 +19,68 @@ RISC (Reduced-Instrument-Set-Computer) only contains common instruments. It will
 開源網址在早期，也就是這本書剛出版的時候為 [GitHub網址](https://github.com/SI-RISCV/e200_opensource) 
 
 但是原網址已經不維護與更新了，最新版本在[新版本GitHub網址](https://github.com/riscv-mcu/e203_hbirdv2)。讀者可以自行前往比對，我應該是先以舊版的搭配書嗑完後再去run看看新版的。
+
+# 先裝一些工具軟體
+
+## SystemC on MacOS
+
+### Version I (work)
+
+到 Brew 直接無腦安裝 SystemC [Brew link](https://formulae.brew.sh/formula/systemc)
+
+```bash
+brew install systemc
+```
+安裝完長這樣：
+![Imgur](https://i.imgur.com/yfkUvty.png)
+然後就來測試一下 SystemC的 helloworld吧
+
+```c++
+// All systemc modules should include systemc.h header file
+#include "systemc.h"
+// Hello_world is module name
+SC_MODULE (hello_world) {
+  SC_CTOR (hello_world) {
+    // Nothing in constructor 
+  }
+  void say_hello() {
+    //Print "Hello World" to the console.
+    cout << "Hello World.\n";
+  }
+};
+
+// sc_main in top level function like in C++ main
+int sc_main(int argc, char* argv[]) {
+  hello_world hello("HELLO");
+  // Print the hello world
+  hello.say_hello();
+  return(0);
+}
+```
+
+```bash
+g++ -o main hello.cpp -I/usr/local/include -L/usr/local/lib -lsystemc
+```
+執行：
+![Imgur](https://i.imgur.com/ReIbiig.png)
+
+### Version II (not working)
+先到官方網站上下載systemC原始程式碼 [SystemC 下載](https://www.accellera.org/downloads/standards/systemc). 
+
+> 參考網址 [Stackoverflow](https://stackoverflow.com/questions/25961573/how-to-use-and-install-systemc-in-terminal-mac-os-x)
+
+![Imgur](https://i.imgur.com/CSoxj65.png)
+
+然後解壓縮後執行以下步驟
+
+```bash
+$ mkdir build
+$ cd build
+$ export CXX=clang++
+$ ../configure --with-arch-suffix=
+$ make install
+```
+configure完應該長這樣：
+![Imgur](https://i.imgur.com/toE1gRw.png)
+
+結果直接不work xD 不知道為什麼...
