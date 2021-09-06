@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Wed, 01 Sep 2021 09:42:26 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day16] RISC open hardware design</title><link>https://waxpple.github.io/posts/day16/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day16/</guid><pubDate>Tue, 31 Aug 2021 11:47:55 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-the-difference-between-risc-and-cisc">What is the difference between RISC and CISC?&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 06 Sep 2021 04:17:15 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day16] RISC open hardware design</title><link>https://waxpple.github.io/posts/day16/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day16/</guid><pubDate>Tue, 31 Aug 2021 11:47:55 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-the-difference-between-risc-and-cisc">What is the difference between RISC and CISC?&lt;/h1>
 &lt;p>CISC (Complex-Instrument-Set-Computer) is an instrument set that contains common instruments and uncommon instruments. For example, 80% of the common instruments we used in the arithmetic program is 20% of the total instrument set.&lt;/p>
 &lt;p>RISC (Reduced-Instrument-Set-Computer) only contains common instruments. It will use more than one simple instrument to finshed one complex instrument which takes more cycles to do the same job but keep the processor simple and clean.&lt;/p>
 &lt;h1 id="第一天開始學risc-v-isa">第一天開始學RISC-V ISA&lt;/h1>
@@ -6,7 +6,103 @@
 因此之後幾個篇文章都會跟隨這本書，雖然這本書裡面是寫簡體字，用語跟台灣相當不一樣xD 但是原作者就是中國人且經歷相當豐富，希望看完這本書能收穫滿滿。&lt;/p>
 &lt;p>本書是介紹 蜂鳥E200系列的處理器，本書開源的是面相低功耗低面積的嵌入式處理器，依照作者給的數據應該是全勝於ARM Cortex-M0/M0+ 系列能耗比。
 開源網址在早期，也就是這本書剛出版的時候為 &lt;a href="https://github.com/SI-RISCV/e200_opensource">GitHub網址&lt;/a>&lt;/p>
-&lt;p>但是原網址已經不維護與更新了，最新版本在&lt;a href="https://github.com/riscv-mcu/e203_hbirdv2">新版本GitHub網址&lt;/a>。讀者可以自行前往比對，我應該是先以舊版的搭配書嗑完後再去run看看新版的。&lt;/p></description></item><item><title>[Day15] Linux on LiteX - iCESugar-Pro</title><link>https://waxpple.github.io/posts/day15/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day15/</guid><pubDate>Tue, 10 Aug 2021 21:52:34 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="install-icesprog">Install icesprog&lt;/h1>
+&lt;p>但是原網址已經不維護與更新了，最新版本在&lt;a href="https://github.com/riscv-mcu/e203_hbirdv2">新版本GitHub網址&lt;/a>。讀者可以自行前往比對，我應該是先以舊版的搭配書嗑完後再去run看看新版的。&lt;/p>
+&lt;h1 id="先裝一些工具軟體">先裝一些工具軟體&lt;/h1>
+&lt;h2 id="systemc-on-macos">SystemC on MacOS&lt;/h2>
+&lt;h3 id="version-i-work">Version I (work)&lt;/h3>
+&lt;p>到 Brew 直接無腦安裝 SystemC &lt;a href="https://formulae.brew.sh/formula/systemc">Brew link&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install systemc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安裝完長這樣：
+&lt;img src="https://i.imgur.com/yfkUvty.png" alt="Imgur">
+然後就來測試一下 SystemC的 helloworld吧&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-c++" data-lang="c++">&lt;span class="c1">// All systemc modules should include systemc.h header file
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;#34;systemc.h&amp;#34;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>&lt;span class="c1">// Hello_world is module name
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">SC_MODULE&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">hello_world&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">SC_CTOR&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">hello_world&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Nothing in constructor
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;span class="kt">void&lt;/span> &lt;span class="nf">say_hello&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">//Print &amp;#34;Hello World&amp;#34; to the console.
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Hello World.&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="c1">// sc_main in top level function like in C++ main
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="nf">sc_main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">char&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">argv&lt;/span>&lt;span class="p">[])&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">hello_world&lt;/span> &lt;span class="n">hello&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;HELLO&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// Print the hello world
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">hello&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">say_hello&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="k">return&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">g++ -o main hello.cpp -I/usr/local/include -L/usr/local/lib -lsystemc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>執行：
+&lt;img src="https://i.imgur.com/ReIbiig.png" alt="Imgur">&lt;/p>
+&lt;h3 id="version-ii-not-working">Version II (not working)&lt;/h3>
+&lt;p>先到官方網站上下載systemC原始程式碼 &lt;a href="https://www.accellera.org/downloads/standards/systemc">SystemC 下載&lt;/a>.&lt;/p>
+&lt;blockquote>
+&lt;p>參考網址 &lt;a href="https://stackoverflow.com/questions/25961573/how-to-use-and-install-systemc-in-terminal-mac-os-x">Stackoverflow&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://i.imgur.com/CSoxj65.png" alt="Imgur">&lt;/p>
+&lt;p>然後解壓縮後執行以下步驟&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ mkdir build
+$ &lt;span class="nb">cd&lt;/span> build
+$ &lt;span class="nb">export&lt;/span> &lt;span class="nv">CXX&lt;/span>&lt;span class="o">=&lt;/span>clang++
+$ ../configure --with-arch-suffix&lt;span class="o">=&lt;/span>
+$ make install
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>configure完應該長這樣：
+&lt;img src="https://i.imgur.com/toE1gRw.png" alt="Imgur">&lt;/p>
+&lt;p>結果直接不work xD 不知道為什麼&amp;hellip;&lt;/p></description></item><item><title>[Day15] Linux on LiteX - iCESugar-Pro</title><link>https://waxpple.github.io/posts/day15/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day15/</guid><pubDate>Tue, 10 Aug 2021 21:52:34 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="install-icesprog">Install icesprog&lt;/h1>
 &lt;p>icesprog is a tool which can program FPGA.
 &lt;a href="https://github.com/FPGAwars/toolchain-icesprog">https://github.com/FPGAwars/toolchain-icesprog&lt;/a>&lt;/p>
 &lt;pre>&lt;code>sudo apt install git &amp;amp;&amp;amp; git clone https://github.com/FPGAwars/toolchain-icesprog.git
