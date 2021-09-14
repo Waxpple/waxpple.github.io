@@ -1,4 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Mon, 06 Sep 2021 07:08:05 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day16] RISC-V open hardware design</title><link>https://waxpple.github.io/posts/day16/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day16/</guid><pubDate>Tue, 31 Aug 2021 11:47:55 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-the-difference-between-risc-and-cisc">What is the difference between RISC and CISC?&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Tue, 14 Sep 2021 07:10:50 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day17] RISC-V CPU IFU設計</title><link>https://waxpple.github.io/posts/day17/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day17/</guid><pubDate>Thu, 09 Sep 2021 17:15:48 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="前言">前言&lt;/h1>
+&lt;p>前面有一些心得，但還沒整理出來，這篇先寫關於IFU的設計理念。&lt;/p>
+&lt;h1 id="verilog-lint">Verilog lint&lt;/h1>
+&lt;p>本篇在攥寫的時候，都會嘗試使用spyglass 做rtl lint來確保rtl code quality. 假設 rtl code 如下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-verilog" data-lang="verilog">&lt;span class="k">module&lt;/span> &lt;span class="n">FA&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;span class="k">input&lt;/span> &lt;span class="n">clk&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="k">input&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mh">3&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="mh">0&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="k">input&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mh">3&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="mh">0&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="k">output&lt;/span> &lt;span class="kt">reg&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mh">4&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="mh">0&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="n">sum&lt;/span>
+&lt;span class="p">);&lt;/span>
+&lt;span class="k">always&lt;/span>&lt;span class="p">@(&lt;/span>&lt;span class="k">posedge&lt;/span> &lt;span class="n">clk&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="k">begin&lt;/span>
+&lt;span class="n">sum&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">end&lt;/span>
+&lt;span class="k">endmodule&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>跑Spyglass lint之後會跟你說紅色地方要使用non-blocking.
+&lt;img src="https://i.imgur.com/D5lE7BV.png" alt="Imgur">&lt;/p>
+&lt;h1 id="一些參考網址">一些參考網址&lt;/h1>
+&lt;p>&lt;a href="https://blog.csdn.net/A_stranger/article/details/103532699">https://blog.csdn.net/A_stranger/article/details/103532699&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://blog.holey.cc/2018/11/05/centos-7-eda-tools-installation/">https://blog.holey.cc/2018/11/05/centos-7-eda-tools-installation/&lt;/a>&lt;/p></description></item><item><title>[Day16] RISC-V open hardware design</title><link>https://waxpple.github.io/posts/day16/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day16/</guid><pubDate>Tue, 31 Aug 2021 11:47:55 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-the-difference-between-risc-and-cisc">What is the difference between RISC and CISC?&lt;/h1>
 &lt;p>CISC (Complex-Instrument-Set-Computer) is an instrument set that contains common instruments and uncommon instruments. For example, 80% of the common instruments we used in the arithmetic program is 20% of the total instrument set.&lt;/p>
 &lt;p>RISC (Reduced-Instrument-Set-Computer) only contains common instruments. It will use more than one simple instrument to finshed one complex instrument which takes more cycles to do the same job but keep the processor simple and clean.&lt;/p>
 &lt;h1 id="第一天開始學risc-v-isa">第一天開始學RISC-V ISA&lt;/h1>
