@@ -1,7 +1,7 @@
 ---
 title: "[Day17] RISC-V CPU IFU設計"
 date: 2021-09-09T17:15:48+08:00
-draft: false
+draft: true
 ---
 # 前言
 前面有一些心得，但還沒整理出來，這篇先寫關於IFU的設計理念。
