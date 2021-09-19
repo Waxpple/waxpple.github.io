@@ -24,3 +24,71 @@ draft: false
 
 廢話不多說，我是在網路上找到一個IT鐵人賽，教你學設計模式　[[ Day 1 ] 我為什麼想學設計模式 ( Design Pattern )](https://ithelp.ithome.com.tw/articles/10201706) 但是我應該會想用C/C++來寫這個課題，而這位大神是使用Java。
 
+# Factory mode
+
+```c++
+
+// account.h
+#include <string>
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+class Product {
+    // Desciption
+    public:
+        virtual void describle(){};
+};
+
+class Factory {
+    
+    public:
+        virtual Product getProduct(){
+            return _myproduct;
+        };
+    private:
+        Product _myproduct;
+};
+
+class FrenchFries:Product{
+
+    public:
+        FrenchFries(){
+            _state = "salted";
+        };
+        FrenchFries(string state){
+            _state = state;
+        };
+        void describle()override {
+            printf("I am %s frenchfries\n",_state.c_str());
+        };
+    private:
+        string _state = "";
+
+};
+
+
+//account.cpp
+#include "account.h"
+#include <string>
+#include <iostream>
+#include <stdio.h>
+int main(int argc, char const *argv[])
+{
+    /* code */
+    FrenchFries* salted_french = new FrenchFries("salted");
+    salted_french->describle();
+    FrenchFries* unsalted_french = new FrenchFries("unsalted");
+    unsalted_french->describle();
+    FrenchFries* default_french = new FrenchFries();
+    default_french->describle();
+    return 0;
+}
+```
+
+```bash
+g++ account.cpp
+```
+
+![Imgur](https://i.imgur.com/JvPAtUL.png)
