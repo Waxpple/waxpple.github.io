@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sat, 18 Sep 2021 02:16:40 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day01] 有時候學硬體或者設計硬體累了…來點軟體吧!</title><link>https://waxpple.github.io/posts/day18/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day18/</guid><pubDate>Sat, 18 Sep 2021 09:57:09 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="前言">前言&lt;/h1>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Waxapple Code Segment</title><link>https://waxpple.github.io/</link><description>Risc V daliy base.</description><generator>Hugo 0.81.0 https://gohugo.io/</generator><language>en</language><managingEditor>a0910618112@gmail.com (Waxapple)</managingEditor><webMaster>a0910618112@gmail.com (Waxapple)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><lastBuildDate>Sun, 19 Sep 2021 16:20:52 +0000</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://waxpple.github.io/rss.xml"/><item><title>[Day01] 有時候學硬體或者設計硬體累了…來點軟體吧!</title><link>https://waxpple.github.io/posts/day18/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day18/</guid><pubDate>Sat, 18 Sep 2021 09:57:09 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="前言">前言&lt;/h1>
 &lt;p>雖然我正在Mediatek實習，待的部門是做手機CPU的部門，不是RTL designer 是做 Implement team的。其實心中預期比較多的是實習能碰Implement 因為在學校其實沒甚麼機會走到PnR, Sign-off等等後端真正的流程。大多是RTL打一打，丟進工具與幾個library隨便合成後跑跑Netlist sim就完工了。一部分是因為走完這些的時間就不太夠了更不太可能在學校上課的期間能走到GDS Tapout。但我發現每天看standard cell、每天看數位電路其實也蠻膩的。於是大膽下定決心累的時候除了運動，可以多練習軟實力。如果以後數位設計失業至少還能寫code維生xD&lt;/p>
 &lt;h1 id="軟體要來學點甚麼">軟體要來學點甚麼?&lt;/h1>
 &lt;p>&lt;img src="https://aws1.discourse-cdn.com/codecademy/original/5X/b/f/2/a/bf2a43e0d76918d1f38537acc9b59d6c245a6eb1.jpeg" alt="meme">&lt;/p>
@@ -10,7 +10,131 @@
 &lt;li>E203 Risc-V re-implement combine opensource skywater 130nm pdk(?)或許可以搭Google的車Tapeout，等學到一定程度就到openIC study group上號召XD&lt;/li>
 &lt;li>Software design pattern&lt;/li>
 &lt;/ol>
-&lt;p>廢話不多說，我是在網路上找到一個IT鐵人賽，教你學設計模式　&lt;a href="https://ithelp.ithome.com.tw/articles/10201706">[ Day 1 ] 我為什麼想學設計模式 ( Design Pattern )&lt;/a> 但是我應該會想用C/C++來寫這個課題，而這位大神是使用Java。&lt;/p></description></item><item><title>[Day16] RISC-V open hardware design</title><link>https://waxpple.github.io/posts/day16/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day16/</guid><pubDate>Tue, 31 Aug 2021 11:47:55 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-the-difference-between-risc-and-cisc">What is the difference between RISC and CISC?&lt;/h1>
+&lt;p>廢話不多說，我是在網路上找到一個IT鐵人賽，教你學設計模式　&lt;a href="https://ithelp.ithome.com.tw/articles/10201706">[ Day 1 ] 我為什麼想學設計模式 ( Design Pattern )&lt;/a> 但是我應該會想用C/C++來寫這個課題，而這位大神是使用Java。&lt;/p>
+&lt;h1 id="factory-mode">Factory mode&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-c++" data-lang="c++">
+&lt;span class="c1">// account.h
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;string&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Product&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Desciption
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;span class="k">virtual&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="n">describle&lt;/span>&lt;span class="p">(){};&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Factory&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;span class="k">virtual&lt;/span> &lt;span class="n">Product&lt;/span> &lt;span class="n">getProduct&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">_myproduct&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="k">private&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;span class="n">Product&lt;/span> &lt;span class="n">_myproduct&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">FrenchFries&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="n">Product&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;span class="n">FrenchFries&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;span class="n">_state&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;salted&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="n">FrenchFries&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">string&lt;/span> &lt;span class="n">state&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;span class="n">_state&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">state&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="kt">void&lt;/span> &lt;span class="nf">describle&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="k">override&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;I am %s frenchfries&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">_state&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">c_str&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="k">private&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;span class="n">string&lt;/span> &lt;span class="n">_state&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="c1">//account.cpp
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;#34;account.h&amp;#34;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;string&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">argv&lt;/span>&lt;span class="p">[])&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="cm">/* code */&lt;/span>
+&lt;span class="n">FrenchFries&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">salted_french&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">FrenchFries&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;salted&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="n">salted_french&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">describle&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">FrenchFries&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">unsalted_french&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">FrenchFries&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;unsalted&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="n">unsalted_french&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">describle&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">FrenchFries&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">default_french&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">FrenchFries&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">default_french&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">describle&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">g++ account.cpp
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/JvPAtUL.png" alt="Imgur">&lt;/p></description></item><item><title>[Day16] RISC-V open hardware design</title><link>https://waxpple.github.io/posts/day16/</link><guid isPermaLink="true">https://waxpple.github.io/posts/day16/</guid><pubDate>Tue, 31 Aug 2021 11:47:55 +0800</pubDate><author>a0910618112@gmail.com (Waxapple)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</copyright><description>&lt;h1 id="what-is-the-difference-between-risc-and-cisc">What is the difference between RISC and CISC?&lt;/h1>
 &lt;p>CISC (Complex-Instrument-Set-Computer) is an instrument set that contains common instruments and uncommon instruments. For example, 80% of the common instruments we used in the arithmetic program is 20% of the total instrument set.&lt;/p>
 &lt;p>RISC (Reduced-Instrument-Set-Computer) only contains common instruments. It will use more than one simple instrument to finshed one complex instrument which takes more cycles to do the same job but keep the processor simple and clean.&lt;/p>
 &lt;h1 id="第一天開始學risc-v-isa">第一天開始學RISC-V ISA&lt;/h1>
